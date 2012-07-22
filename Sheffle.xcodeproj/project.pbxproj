@@ -280,10 +280,10 @@
 			isa = PBXGroup;
 			children = (
 				A6A9CB2C15BC31EE00C02AD5 /* Sheffle.xcdatamodeld */,
-				A6A9CB2E15BC31EE00C02AD5 /* SFBook.m */,
-				A6A9CB2F15BC31EE00C02AD5 /* SFShelf.m */,
 				A6A9CB3015BC31EE00C02AD5 /* SFBook.h */,
+				A6A9CB2E15BC31EE00C02AD5 /* SFBook.m */,
 				A6A9CB3115BC31EE00C02AD5 /* SFShelf.h */,
+				A6A9CB2F15BC31EE00C02AD5 /* SFShelf.m */,
 			);
 			name = Models;
 			path = ..;

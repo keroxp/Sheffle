@@ -14,6 +14,9 @@
 
 @implementation SFBookViewController
 
+@synthesize managedObjectContext = _managedObjectContext;
+@synthesize book = _book;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

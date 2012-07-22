@@ -18,6 +18,6 @@
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-- (IBAction)addButtonDidTap:(id)sender;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end

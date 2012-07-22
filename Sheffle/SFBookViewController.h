@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "SFBook.h"
 
 @interface SFBookViewController : UIViewController
 
-@property(strong,nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) SFBook *book;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end

@@ -11,14 +11,21 @@
 
 @interface SFShelfViewController ()
 {
-    
+    UIBarButtonItem *_donebutton;
+    UIBarButtonItem *_addButton;
+    ZBarReaderView *_readerView;
 }
+
+- (void)addButtonDidTap:(id)sender;
+- (void)doneButtonDidTap:(id)sender;
+- (void)insertNewObject:(NSDictionary*)book;
 
 @end
 
 @implementation SFShelfViewController
 
 @synthesize managedObjectContext = __managedObjectContext;
+@synthesize searchBar = _searchBar;
 @synthesize fetchedResultsController = __fetchedResultsController;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -34,15 +41,32 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    
+    // NavigationBarを初期化
+    
+    _addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
+    _donebutton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonDidTap:)];    
+    [[self navigationItem] setLeftBarButtonItem:[self editButtonItem]];
+    [[self navigationItem] setRightBarButtonItem:_addButton];
+    
+    
+    // ZbarImageViewを構築
+    ZBarImageScanner *scanner = [[ZBarImageScanner alloc] init];
+    
+    // EXAMPLE: disable rarely used I2/5 to improve performance
+    [scanner setSymbology: ZBAR_I25 config: ZBAR_CFG_ENABLE to: 0];
+    
+    _readerView = [[ZBarReaderView alloc] initWithImageScanner:scanner];
+    [_readerView setFrame:CGRectMake(0, 0, self.view.frame.size.width, 100.0f)];
+    [_readerView setReaderDelegate:self];
+
 }
 
 - (void)viewDidUnload
 {
+    [self setSearchBar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -77,7 +101,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellID = @"ShlefCell";
+    static NSString *CellID = @"ShelfCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
@@ -115,14 +139,14 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Shelf" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"updated" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
     NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -204,53 +228,25 @@
  }
  */
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    //    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
-    [cell.textLabel setText:[[object valueForKey:@"title"] description]];
-}
-
-- (IBAction)addButtonDidTap:(id)sender {
-    // ADD: present a barcode reader that scans from the camera feed
-    ZBarReaderViewController *reader = [ZBarReaderViewController new];
-    reader.readerDelegate = self;
-    reader.supportedOrientationsMask = ZBarOrientationMaskAll;
-    
-    ZBarImageScanner *scanner = [[ZBarImageScanner alloc] init];
-//    ZBarImageScanner *scanner = reader.scanner;
-    // TODO: (optional) additional reader configuration here
-    
-    // EXAMPLE: disable rarely used I2/5 to improve performance
-    [scanner setSymbology: ZBAR_I25
-                   config: ZBAR_CFG_ENABLE
-                       to: 0];
-
-    ZBarReaderView *readerView = [[ZBarReaderView alloc] initWithImageScanner:scanner];
-    [readerView setFrame:CGRectMake(0, 0, self.view.frame.size.width, 100.0f)];
-    [readerView setReaderDelegate:self];
-    [readerView start];
-    [self.tableView setTableHeaderView:readerView];
-
-    
-    // present and release the controller
-//    [self presentModalViewController: reader animated: YES];
-}
+#pragma mark - ZBarReaderView
 
 - (void)readerView:(ZBarReaderView *)readerView didReadSymbols:(ZBarSymbolSet *)symbols fromImage:(UIImage *)image
 {
+
+    [_readerView stop];
+    
     for(ZBarSymbol *symbol in symbols) {
         
-        NSString *resultText = symbol.data;        
-        UIImage *resultImage = image;
-    
+        NSString *resultText = [symbol data];
+        
         // 楽天ブックス総合検索APIのURL
-    
+        
         NSMutableString *apiURIString = [NSMutableString stringWithString:@"http://api.rakuten.co.jp/rws/3.0/json?"];
         [apiURIString appendFormat:@"developerId=%@&",kRakutenAPPID];
         [apiURIString appendString:@"operation=BooksTotalSearch&"];
         [apiURIString appendString:@"version=2011-12-01&"];
         [apiURIString appendFormat:@"isbnjan=%@",resultText];
+        //        NSLog(@"url is %@",apiURIString);        
         
         // HTTPRequestを構築
         R9HTTPRequest *req = [[R9HTTPRequest alloc] initWithURL:[NSURL URLWithString:[apiURIString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
@@ -259,7 +255,7 @@
         [SVProgressHUD showWithStatus:@"Loading"];
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         
-        NSLog(@"url is %@",apiURIString);
+        // 成功時および失敗時のハンドラをセット
         [req setCompletionHandler:^(NSHTTPURLResponse *responseHeader, NSString *responseString){
             //        NSLog(@"Reponse is : %@",responseHeader);
             //        NSLog(@"body is %@",responseString);
@@ -268,79 +264,78 @@
                 JSON = [[[[[[responseString JSONValue] objectForKey:@"Body"] objectForKey:@"BooksTotalSearch"] objectForKey:@"Items"] objectForKey:@"Item"] objectAtIndex:0];
             }
             @catch (NSException *exception) {
-                NSLog(@"data not found : %@",responseString);            
+                NSLog(@"data not found : %@",responseString);
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                [SVProgressHUD dismissWithError:@"Product not found" afterDelay:3.0f];
             }
             @finally {
                 
             }        
-//            NSLog(@"data are %@", JSON);
+            //            NSLog(@"data are %@", JSON);
+            // TODO : 登録処理      
+            [self insertNewObject:JSON];
             [SVProgressHUD dismissWithSuccess:[JSON objectForKey:@"title"] afterDelay:3.0f];
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            [_readerView start];
         }];
         [req setFailedHandler:^(NSError *error){
             [SVProgressHUD dismissWithError:@"Error happed" afterDelay:3.0f];
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             NSLog(@"error happend : %@",error);
+            [_readerView start];
         }];
+        
+        // リクエストをスタート
         [req startRequest];
     }
 }
 
-- (void) imagePickerController: (UIImagePickerController*) reader didFinishPickingMediaWithInfo: (NSDictionary*) info
+#pragma mark - Private Method
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    // ADD: get the decode results
-    id<NSFastEnumeration> results =[info objectForKey: ZBarReaderControllerResults];
-    ZBarSymbol *symbol = nil;
-    for(symbol in results)
-        // EXAMPLE: just grab the first barcode
-        break;
-    
-    // EXAMPLE: do something useful with the barcode data
-    NSString *resultText = symbol.data;
-    
-    // EXAMPLE: do something useful with the barcode image
+    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    //    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
+    [cell.textLabel setText:[[object valueForKey:@"title"] description]];
+    [cell.detailTextLabel setText:[[object valueForKey:@"author"] description]];
+}
 
-    UIImage *resultImage = [info objectForKey: UIImagePickerControllerOriginalImage];
-    
-    // 楽天ブックス総合検索APIに接続
-    
-    NSMutableString *apiURIString = [NSMutableString stringWithString:@"http://api.rakuten.co.jp/rws/3.0/json?"];
-    [apiURIString appendFormat:@"developerId=%@&",kRakutenAPPID];
-    [apiURIString appendString:@"operation=BooksTotalSearch&"];
-    [apiURIString appendString:@"version=2011-12-01&"];
-    [apiURIString appendFormat:@"isbnjan=%@",resultText];
-    
-    R9HTTPRequest *req = [[R9HTTPRequest alloc] initWithURL:[NSURL URLWithString:[apiURIString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-    [SVProgressHUD showWithStatus:@"Loading"];
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-    NSLog(@"url is %@",apiURIString);
-    [req setCompletionHandler:^(NSHTTPURLResponse *responseHeader, NSString *responseString){
-//        NSLog(@"Reponse is : %@",responseHeader);
-//        NSLog(@"body is %@",responseString);
-        NSDictionary *JSON = [NSDictionary dictionary];
-        @try {
-            JSON = [[[[[[responseString JSONValue] objectForKey:@"Body"] objectForKey:@"BooksTotalSearch"] objectForKey:@"Items"] objectForKey:@"Item"] objectAtIndex:0];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"data not found : %@",responseString);            
-        }
-        @finally {
+- (void)addButtonDidTap:(id)sender {
 
-        }        
-        NSLog(@"data are %@", JSON);
-        [SVProgressHUD dismiss];
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-    }];
-    [req setFailedHandler:^(NSError *error){
-        [SVProgressHUD dismissWithError:@"Error happed" afterDelay:3.0f];
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        NSLog(@"error happend : %@",error);
-    }];
-    [req startRequest];
+    [_readerView start];
+    [self.tableView setTableHeaderView:_readerView];
+    [self.navigationItem setRightBarButtonItem:_donebutton];
+    [self setTitle:@"Scan Barcode"];
+
+}
+
+- (void)doneButtonDidTap:(id)sender
+{
+    [_readerView stop];
+    [self.navigationItem setRightBarButtonItem:_addButton];
+    [self.tableView setTableHeaderView:_searchBar];
+    [self setTitle:@"Shelf"];
+}
+
+- (void)insertNewObject:(NSDictionary*)book
+{
+    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
+    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
     
-    // ADD: dismiss the controller (NB dismiss from the *reader*!)
-    [reader dismissModalViewControllerAnimated: YES];
+    // If appropriate, configure the new managed object.
+    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
+    [newManagedObject setValue:[book objectForKey:@"title"] forKey:@"title"];
+    [newManagedObject setValue:[book objectForKey:@"author"] forKey:@"author"];
+    
+    // Save the context.
+    NSError *error = nil;
+    if (![context save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
 }
 
 @end
