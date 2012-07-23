@@ -17,22 +17,20 @@
 
 #import "SFBookViewController.h"
 #import "SFImageDownloader.h"
-#import "SFGridShelfViewController.h"
 #import "SFTableShelfViewController.h"
+#import "SFGridShelfViewController.h"
 
 typedef enum{
     SFShelfViewModeTable = 0,
     SFShelfViewModeGrid
 }SFShelfViewMode;
 
-
 @interface SFShelfViewController : UIViewController 
 <ZBarReaderViewDelegate
 ,SFImageDownloaderDelegate>
 
 // Core Data
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 // View Controllers
 @property (strong, nonatomic) SFGridShelfViewController *gridShelfViewController;

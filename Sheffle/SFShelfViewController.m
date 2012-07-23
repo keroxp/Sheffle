@@ -7,11 +7,12 @@
 //
 
 #import "SFShelfViewController.h"
+
 #define kRakutenAPPID @"1058212220451425377"
 #define kBarTintColor [UIColor colorWithRed:214.0f/255.0f green:168.0f/255.0f blue:91.0f/255.0f alpha:1.0f]
-#define kDefaultTableViewFrame CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - self.navigationController.toolbar.frame.size.height)
+#define kDefaultShelfViewFrame CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
 #define kDefaultReaderViewFrame CGRectMake(0, 0, self.view.frame.size.width, 0)
-#define kScanModeTableViewFrame CGRectMake(0, 100.0f, self.view.frame.size.width, self.view.frame.size.height - self.navigationController.toolbar.frame.size.height - 100.0f)
+#define kScanModeShelfViewFrame CGRectMake(0, 100.0f, self.view.frame.size.width, self.view.frame.size.height - 100.0f)
 #define kScanModeReaderViewFrame CGRectMake(0, 0, self.view.frame.size.width, 100.0f)
 
 @interface SFShelfViewController ()
@@ -41,19 +42,18 @@
 @synthesize shelfWrapperView = _shelfWrapperView;
 @synthesize tableShelfViewController = _tableShelfViewController;
 @synthesize gridShelfViewController = _gridShelfViewController;
-@synthesize managedObjectContext = __managedObjectContext;
-@synthesize fetchedResultsController = __fetchedResultsController;
+@synthesize managedObjectContext = _managedObjectContext;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
+  
+    NSLog(@"view.frame : %@",self.view);
     // ２種類のShelfViewControllerを構築
     
     _tableShelfViewController = (SFTableShelfViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"tableShelfView"];
     _gridShelfViewController = (SFGridShelfViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"gridShelfView"];
-
+    
     // NavigationBarを初期化
     
     [self setTitle:@"Shelves"];
@@ -81,7 +81,10 @@
     
     [self setToolbarItems:[NSArray arrayWithObjects:_segmentedControlItem,_addButton, nil]];
     
+    // ShelfWrapperViewの初期化
     
+    [_shelfWrapperView setFrame:kDefaultShelfViewFrame];
+
     // ZbarImageViewを構築
     [_readerWrapperView setFrame:kDefaultReaderViewFrame];
     ZBarImageScanner *scanner = [[ZBarImageScanner alloc] init];
@@ -92,18 +95,13 @@
     [_readerView setReaderDelegate:self];
     [_readerWrapperView addSubview:_readerView];
     
-    // TableViewを初期化    
-//    [_tableView setFrame:kDefaultTableViewFrame];
-//    [_tableView setDelegate:self];
-//    [_tableView setDataSource:self];
+//    [self.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     
-    // SearchBarを初期化
-    
-//    [_searchBar setDelegate:self];
-//    [self.searchDisplayController setDelegate:self];
+    // TableShelfViewを初期配置
+    [_tableShelfViewController setManagedObjectContext:[self managedObjectContext]];
+    [_shelfWrapperView addSubview:_tableShelfViewController.view]; 
     
     // Viewの初期化
-    
     CALayer *topShadowLayer = [CALayer layer];
     topShadowLayer.frame = self.view.bounds;
     [self.view.layer addSublayer:topShadowLayer];
@@ -124,22 +122,20 @@
     [bottomShadowLayer setShadowOffset:CGSizeMake(0, 2.5)];
     [bottomShadowLayer setShadowColor:[[UIColor blackColor] CGColor]];
     [bottomShadowLayer setShadowOpacity:0.75];
-    [bottomShadowLayer setShadowPath:[dpsPath CGPath]];
+    [bottomShadowLayer setShadowPath:[dpsPath CGPath]]; 
 
 }
 
 - (void)viewDidUnload
 {
-//    [self setSearchBar:nil];
-//    [self setTableView:nil];
     [self setReaderWrapperView:nil];
+    [self setShelfWrapperView:nil];
     _readerView = nil;
     _scanButton = nil;
     _donebutton = nil;
     _segmentedControl = nil;
     _segmentedControlItem = nil;
     _addButton = nil;
-    [self setShelfWrapperView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -155,14 +151,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    static NSString *segueIDForBook = @"showDetail";
-    if ([[segue identifier] isEqualToString:segueIDForBook]) {
-        SFBookViewController *bvc = (SFBookViewController*)[segue destinationViewController];
-        [bvc setManagedObjectContext:[self managedObjectContext]];
-    }
-}
+
 
 #pragma mark - ZBarReaderView
 
@@ -236,7 +225,7 @@
     [_readerView start];
     [UIView animateWithDuration:0.25f delay:0.0 options:(UIViewAnimationCurveEaseIn <<  16) animations:^(void){
         _readerWrapperView.frame = kScanModeReaderViewFrame;
-        _shelfWrapperView.frame = kScanModeTableViewFrame;
+        _shelfWrapperView.frame = kScanModeShelfViewFrame;
     }completion:^(BOOL finished){
 //        [self.tableView setTableHeaderView:_readerView];
         [self.navigationItem setRightBarButtonItem:_donebutton];
@@ -250,7 +239,7 @@
     [_readerView stop];
     [UIView animateWithDuration:0.25f delay:0.0 options:(UIViewAnimationCurveEaseIn <<  16) animations:^(void){
         _readerWrapperView.frame = kDefaultReaderViewFrame;
-        _shelfWrapperView.frame = kDefaultTableViewFrame;
+        _shelfWrapperView.frame = kDefaultShelfViewFrame;
     }completion:^(BOOL finished){
         [self.navigationItem setRightBarButtonItem:_scanButton];
 //        [self.tableView setTableHeaderView:_searchBar];
@@ -269,8 +258,8 @@
 
 - (void)insertNewObject:(NSDictionary*)book
 {
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
+    NSManagedObjectContext *context = [self.tableShelfViewController.fetchedResultsController managedObjectContext];
+    NSEntityDescription *entity = [[self.tableShelfViewController.fetchedResultsController fetchRequest] entity];
     NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
     
     // If appropriate, configure the new managed object.

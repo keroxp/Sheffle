@@ -8,15 +8,20 @@
 
 #import "SFTableShelfViewController.h"
 
-@interface SFTableShelfViewController ()
-
-@end
-
 @implementation SFTableShelfViewController
 
 @synthesize managedObjectContext = __managedObjectContext;
 @synthesize fetchedResultsController = __fetchedResultsController;
 @synthesize delegate = _delegate;
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self){
+        
+    }
+    return self;
+}
 
 - (void)awakeFromNib
 {
@@ -30,7 +35,7 @@
     
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
-    [self.tableView setFrame:kDefaultTableViewFrame];
+//    [self.tableView setFrame:self.view.superview.frame];
     
     [self.searchDisplayController.searchBar setDelegate:self];
     [self.searchDisplayController setDelegate:self];
@@ -200,5 +205,13 @@
     }
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    static NSString *segueIDForBook = @"showDetail";
+    if ([[segue identifier] isEqualToString:segueIDForBook]) {
+        SFBookViewController *bvc = (SFBookViewController*)[segue destinationViewController];
+        [bvc setManagedObjectContext:[self managedObjectContext]];
+    }
+}
 
 @end

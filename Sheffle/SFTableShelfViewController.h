@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "SFShelfViewController.h"
 #import "SFBookViewController.h"
 
 @protocol SFTableShelfViewDelegate;
