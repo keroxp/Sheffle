@@ -9,18 +9,29 @@
 #import "SFShelfViewController.h"
 #define kRakutenAPPID @"1058212220451425377"
 #define kBarTintColor [UIColor colorWithRed:214.0f/255.0f green:168.0f/255.0f blue:91.0f/255.0f alpha:1.0f]
+#define kDefaultTableViewFrame CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - self.navigationController.toolbar.frame.size.height)
+#define kDefaultReaderViewFrame CGRectMake(0, 0, self.view.frame.size.width, 0)
+#define kScanModeTableViewFrame CGRectMake(0, 100.0f, self.view.frame.size.width, self.view.frame.size.height - self.navigationController.toolbar.frame.size.height - 100.0f)
+#define kScanModeReaderViewFrame CGRectMake(0, 0, self.view.frame.size.width, 100.0f)
 
 @interface SFShelfViewController ()
 {
+    UIBarButtonItem *_titleButton;
     UIBarButtonItem *_donebutton;
+    UIBarButtonItem *_scanButton;
     UIBarButtonItem *_addButton;
+    UIBarButtonItem *_segmentedControlItem;
+    UISegmentedControl *_segmentedControl;
     ZBarReaderView *_readerView;
     NSManagedObjectContext *_currentManagedObjectContext;
     NSManagedObject *_currentManagedObject;
 }
 
-- (void)addButtonDidTap:(id)sender;
+- (void)titleDidTap:(id)sender;
+- (void)scanButtonDidTap:(id)sender;
 - (void)doneButtonDidTap:(id)sender;
+- (void)addButtonDidTap:(id)sender;
+- (void)segmentedControlDidChange:(UISegmentedControl*)sender;
 - (void)insertNewObject:(NSDictionary*)book;
 
 @end
@@ -28,54 +39,116 @@
 @implementation SFShelfViewController
 
 @synthesize managedObjectContext = __managedObjectContext;
+@synthesize readerWrapperView = _readerWrapperView;
 @synthesize searchBar = _searchBar;
+@synthesize tableView = _tableView;
 @synthesize fetchedResultsController = __fetchedResultsController;
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     
     // NavigationBarを初期化
     
-    _addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
-    [_addButton setTintColor:kBarTintColor];
+    [self setTitle:@"Shelves"];
+    _scanButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(scanButtonDidTap:)];
+    [_scanButton setTintColor:kBarTintColor];
     _donebutton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonDidTap:)];    
     [_donebutton setTintColor:kBarTintColor];
+    
+    _titleButton = [[UIBarButtonItem alloc] initWithTitle:@"Shelves" style:UIBarButtonItemStyleBordered target:self action:@selector(titleButtonDidTap:)];
+    [_titleButton setTintColor:kBarTintColor];
+
+    UITapGestureRecognizer *tgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(titleDidTap:)];
+    [self.navigationItem.titleView addGestureRecognizer:tgr];
+    
     [[self editButtonItem] setTintColor:kBarTintColor];
     [[self navigationItem] setLeftBarButtonItem:[self editButtonItem]];
-    [[self navigationItem] setRightBarButtonItem:_addButton];
+    [[self navigationItem] setRightBarButtonItem:_scanButton];
+    
+    // Toolbarを初期化
+    
+    [self.navigationController.toolbar setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+    _segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Title",@"Author",@"Date",@"Stared", nil]];
+    [_segmentedControl setSelectedSegmentIndex:0];
+    [_segmentedControl setSegmentedControlStyle:UISegmentedControlStyleBar];
+    [_segmentedControl setTintColor:kBarTintColor];
+    [_segmentedControl addTarget:self action:@selector(segmentedControlDidChange:) forControlEvents:UIControlEventValueChanged];
+    _segmentedControlItem = [[UIBarButtonItem alloc] initWithCustomView:_segmentedControl];
+    
+    _addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
+    [_addButton setTintColor:kBarTintColor];
+    
+    [self setToolbarItems:[NSArray arrayWithObjects:_segmentedControlItem,_addButton, nil]];
     
     
     // ZbarImageViewを構築
+    [_readerWrapperView setFrame:kDefaultReaderViewFrame];
     ZBarImageScanner *scanner = [[ZBarImageScanner alloc] init];
-    
     // EXAMPLE: disable rarely used I2/5 to improve performance
     [scanner setSymbology: ZBAR_I25 config: ZBAR_CFG_ENABLE to: 0];
-    
     _readerView = [[ZBarReaderView alloc] initWithImageScanner:scanner];
-    [_readerView setFrame:CGRectMake(0, 0, self.view.frame.size.width, 100.0f)];
+    [_readerView setFrame:_readerWrapperView.frame];
     [_readerView setReaderDelegate:self];
+    [_readerWrapperView addSubview:_readerView];
+    
+    // TableViewを初期化    
+    [_tableView setFrame:kDefaultTableViewFrame];
+    [_tableView setDelegate:self];
+    [_tableView setDataSource:self];
+    
+    // SearchBarを初期化
+    
+    [_searchBar setDelegate:self];
+    [self.searchDisplayController setDelegate:self];
+    
+    // Viewの初期化
+    
+    CALayer *topShadowLayer = [CALayer layer];
+    topShadowLayer.frame = self.view.bounds;
+    [self.view.layer addSublayer:topShadowLayer];
+    topShadowLayer.masksToBounds = YES;
+    CGRect shadowFrame = CGRectMake(-10.0, -10.0, topShadowLayer.bounds.size.width+10.0, 10.0);
+    UIBezierPath *path = [UIBezierPath bezierPathWithRect:shadowFrame];                          
+    topShadowLayer.shadowOffset = CGSizeMake(0, 2.5); 
+    topShadowLayer.shadowColor = [[UIColor blackColor] CGColor];
+    topShadowLayer.shadowOpacity = 0.5;
+    topShadowLayer.shadowPath = [path CGPath];
+    
+    CALayer *bottomShadowLayer = [CALayer layer];
+    [bottomShadowLayer setFrame:self.view.bounds];
+    [self.view.layer addSublayer:bottomShadowLayer];
+    [bottomShadowLayer setMasksToBounds:YES];
+    CGRect dpsFrame = CGRectMake(-10.0, self.view.bounds.size.height + 10.0, bottomShadowLayer.bounds.size.width+10.0, 10.0);
+    UIBezierPath *dpsPath = [UIBezierPath bezierPathWithRect:dpsFrame];
+    [bottomShadowLayer setShadowOffset:CGSizeMake(0, 2.5)];
+    [bottomShadowLayer setShadowColor:[[UIColor blackColor] CGColor]];
+    [bottomShadowLayer setShadowOpacity:0.75];
+    [bottomShadowLayer setShadowPath:[dpsPath CGPath]];
 
 }
 
 - (void)viewDidUnload
 {
     [self setSearchBar:nil];
+    [self setTableView:nil];
+    [self setReaderWrapperView:nil];
+    _readerView = nil;
+    _scanButton = nil;
+    _donebutton = nil;
+    _segmentedControl = nil;
+    _segmentedControlItem = nil;
+    _addButton = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -133,6 +206,11 @@
             abort();
         }
     }   
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - Fetched results controller
@@ -307,21 +385,45 @@
     }
 }
 
-- (void)addButtonDidTap:(id)sender 
+- (void)titleDidTap:(id)sender
+{
+    NSLog(@"title did tap");
+}
+
+- (void)scanButtonDidTap:(id)sender 
 {
     [_readerView start];
-    [self.tableView setTableHeaderView:_readerView];
-    [self.navigationItem setRightBarButtonItem:_donebutton];
-    [self setTitle:@"Scan Barcode"];
+    [UIView animateWithDuration:0.25f delay:0.0 options:(UIViewAnimationCurveEaseIn <<  16) animations:^(void){
+        _readerWrapperView.frame = kScanModeReaderViewFrame;
+        _tableView.frame = kScanModeTableViewFrame;
+    }completion:^(BOOL finished){
+//        [self.tableView setTableHeaderView:_readerView];
+        [self.navigationItem setRightBarButtonItem:_donebutton];
+        [self setTitle:@"Scan Barcode"];
+    }];
 
 }
 
 - (void)doneButtonDidTap:(id)sender
 {
     [_readerView stop];
-    [self.navigationItem setRightBarButtonItem:_addButton];
-    [self.tableView setTableHeaderView:_searchBar];
-    [self setTitle:@"Shelf"];
+    [UIView animateWithDuration:0.25f delay:0.0 options:(UIViewAnimationCurveEaseIn <<  16) animations:^(void){
+        _readerWrapperView.frame = kDefaultReaderViewFrame;
+        _tableView.frame = kDefaultTableViewFrame;
+    }completion:^(BOOL finished){
+        [self.navigationItem setRightBarButtonItem:_scanButton];
+//        [self.tableView setTableHeaderView:_searchBar];
+        [self setTitle:@"Shelf"];
+    }];
+}
+
+- (void)addButtonDidTap:(id)sender {
+    NSLog(@"add button did tap");
+}
+
+- (void)segmentedControlDidChange:(UISegmentedControl *)sender
+{
+    NSLog(@"segmented control did change index : %i",[_segmentedControl selectedSegmentIndex]);
 }
 
 - (void)insertNewObject:(NSDictionary*)book
@@ -368,6 +470,8 @@
         abort();
     }
 }
+
+
 
 - (void)downloader:(SFImageDownloader *)downloader didFailWithError:(NSError *)error
 {
