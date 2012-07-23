@@ -9,5 +9,5 @@
 #import "SFBook.h"
 
 @implementation SFBook
-@synthesize artistName, title, isbnjan, smallImage, midiumImage, largeImage, itemCaption, salesDate, publisherName, author, created, updated;
+@synthesize artistName, title, isbnjan, smallImage, mediumImage, largeImage, itemCaption, salesDate, publisherName, author, created, updated;
 @end

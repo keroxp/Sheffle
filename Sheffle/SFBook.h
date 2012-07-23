@@ -19,9 +19,9 @@
 @property (strong, nonatomic) NSString *itemCaption;
 @property (strong, nonatomic) NSString *isbnjan;
 @property (strong, nonatomic) NSString *itemUrl;
-@property (strong, nonatomic) UIImage *smallImage;
-@property (strong, nonatomic) UIImage *midiumImage;
-@property (strong, nonatomic) UIImage *largeImage;
+@property (strong, nonatomic) NSData *smallImage;
+@property (strong, nonatomic) NSData *mediumImage;
+@property (strong, nonatomic) NSData *largeImage;
 
 // プライベートデータカラム
 @property (strong, nonatomic) NSDate *created;

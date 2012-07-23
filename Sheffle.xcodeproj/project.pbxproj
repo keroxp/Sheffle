@@ -23,6 +23,7 @@
 		A685A2E615BC3B30000A1AD5 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = A685A2DA15BC3B30000A1AD5 /* SBJsonWriter.m */; };
 		A685A2EA15BC3CC0000A1AD5 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A685A2E715BC3CC0000A1AD5 /* SVProgressHUD.m */; };
 		A685A2EB15BC3CC0000A1AD5 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A685A2E915BC3CC0000A1AD5 /* SVProgressHUD.bundle */; };
+		A68E54A515BC7618007C0E15 /* SFImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A68E54A415BC7618007C0E15 /* SFImageDownloader.m */; };
 		A6A9CB1C15BC274600C02AD5 /* SFShelfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A9CB1B15BC274600C02AD5 /* SFShelfViewController.m */; };
 		A6A9CB1F15BC275C00C02AD5 /* SFBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A9CB1E15BC275C00C02AD5 /* SFBookViewController.m */; };
 		A6A9CB2115BC27D800C02AD5 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6A9CB2015BC27D800C02AD5 /* MainStoryboard_iPad.storyboard */; };
@@ -95,6 +96,8 @@
 		A685A2E715BC3CC0000A1AD5 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = SVProgressHUD/SVProgressHUD.m; sourceTree = "<group>"; };
 		A685A2E815BC3CC0000A1AD5 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = SVProgressHUD/SVProgressHUD.h; sourceTree = "<group>"; };
 		A685A2E915BC3CC0000A1AD5 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
+		A68E54A315BC7618007C0E15 /* SFImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFImageDownloader.h; sourceTree = "<group>"; };
+		A68E54A415BC7618007C0E15 /* SFImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFImageDownloader.m; sourceTree = "<group>"; };
 		A6A9CB1A15BC274600C02AD5 /* SFShelfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFShelfViewController.h; sourceTree = "<group>"; };
 		A6A9CB1B15BC274600C02AD5 /* SFShelfViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFShelfViewController.m; sourceTree = "<group>"; };
 		A6A9CB1D15BC275C00C02AD5 /* SFBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBookViewController.h; sourceTree = "<group>"; };
@@ -272,6 +275,8 @@
 				A6A9CB1B15BC274600C02AD5 /* SFShelfViewController.m */,
 				A6A9CB1D15BC275C00C02AD5 /* SFBookViewController.h */,
 				A6A9CB1E15BC275C00C02AD5 /* SFBookViewController.m */,
+				A68E54A315BC7618007C0E15 /* SFImageDownloader.h */,
+				A68E54A415BC7618007C0E15 /* SFImageDownloader.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -567,6 +572,7 @@
 				A685A2E515BC3B30000A1AD5 /* SBJsonUTF8Stream.m in Sources */,
 				A685A2E615BC3B30000A1AD5 /* SBJsonWriter.m in Sources */,
 				A685A2EA15BC3CC0000A1AD5 /* SVProgressHUD.m in Sources */,
+				A68E54A515BC7618007C0E15 /* SFImageDownloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

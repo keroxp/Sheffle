@@ -14,6 +14,8 @@
     UIBarButtonItem *_donebutton;
     UIBarButtonItem *_addButton;
     ZBarReaderView *_readerView;
+    NSManagedObjectContext *_currentManagedObjectContext;
+    NSManagedObject *_currentManagedObject;
 }
 
 - (void)addButtonDidTap:(id)sender;
@@ -262,6 +264,8 @@
             NSDictionary *JSON = [NSDictionary dictionary];
             @try {
                 JSON = [[[[[[responseString JSONValue] objectForKey:@"Body"] objectForKey:@"BooksTotalSearch"] objectForKey:@"Items"] objectForKey:@"Item"] objectAtIndex:0];
+                [self insertNewObject:JSON];
+                [SVProgressHUD dismissWithSuccess:[JSON objectForKey:@"title"] afterDelay:3.0f];
             }
             @catch (NSException *exception) {
                 NSLog(@"data not found : %@",responseString);
@@ -269,14 +273,9 @@
                 [SVProgressHUD dismissWithError:@"Product not found" afterDelay:3.0f];
             }
             @finally {
-                
-            }        
-            //            NSLog(@"data are %@", JSON);
-            // TODO : 登録処理      
-            [self insertNewObject:JSON];
-            [SVProgressHUD dismissWithSuccess:[JSON objectForKey:@"title"] afterDelay:3.0f];
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            [_readerView start];
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                [_readerView start];
+            }                      
         }];
         [req setFailedHandler:^(NSError *error){
             [SVProgressHUD dismissWithError:@"Error happed" afterDelay:3.0f];
@@ -294,14 +293,18 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"reload table");
     NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     //    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
     [cell.textLabel setText:[[object valueForKey:@"title"] description]];
     [cell.detailTextLabel setText:[[object valueForKey:@"author"] description]];
+    if ([object valueForKey:@"mediumImage"]) {        
+        [cell.imageView setImage:[UIImage imageWithData:[object valueForKey:@"mediumImage"]]];
+    }
 }
 
-- (void)addButtonDidTap:(id)sender {
-
+- (void)addButtonDidTap:(id)sender 
+{
     [_readerView start];
     [self.tableView setTableHeaderView:_readerView];
     [self.navigationItem setRightBarButtonItem:_donebutton];
@@ -325,8 +328,32 @@
     
     // If appropriate, configure the new managed object.
     // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
+    NSDateFormatter *fm = [[NSDateFormatter alloc] init];
+    [fm setDateFormat:@"yyyy年MM月"];
     [newManagedObject setValue:[book objectForKey:@"title"] forKey:@"title"];
     [newManagedObject setValue:[book objectForKey:@"author"] forKey:@"author"];
+    [newManagedObject setValue:[book objectForKey:@"artistName"] forKey:@"artistName"];
+    [newManagedObject setValue:[book objectForKey:@"itemCaption"] forKey:@"itemCaption"];
+    [newManagedObject setValue:[fm dateFromString:[book objectForKey:@"salesDate"]] forKey:@"salesDate"];
+    [newManagedObject setValue:[book objectForKey:@"itemUrl"] forKey:@"itemUrl"];
+    
+    if ([book objectForKey:@"isbn"]) {
+        [newManagedObject setValue:[book objectForKey:@"isbn"] forKey:@"isbnjan"];
+    }else if ([book objectForKey:@"jan"]) {
+        [newManagedObject setValue:[book objectForKey:@"jan"] forKey:@"isbnjan"];
+    }
+    
+    [newManagedObject setValue:[NSDate date] forKey:@"created"];
+    [newManagedObject setValue:[NSDate date] forKey:@"updated"];
+    
+    _currentManagedObject = newManagedObject;
+    _currentManagedObjectContext = context;    
+    
+    SFImageDownloader *downloader = [[SFImageDownloader alloc] initWithURL:[NSURL URLWithString:[book objectForKey:@"mediumImageUrl"]]];
+    [downloader setDelegate:self];    
+    [downloader startDownload];
+    
+//    [newManagedObject setValue:imgData forKey:@"mediumImage"];
     
     // Save the context.
     NSError *error = nil;
@@ -336,6 +363,27 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
+}
+
+- (void)downloader:(SFImageDownloader *)downloader didFailWithError:(NSError *)error
+{
+    NSLog(@"dl error");
+}
+
+- (void)downloader:(SFImageDownloader *)downloader didFinishLoading:(NSData *)data
+{
+    NSLog(@"iameg dl finied");
+
+    [_currentManagedObject setValue:data forKey:@"mediumImage"];
+    // Save the context.
+    NSError *error = nil;
+    if (![_currentManagedObjectContext save:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    [self.tableView reloadData];
 }
 
 @end

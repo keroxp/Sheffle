@@ -8,7 +8,7 @@
         <attribute name="itemCaption" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="largeImage" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="midiumImage" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="mediumImage" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="publisherName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="salesDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="smallImage" optional="YES" attributeType="Binary" syncable="YES"/>

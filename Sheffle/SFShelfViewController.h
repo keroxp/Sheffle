@@ -13,8 +13,10 @@
 #import "SBJson.h"
 #import "SVProgressHUD.h"
 #import "SFBookViewController.h"
+#import "SFImageDownloader.h"
 
-@interface SFShelfViewController : UITableViewController <NSFetchedResultsControllerDelegate,ZBarReaderViewDelegate>
+
+@interface SFShelfViewController : UITableViewController <NSFetchedResultsControllerDelegate,ZBarReaderViewDelegate,SFImageDownloaderDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
