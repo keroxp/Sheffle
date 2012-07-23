@@ -19,6 +19,7 @@
 {
     // Override point for customization after application launch.
     UINavigationController *rvc = (UINavigationController*)[[self window] rootViewController];
+    [rvc.navigationBar setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forBarMetrics:UIBarMetricsDefault];
     SFShelfViewController *svc = (SFShelfViewController*)[rvc topViewController];
     [svc setManagedObjectContext:[self managedObjectContext]];
     

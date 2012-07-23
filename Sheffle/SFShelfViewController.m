@@ -8,6 +8,7 @@
 
 #import "SFShelfViewController.h"
 #define kRakutenAPPID @"1058212220451425377"
+#define kBarTintColor [UIColor colorWithRed:214.0f/255.0f green:168.0f/255.0f blue:91.0f/255.0f alpha:1.0f]
 
 @interface SFShelfViewController ()
 {
@@ -49,7 +50,10 @@
     // NavigationBarを初期化
     
     _addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
+    [_addButton setTintColor:kBarTintColor];
     _donebutton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonDidTap:)];    
+    [_donebutton setTintColor:kBarTintColor];
+    [[self editButtonItem] setTintColor:kBarTintColor];
     [[self navigationItem] setLeftBarButtonItem:[self editButtonItem]];
     [[self navigationItem] setRightBarButtonItem:_addButton];
     
