@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1171" systemVersion="11E53" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Book" syncable="YES">
+    <entity name="Book" representedClassName="SFBook" syncable="YES">
         <attribute name="artistName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
@@ -14,14 +14,16 @@
         <attribute name="smallImage" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updated" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="shelf" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Shelf" inverseName="books" inverseEntity="Shelf" syncable="YES"/>
     </entity>
-    <entity name="Shelf" syncable="YES">
+    <entity name="Shelf" representedClassName="SFShelf" syncable="YES">
         <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updated" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="shelf" inverseEntity="Book" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Book" positionX="-1332" positionY="-45" width="128" height="240"/>
-        <element name="Shelf" positionX="-1791" positionY="-9" width="128" height="90"/>
+        <element name="Book" positionX="-1503" positionY="-324" width="128" height="255"/>
+        <element name="Shelf" positionX="-1487" positionY="0" width="128" height="105"/>
     </elements>
 </model>

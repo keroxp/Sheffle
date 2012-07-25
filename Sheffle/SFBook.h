@@ -23,6 +23,10 @@
 @property (strong, nonatomic) NSData *mediumImage;
 @property (strong, nonatomic) NSData *largeImage;
 
+// リレーション
+
+@property (strong, nonatomic) NSSet *books;
+
 // プライベートデータカラム
 @property (strong, nonatomic) NSDate *created;
 @property (strong, nonatomic) NSDate *updated;

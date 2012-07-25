@@ -9,5 +9,5 @@
 #import "SFBook.h"
 
 @implementation SFBook
-@dynamic artistName, title, isbnjan, smallImage, mediumImage, largeImage, itemCaption, itemUrl, salesDate, publisherName, author, created, updated;
+@dynamic artistName, title, isbnjan, smallImage, mediumImage, largeImage, itemCaption, itemUrl, salesDate, publisherName, author, books, created, updated;
 @end

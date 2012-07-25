@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A62A41ED15C0611500959355 /* SFCoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = A62A41EC15C0611500959355 /* SFCoreDataController.m */; };
 		A6408C5515BDC9A8001AF716 /* GSBookShelfView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6408C4D15BDC9A8001AF716 /* GSBookShelfView.m */; };
 		A6408C5615BDC9A8001AF716 /* GSBookViewContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6408C5015BDC9A8001AF716 /* GSBookViewContainerView.m */; };
 		A6408C5715BDC9A8001AF716 /* GSCellContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6408C5215BDC9A8001AF716 /* GSCellContainerView.m */; };
@@ -77,6 +78,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A62A41EB15C0611400959355 /* SFCoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFCoreDataController.h; sourceTree = "<group>"; };
+		A62A41EC15C0611500959355 /* SFCoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFCoreDataController.m; sourceTree = "<group>"; };
 		A6408C4B15BDC9A8001AF716 /* GSBookShelfCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSBookShelfCell.h; sourceTree = "<group>"; };
 		A6408C4C15BDC9A8001AF716 /* GSBookShelfView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSBookShelfView.h; sourceTree = "<group>"; };
 		A6408C4D15BDC9A8001AF716 /* GSBookShelfView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSBookShelfView.m; sourceTree = "<group>"; };
@@ -353,10 +356,12 @@
 				A6A9CB1B15BC274600C02AD5 /* SFShelfViewController.m */,
 				A6408C6415BDCDDD001AF716 /* SFTableShelfViewController.h */,
 				A6408C6515BDCDDD001AF716 /* SFTableShelfViewController.m */,
-				A6408C6215BDCDB4001AF716 /* SFGridShelfViewController.m */,
 				A6408C6115BDCDB4001AF716 /* SFGridShelfViewController.h */,
+				A6408C6215BDCDB4001AF716 /* SFGridShelfViewController.m */,
 				A6B9989215B98D1200D0919C /* SFAppDelegate.h */,
 				A6B9989315B98D1200D0919C /* SFAppDelegate.m */,
+				A62A41EB15C0611400959355 /* SFCoreDataController.h */,
+				A62A41EC15C0611500959355 /* SFCoreDataController.m */,
 				A6A9CB1D15BC275C00C02AD5 /* SFBookViewController.h */,
 				A6A9CB1E15BC275C00C02AD5 /* SFBookViewController.m */,
 				A68E54A315BC7618007C0E15 /* SFImageDownloader.h */,
@@ -669,6 +674,7 @@
 				A6408C5815BDC9A8001AF716 /* NSMutableArray+Rearrange.m in Sources */,
 				A6408C6315BDCDB4001AF716 /* SFGridShelfViewController.m in Sources */,
 				A6408C6615BDCDDD001AF716 /* SFTableShelfViewController.m in Sources */,
+				A62A41ED15C0611500959355 /* SFCoreDataController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

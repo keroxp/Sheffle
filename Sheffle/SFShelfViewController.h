@@ -37,7 +37,7 @@ typedef enum{
 @property (strong, nonatomic) SFTableShelfViewController *tableShelfViewController; 
 
 // UI
-@property (weak, nonatomic) IBOutlet UIView *readerWrapperView;
-@property (weak, nonatomic) IBOutlet UIView *shelfWrapperView;
+@property (strong, nonatomic) UIView *readerView;
+@property (strong, nonatomic) UIView *shelfView;
 
 @end

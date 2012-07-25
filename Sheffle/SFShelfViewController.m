@@ -38,8 +38,8 @@
 
 @implementation SFShelfViewController
 
-@synthesize readerWrapperView = _readerWrapperView;
-@synthesize shelfWrapperView = _shelfWrapperView;
+@synthesize readerView = _readerView;
+@synthesize shelfView = _shelfView;
 @synthesize tableShelfViewController = _tableShelfViewController;
 @synthesize gridShelfViewController = _gridShelfViewController;
 @synthesize managedObjectContext = _managedObjectContext;
@@ -47,12 +47,41 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-  
-    NSLog(@"view.frame : %@",self.view);
-    // ２種類のShelfViewControllerを構築
     
+    // Reader Viewの初期化
+    
+    // ZbarImageViewを構築
+    ZBarImageScanner *scanner = [[ZBarImageScanner alloc] init];
+    // EXAMPLE: disable rarely used I2/5 to improve performance
+    [scanner setSymbology: ZBAR_I25 config: ZBAR_CFG_ENABLE to: 0];
+    _readerView = [[ZBarReaderView alloc] initWithImageScanner:scanner];
+    [_readerView setFrame:kDefaultReaderViewFrame];
+    [_readerView setReaderDelegate:self];
+//    [_readerWrapperView addSubview:_readerView];
+    [_readerView setBackgroundColor:[UIColor blueColor]];
+//    [_readerWrapperView setBackgroundColor:[UIColor greenColor]];
+    [[self view] setBackgroundColor:[UIColor blackColor]];
+    [[self view] addSubview:_readerView];
+    
+
+    // Shelf Viewの初期化
+    
+    // ２種類のShelfViewControllerを構築
     _tableShelfViewController = (SFTableShelfViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"tableShelfView"];
     _gridShelfViewController = (SFGridShelfViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"gridShelfView"];
+    [[_tableShelfViewController view] setFrame:kDefaultShelfViewFrame];
+    [[_gridShelfViewController view] setFrame:kDefaultShelfViewFrame];
+    [_tableShelfViewController setManagedObjectContext:[self managedObjectContext]];
+    [_tableShelfViewController didMoveToParentViewController:self];
+    
+    [self addChildViewController:_tableShelfViewController];
+    [self addChildViewController:_gridShelfViewController];
+    
+
+//    _shelfWrapperView = [_tableShelfViewController view];
+    [_shelfView setFrame:kDefaultShelfViewFrame];
+    _shelfView = [_tableShelfViewController view];
+    [[self view] addSubview:_shelfView];
     
     // NavigationBarを初期化
     
@@ -80,26 +109,11 @@
     [_addButton setTintColor:kBarTintColor];
     
     [self setToolbarItems:[NSArray arrayWithObjects:_segmentedControlItem,_addButton, nil]];
-    
-    // ShelfWrapperViewの初期化
-    
-    [_shelfWrapperView setFrame:kDefaultShelfViewFrame];
 
-    // ZbarImageViewを構築
-    [_readerWrapperView setFrame:kDefaultReaderViewFrame];
-    ZBarImageScanner *scanner = [[ZBarImageScanner alloc] init];
-    // EXAMPLE: disable rarely used I2/5 to improve performance
-    [scanner setSymbology: ZBAR_I25 config: ZBAR_CFG_ENABLE to: 0];
-    _readerView = [[ZBarReaderView alloc] initWithImageScanner:scanner];
-    [_readerView setFrame:_readerWrapperView.frame];
-    [_readerView setReaderDelegate:self];
-    [_readerWrapperView addSubview:_readerView];
     
 //    [self.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     
-    // TableShelfViewを初期配置
-    [_tableShelfViewController setManagedObjectContext:[self managedObjectContext]];
-    [_shelfWrapperView addSubview:_tableShelfViewController.view]; 
+
     
     // Viewの初期化
     CALayer *topShadowLayer = [CALayer layer];
@@ -128,8 +142,8 @@
 
 - (void)viewDidUnload
 {
-    [self setReaderWrapperView:nil];
-    [self setShelfWrapperView:nil];
+    [self setReaderView:nil];
+    [self setShelfView:nil];
     _readerView = nil;
     _scanButton = nil;
     _donebutton = nil;
@@ -224,10 +238,9 @@
 {
     [_readerView start];
     [UIView animateWithDuration:0.25f delay:0.0 options:(UIViewAnimationCurveEaseIn <<  16) animations:^(void){
-        _readerWrapperView.frame = kScanModeReaderViewFrame;
-        _shelfWrapperView.frame = kScanModeShelfViewFrame;
+        _readerView.frame = kScanModeReaderViewFrame;
+        _shelfView.frame = kScanModeShelfViewFrame;
     }completion:^(BOOL finished){
-//        [self.tableView setTableHeaderView:_readerView];
         [self.navigationItem setRightBarButtonItem:_donebutton];
         [self setTitle:@"Scan Barcode"];
     }];
@@ -238,11 +251,10 @@
 {
     [_readerView stop];
     [UIView animateWithDuration:0.25f delay:0.0 options:(UIViewAnimationCurveEaseIn <<  16) animations:^(void){
-        _readerWrapperView.frame = kDefaultReaderViewFrame;
-        _shelfWrapperView.frame = kDefaultShelfViewFrame;
+        _readerView.frame = kDefaultReaderViewFrame;
+        _shelfView.frame = kDefaultShelfViewFrame;
     }completion:^(BOOL finished){
         [self.navigationItem setRightBarButtonItem:_scanButton];
-//        [self.tableView setTableHeaderView:_searchBar];
         [self setTitle:@"Shelf"];
     }];
 }

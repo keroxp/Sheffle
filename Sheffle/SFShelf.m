@@ -10,6 +10,6 @@
 
 @implementation SFShelf
 
-@dynamic title, created, updated;
+@dynamic title, created, updated, shelf;
 
 @end

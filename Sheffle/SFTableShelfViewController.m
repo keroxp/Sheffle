@@ -61,8 +61,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellID = @"ShelfCell";
+    static NSString *CellID = @"TableShelfCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
+    NSLog(@"%@",cell);
+    
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -192,6 +194,7 @@
  [self.tableView reloadData];
  }
  */
+
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {

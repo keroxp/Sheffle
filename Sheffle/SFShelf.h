@@ -7,11 +7,13 @@
 //
 
 #import <CoreData/CoreData.h>
+#import "SFShelf.h"
 
 @interface SFShelf : NSManagedObject
 
 @property (strong,nonatomic) NSString *title;
 @property (strong,nonatomic) NSDate *created;
 @property (strong,nonatomic) NSDate *updated;
+@property (strong,nonatomic) SFShelf *shelf;
 
 @end
