@@ -23,6 +23,7 @@
     UIBarButtonItem *_segmentedControlItem;
     UISegmentedControl *_segmentedControl;
     ZBarReaderView *_readerView;
+    SFShelfViewMode _shelfViewMode;
 }
 
 - (void)titleDidTap:(id)sender;
@@ -46,6 +47,7 @@
     [super viewDidLoad];
     
     // Reader Viewの初期化
+
     
     // ZbarImageViewを構築
     ZBarImageScanner *scanner = [[ZBarImageScanner alloc] init];
@@ -56,8 +58,7 @@
 //    [_readerView setBackgroundColor:[UIColor blueColor]];
 //    [[self view] setBackgroundColor:[UIColor blackColor]];
     [[self view] addSubview:_readerView];
-    
-
+        
     // Shelf Viewの初期化
     
     // ２種類のShelfViewControllerを構築
@@ -65,7 +66,6 @@
     _gridShelfViewController = [[SFGridShelfViewController alloc] init];
     
     [[_tableShelfViewController view] setFrame:kDefaultShelfViewFrame];
-    [[_tableShelfViewController tableView] setShowsVerticalScrollIndicator:YES];
     [[_gridShelfViewController view] setFrame:kDefaultShelfViewFrame];
     [_tableShelfViewController didMoveToParentViewController:self];
     
@@ -73,14 +73,28 @@
     [self addChildViewController:_gridShelfViewController];
     
 
-//    _shelfWrapperView = [_tableShelfViewController view];
     [_shelfView setFrame:kDefaultShelfViewFrame];
-    _shelfView = [_tableShelfViewController view];
+//    _shelfView = [_tableShelfViewController view];
+    _shelfView = [_gridShelfViewController view];
     [[self view] addSubview:_shelfView];
+    
+    _shelfViewMode = SFShelfViewModeGrid;
     
     // NavigationBarを初期化
     
-    [self setTitle:@"Shelves"];
+//    [self setTitle:@"Shelves"];
+    
+    UIToolbar *titleBar = [[UIToolbar alloc] initWithFrame:[self.navigationItem.titleView frame]];
+    [titleBar setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.0f]];
+    UIBarButtonItem *shelfButton = [[UIBarButtonItem alloc] initWithTitle:@"Shelves" style:UIBarButtonItemStyleBordered target:self action:@selector(titleDidTap:)];
+    UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [titleButton setFrame:CGRectMake(0, 0, 100, 44.0)];
+    [titleButton setTintColor:kBarTintColor];
+    [titleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [titleButton setTitle:@"Shelf" forState:UIControlStateNormal];
+    [titleButton addTarget:self action:@selector(titleDidTap:) forControlEvents:UIControlEventTouchUpInside];
+
+    [shelfButton setTintColor:kBarTintColor];
     _scanButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(scanButtonDidTap:)];
     [_scanButton setTintColor:kBarTintColor];
     _donebutton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonDidTap:)];    
@@ -89,10 +103,10 @@
     [[self editButtonItem] setTintColor:kBarTintColor];
     [[self navigationItem] setLeftBarButtonItem:[self editButtonItem]];
     [[self navigationItem] setRightBarButtonItem:_scanButton];
+    [[self navigationItem] setTitleView:titleButton];
     
     // Toolbarを初期化
     
-    [self.navigationController.toolbar setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
     _segmentedControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Title",@"Author",@"Date",@"Stared", nil]];
     [_segmentedControl setSelectedSegmentIndex:0];
     [_segmentedControl setSegmentedControlStyle:UISegmentedControlStyleBar];
@@ -108,7 +122,6 @@
     
 //    [self.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     
-
     
     // Viewの初期化
     CALayer *topShadowLayer = [CALayer layer];
@@ -131,7 +144,12 @@
     [bottomShadowLayer setShadowOffset:CGSizeMake(0, 2.5)];
     [bottomShadowLayer setShadowColor:[[UIColor blackColor] CGColor]];
     [bottomShadowLayer setShadowOpacity:0.75];
-    [bottomShadowLayer setShadowPath:[dpsPath CGPath]]; 
+    [bottomShadowLayer setShadowPath:[dpsPath CGPath]];
+    
+    
+    NSLog(@"%@", [_gridShelfViewController view]);
+    NSLog(@"%@", [_gridShelfViewController bookShelfView]);
+//    NSLog(@"%@",_tableShelfViewController.view);
 
 }
 
@@ -231,6 +249,15 @@
 - (void)scanButtonDidTap:(id)sender 
 {
     [_readerView start];
+    switch (_shelfViewMode) {
+        case SFShelfViewModeTable:
+            [[_tableShelfViewController tableView] setContentOffset:CGPointZero];
+            break;
+        case SFShelfViewModeGrid:
+            [[_gridShelfViewController bookShelfView] setContentOffset:CGPointZero];
+        default:
+            break;
+    }
     [UIView animateWithDuration:0.25f delay:0.0 options:(UIViewAnimationCurveEaseIn <<  16) animations:^(void){
         _readerView.frame = kScanModeReaderViewFrame;
         _shelfView.frame = kScanModeShelfViewFrame;

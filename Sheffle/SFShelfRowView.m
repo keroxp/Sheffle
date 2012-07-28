@@ -22,8 +22,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        _backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 119)];
-        [_backgroundImageView setImage:[UIImage imageNamed:@"shlefgbmiddle.png"]];
+        _backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 120)];
+        [_backgroundImageView setImage:[UIImage imageNamed:@"shelfbg.png"]];
         [self addSubview:_backgroundImageView];    
     }
     return self;

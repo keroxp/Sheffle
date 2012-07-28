@@ -12,6 +12,7 @@
 {
     NSManagedObjectContext *__managedObjectContext;
     SFShelf *_currentShelf;
+    UISearchDisplayController *__searchDisplayController;
 }
 
 @end
@@ -25,8 +26,7 @@
 {
     self = [super initWithStyle:style];
     if (self){
-        
-    }
+   }
     return self;
 }
 
@@ -37,10 +37,16 @@
     
 //    [self.tableView setFrame:self.view.superview.frame];
     
-    [self.searchDisplayController.searchBar setDelegate:self];
-    [self.searchDisplayController setDelegate:self];
-    
     __managedObjectContext = [[SFCoreDataManager sharedManager] managedObjectContext];
+    
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0f)];
+    [searchBar setDelegate:self];
+
+    __searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+    [__searchDisplayController setSearchResultsDelegate:self];
+    [__searchDisplayController setSearchResultsDataSource:self];
+    
+    [[self tableView] setTableHeaderView:searchBar];
 }
 
 - (void)viewDidUnload {

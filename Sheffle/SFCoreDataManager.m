@@ -17,12 +17,16 @@ static SFCoreDataManager *_sharedInstance;
 }
 
 - (NSString*)insertNewIdentifier;
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator;
+- (NSManagedObjectModel*)managedObjectModel;
+- (NSURL *)applicationDocumentsDirectory;
 
 @end
 
 @implementation SFCoreDataManager
 
 @synthesize managedObjectContext = __managedObjectContext;
+@synthesize fetchedResultController = __fetchedResultController;
 
 + (id)sharedManager
 {
@@ -151,6 +155,15 @@ static SFCoreDataManager *_sharedInstance;
     }
     
     return __persistentStoreCoordinator;
+}
+
+- (NSFetchedResultsController *)fetchedResultController
+{
+    if (__fetchedResultController) {
+        return __fetchedResultController;
+    }
+    
+    
 }
 
 - (void)saveContext

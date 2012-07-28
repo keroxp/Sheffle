@@ -21,7 +21,8 @@
     // Root View Controllerを初期化
     UINavigationController *rvc = (UINavigationController*)[[self window] rootViewController];
     [[rvc navigationBar] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forBarMetrics:UIBarMetricsDefault];
-    
+    [[rvc toolbar] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+
     return YES;
 }
 							

@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GSBookShelf/GSBookShelfCell.h"
 
 @interface SFShelfRowView : UIView
+<GSBookShelfCell>
 
 @property(strong,nonatomic) UIImageView *backgroundImageView;
+@property(strong,nonatomic) NSString *reuseIdentifier;
 
 @end

@@ -7,8 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
+
+#import "SFCoreDataManager.h"
+
 #import "GSBookShelfView.h"
 #import "R9HTTPRequest/R9HTTPRequest.h"
+
+#import "SFShelfBookView.h"
+#import "SFShelfRowView.h"
 
 typedef enum {
     BOOK_UNSELECTED,
@@ -16,5 +23,12 @@ typedef enum {
 }BookStatus;
 
 @interface SFGridShelfViewController : UIViewController
+<NSFetchedResultsControllerDelegate
+,GSBookShelfViewDelegate
+,GSBookShelfViewDataSource>
+
+@property (strong, nonatomic) GSBookShelfView *bookShelfView;
+@property (readonly) NSFetchedResultsController *fetchedResultsController;
+@property (readonly) NSManagedObjectContext *managedObjectContext;
 
 @end
