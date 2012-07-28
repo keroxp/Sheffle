@@ -37,4 +37,6 @@ typedef enum{
 @property (strong, nonatomic) UIView *readerView;
 @property (strong, nonatomic) UIView *shelfView;
 
++ (id)sharedController;
+
 @end

@@ -75,6 +75,7 @@
     [self.view addSubview:_bookShelfView];
     
     //[self performSelector:@selector(testScrollToRow) withObject:self afterDelay:3];
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
@@ -92,15 +93,34 @@
 }
 
 - (void)initBooks {
-    NSInteger numberOfBooks = 100;
-    _bookArray = [[NSMutableArray alloc] initWithCapacity:numberOfBooks];
-    _bookStatus = [[NSMutableArray alloc] initWithCapacity:numberOfBooks];
-    for (int i = 0; i < numberOfBooks; i++) {
-        NSNumber *number = [NSNumber numberWithInt:i % 4 + 1];
-        [_bookArray addObject:number];
-        [_bookStatus addObject:[NSNumber numberWithInt:BOOK_UNSELECTED]];
-    }
+//    NSInteger numberOfBooks = 100;
+//    _bookArray = [[NSMutableArray alloc] initWithCapacity:numberOfBooks];
+//    _bookStatus = [[NSMutableArray alloc] initWithCapacity:numberOfBooks];
+//    for (int i = 0; i < numberOfBooks; i++) {
+//        NSNumber *number = [NSNumber numberWithInt:i % 4 + 1];
+//        [_bookArray addObject:number];
+//        [_bookStatus addObject:[NSNumber numberWithInt:BOOK_UNSELECTED]];
+//    }
+//
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@""];
+    NSEntityDescription *entiry = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:[self managedObjectContext]];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:NO];
     
+//    [request setFetchBatchSize:20];
+    [request setEntity:entiry];
+    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    [request setPredicate:predicate];
+    
+    NSError *error = nil;
+    _bookArray = [NSMutableArray arrayWithArray:[[self managedObjectContext] executeFetchRequest:request error:&error]];
+    if (error) {
+        NSLog(@"Failed to fetch books data");
+    }
+    _bookStatus = [NSMutableArray arrayWithCapacity:[_bookArray count]];
+    for (int i = 0 , max = [_bookStatus count]; i < max; i++) {
+        [_bookArray addObject:[NSNumber numberWithInt:BOOK_UNSELECTED]];
+    }
     _booksIndexsToBeRemoved = [NSMutableIndexSet indexSet];
 }
 
@@ -113,8 +133,7 @@
 }
 
 - (void)switchToNormalMode {
-    _editMode = NO;
-    
+    _editMode = NO; 
     [self.navigationItem setLeftBarButtonItem:_editBarButton];
     [self.navigationItem setRightBarButtonItem:_addBarButton];
 }
