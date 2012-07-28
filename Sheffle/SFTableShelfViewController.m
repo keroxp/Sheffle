@@ -8,9 +8,16 @@
 
 #import "SFTableShelfViewController.h"
 
+@interface SFTableShelfViewController ()
+{
+    NSManagedObjectContext *__managedObjectContext;
+    SFShelf *_currentShelf;
+}
+
+@end
+
 @implementation SFTableShelfViewController
 
-@synthesize managedObjectContext = __managedObjectContext;
 @synthesize fetchedResultsController = __fetchedResultsController;
 @synthesize delegate = _delegate;
 
@@ -23,22 +30,17 @@
     return self;
 }
 
-- (void)awakeFromNib
-{
-    [super awakeFromNib];
-}
-
 - (void)viewDidLoad 
 {
     
     [self.tableView clearsContextBeforeDrawing];
     
-    [self.tableView setDelegate:self];
-    [self.tableView setDataSource:self];
 //    [self.tableView setFrame:self.view.superview.frame];
     
     [self.searchDisplayController.searchBar setDelegate:self];
     [self.searchDisplayController setDelegate:self];
+    
+    __managedObjectContext = [[SFCoreDataManager sharedManager] managedObjectContext];
 }
 
 - (void)viewDidUnload {
@@ -63,9 +65,14 @@
 {
     static NSString *CellID = @"TableShelfCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
-    NSLog(@"%@",cell);
+    
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellID];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
     
     [self configureCell:cell atIndexPath:indexPath];
+    
     return cell;
 }
 
@@ -106,7 +113,7 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:__managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
@@ -120,7 +127,7 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:__managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -213,7 +220,7 @@
     static NSString *segueIDForBook = @"showDetail";
     if ([[segue identifier] isEqualToString:segueIDForBook]) {
         SFBookViewController *bvc = (SFBookViewController*)[segue destinationViewController];
-        [bvc setManagedObjectContext:[self managedObjectContext]];
+        [bvc setManagedObjectContext:__managedObjectContext];
     }
 }
 

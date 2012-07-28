@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import "SFCoreDataManager.h"
 #import "SFBookViewController.h"
 
 @protocol SFTableShelfViewDelegate;
@@ -20,7 +21,8 @@
 
 // Core Data
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+// Delegation
 @property (weak, nonatomic) id<SFTableShelfViewDelegate> delegate;
 
 @end

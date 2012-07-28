@@ -9,11 +9,19 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@interface SFCoreDataController : NSObject
+#import "SFBook.h"
+#import "SFShelf.h"
+
+@interface SFCoreDataManager : NSObject
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
++ (id)sharedManager;
+
+- (SFShelf*)insertNewShelf;
+- (SFBook*)insertNewBook;
+
+- (NSArray*)sortedShelves;
 
 - (void)saveContext;
 - (NSURL*)applicationDocumentsDirectory;

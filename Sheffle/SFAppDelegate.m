@@ -13,20 +13,14 @@
 @implementation SFAppDelegate
 
 @synthesize window = _window;
-@synthesize coreDataController = _coreDataController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
     
-    // Core Data Controllerをインスタンス化
-    _coreDataController = [[SFCoreDataController alloc] init];
-    
     // Root View Controllerを初期化
     UINavigationController *rvc = (UINavigationController*)[[self window] rootViewController];
     [[rvc navigationBar] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forBarMetrics:UIBarMetricsDefault];
-    SFShelfViewController *svc = (SFShelfViewController*)[rvc topViewController];
-    [svc setManagedObjectContext:[[self coreDataController] managedObjectContext]];
     
     return YES;
 }

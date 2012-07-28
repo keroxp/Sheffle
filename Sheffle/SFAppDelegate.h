@@ -8,12 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-#import "SFShelfViewController.h"
-#import "SFCoreDataController.h"
 
 @interface SFAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) SFCoreDataController *coreDataController;
 
 @end

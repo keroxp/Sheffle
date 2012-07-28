@@ -29,9 +29,6 @@ typedef enum{
 <ZBarReaderViewDelegate
 ,SFImageDownloaderDelegate>
 
-// Core Data
-@property (weak, nonatomic) NSManagedObjectContext *managedObjectContext;
-
 // View Controllers
 @property (strong, nonatomic) SFGridShelfViewController *gridShelfViewController;
 @property (strong, nonatomic) SFTableShelfViewController *tableShelfViewController; 

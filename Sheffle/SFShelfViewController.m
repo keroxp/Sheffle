@@ -23,8 +23,6 @@
     UIBarButtonItem *_segmentedControlItem;
     UISegmentedControl *_segmentedControl;
     ZBarReaderView *_readerView;
-    NSManagedObjectContext *_currentManagedObjectContext;
-    NSManagedObject *_currentManagedObject;
 }
 
 - (void)titleDidTap:(id)sender;
@@ -42,7 +40,6 @@
 @synthesize shelfView = _shelfView;
 @synthesize tableShelfViewController = _tableShelfViewController;
 @synthesize gridShelfViewController = _gridShelfViewController;
-@synthesize managedObjectContext = _managedObjectContext;
 
 - (void)viewDidLoad
 {
@@ -52,26 +49,24 @@
     
     // ZbarImageViewを構築
     ZBarImageScanner *scanner = [[ZBarImageScanner alloc] init];
-    // EXAMPLE: disable rarely used I2/5 to improve performance
     [scanner setSymbology: ZBAR_I25 config: ZBAR_CFG_ENABLE to: 0];
     _readerView = [[ZBarReaderView alloc] initWithImageScanner:scanner];
     [_readerView setFrame:kDefaultReaderViewFrame];
     [_readerView setReaderDelegate:self];
-//    [_readerWrapperView addSubview:_readerView];
-    [_readerView setBackgroundColor:[UIColor blueColor]];
-//    [_readerWrapperView setBackgroundColor:[UIColor greenColor]];
-    [[self view] setBackgroundColor:[UIColor blackColor]];
+//    [_readerView setBackgroundColor:[UIColor blueColor]];
+//    [[self view] setBackgroundColor:[UIColor blackColor]];
     [[self view] addSubview:_readerView];
     
 
     // Shelf Viewの初期化
     
     // ２種類のShelfViewControllerを構築
-    _tableShelfViewController = (SFTableShelfViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"tableShelfView"];
-    _gridShelfViewController = (SFGridShelfViewController*)[self.storyboard instantiateViewControllerWithIdentifier:@"gridShelfView"];
+    _tableShelfViewController = [[SFTableShelfViewController alloc] initWithStyle:UITableViewStylePlain];
+    _gridShelfViewController = [[SFGridShelfViewController alloc] init];
+    
     [[_tableShelfViewController view] setFrame:kDefaultShelfViewFrame];
+    [[_tableShelfViewController tableView] setShowsVerticalScrollIndicator:YES];
     [[_gridShelfViewController view] setFrame:kDefaultShelfViewFrame];
-    [_tableShelfViewController setManagedObjectContext:[self managedObjectContext]];
     [_tableShelfViewController didMoveToParentViewController:self];
     
     [self addChildViewController:_tableShelfViewController];
@@ -226,8 +221,7 @@
     }
 }
 
-#pragma mark - Private Method
-
+#pragma mark - Event Handler
 
 - (void)titleDidTap:(id)sender
 {
@@ -268,52 +262,7 @@
     NSLog(@"segmented control did change index : %i",[_segmentedControl selectedSegmentIndex]);
 }
 
-- (void)insertNewObject:(NSDictionary*)book
-{
-    NSManagedObjectContext *context = [self.tableShelfViewController.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.tableShelfViewController.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-    
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    NSDateFormatter *fm = [[NSDateFormatter alloc] init];
-    [fm setDateFormat:@"yyyy年MM月"];
-    [newManagedObject setValue:[book objectForKey:@"title"] forKey:@"title"];
-    [newManagedObject setValue:[book objectForKey:@"author"] forKey:@"author"];
-    [newManagedObject setValue:[book objectForKey:@"artistName"] forKey:@"artistName"];
-    [newManagedObject setValue:[book objectForKey:@"itemCaption"] forKey:@"itemCaption"];
-    [newManagedObject setValue:[fm dateFromString:[book objectForKey:@"salesDate"]] forKey:@"salesDate"];
-    [newManagedObject setValue:[book objectForKey:@"itemUrl"] forKey:@"itemUrl"];
-    
-    if ([book objectForKey:@"isbn"]) {
-        [newManagedObject setValue:[book objectForKey:@"isbn"] forKey:@"isbnjan"];
-    }else if ([book objectForKey:@"jan"]) {
-        [newManagedObject setValue:[book objectForKey:@"jan"] forKey:@"isbnjan"];
-    }
-    
-    [newManagedObject setValue:[NSDate date] forKey:@"created"];
-    [newManagedObject setValue:[NSDate date] forKey:@"updated"];
-    
-    _currentManagedObject = newManagedObject;
-    _currentManagedObjectContext = context;    
-    
-    SFImageDownloader *downloader = [[SFImageDownloader alloc] initWithURL:[NSURL URLWithString:[book objectForKey:@"mediumImageUrl"]]];
-    [downloader setDelegate:self];    
-    [downloader startDownload];
-    
-//    [newManagedObject setValue:imgData forKey:@"mediumImage"];
-    
-    // Save the context.
-    NSError *error = nil;
-    if (![context save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-}
-
-
+#pragma mark - Downloader
 
 - (void)downloader:(SFImageDownloader *)downloader didFailWithError:(NSError *)error
 {
@@ -323,17 +272,6 @@
 - (void)downloader:(SFImageDownloader *)downloader didFinishLoading:(NSData *)data
 {
     NSLog(@"iameg dl finied");
-
-    [_currentManagedObject setValue:data forKey:@"mediumImage"];
-    // Save the context.
-    NSError *error = nil;
-    if (![_currentManagedObjectContext save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-//    [self.tableView reloadData];
 }
 
 @end

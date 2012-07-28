@@ -6,13 +6,79 @@
 //  Copyright (c) 2012年 Kaeru Lab. All rights reserved.
 //
 
-#import "SFCoreDataController.h"
+#import "SFCoreDataManager.h"
 
-@implementation SFCoreDataController
+static SFCoreDataManager *_sharedInstance;
+
+@interface SFCoreDataManager ()
+{
+    NSManagedObjectModel *__managedObjectModel;
+    NSPersistentStoreCoordinator *__persistentStoreCoordinator;
+}
+
+- (NSString*)insertNewIdentifier;
+
+@end
+
+@implementation SFCoreDataManager
 
 @synthesize managedObjectContext = __managedObjectContext;
-@synthesize managedObjectModel = __managedObjectModel;
-@synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
+
++ (id)sharedManager
+{
+    if (!_sharedInstance) {
+        _sharedInstance = [[SFCoreDataManager alloc] init];
+    }
+    return _sharedInstance;
+}
+
+- (SFShelf *)insertNewShelf
+{
+    SFShelf *shelf = [NSEntityDescription insertNewObjectForEntityForName:@"Shelf" inManagedObjectContext:[self managedObjectContext]];
+    [shelf setIdentifier:[self insertNewIdentifier]];
+    
+    //TODO:indexを設置
+    
+    return shelf;
+}
+
+- (SFBook *)insertNewBook
+{
+    SFBook *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:[self managedObjectContext]];
+    [book setIdentifier:[self insertNewIdentifier]];
+    
+    //TODO:indexを設置する
+    
+    return book;
+}
+
+- (NSArray *)sortedShelves
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Shelf" inManagedObjectContext:[self managedObjectContext]];
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+    
+    [request setEntity:entity];
+    [request setSortDescriptors:[NSArray arrayWithObject:sort]];
+    
+    NSError *error = nil;
+    NSArray *results = [[self managedObjectContext] executeFetchRequest:request error:&error];
+    
+    if (error) {
+        NSLog(@"fetch request failed : %@", [error localizedDescription]);
+        return nil;
+    }
+    
+    return results;
+}
+
+- (NSString *)insertNewIdentifier
+{
+    CFUUIDRef uuid = CFUUIDCreate(NULL);
+    NSString *identifier = (__bridge NSString*)CFUUIDCreateString(NULL, uuid);
+    CFRelease(uuid);
+    return identifier;
+}
 
 #pragma mark - Core Data stack
 
