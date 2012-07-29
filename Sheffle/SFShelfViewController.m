@@ -63,47 +63,35 @@
     
     // ２種類のShelfViewControllerを構築
     _tableShelfViewController = [[SFTableShelfViewController alloc] initWithStyle:UITableViewStylePlain];
-    _gridShelfViewController = [[SFGridShelfViewController alloc] init];
+//    _gridShelfViewController = [[SFGridShelfViewController alloc] init];
     
     [[_tableShelfViewController view] setFrame:kDefaultShelfViewFrame];
-    [[_gridShelfViewController view] setFrame:kDefaultShelfViewFrame];
+//    [[_gridShelfViewController view] setFrame:kDefaultShelfViewFrame];
     [_tableShelfViewController didMoveToParentViewController:self];
     
     [self addChildViewController:_tableShelfViewController];
-    [self addChildViewController:_gridShelfViewController];
+//    [self addChildViewController:_gridShelfViewController];
     
 
     [_shelfView setFrame:kDefaultShelfViewFrame];
-//    _shelfView = [_tableShelfViewController view];
-    _shelfView = [_gridShelfViewController view];
+    _shelfView = [_tableShelfViewController view];
+//    _shelfView = [_gridShelfViewController view];
+    [[self navigationItem] setLeftBarButtonItem:[_tableShelfViewController editButtonItem]];
     [[self view] addSubview:_shelfView];
     
     _shelfViewMode = SFShelfViewModeGrid;
     
     // NavigationBarを初期化
     
-//    [self setTitle:@"Shelves"];
+    [self setTitle:@"Shelves"];
     
-    UIToolbar *titleBar = [[UIToolbar alloc] initWithFrame:[self.navigationItem.titleView frame]];
-    [titleBar setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.0f]];
-    UIBarButtonItem *shelfButton = [[UIBarButtonItem alloc] initWithTitle:@"Shelves" style:UIBarButtonItemStyleBordered target:self action:@selector(titleDidTap:)];
-    UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [titleButton setFrame:CGRectMake(0, 0, 100, 44.0)];
-    [titleButton setTintColor:kBarTintColor];
-    [titleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [titleButton setTitle:@"Shelf" forState:UIControlStateNormal];
-    [titleButton addTarget:self action:@selector(titleDidTap:) forControlEvents:UIControlEventTouchUpInside];
-
-    [shelfButton setTintColor:kBarTintColor];
     _scanButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(scanButtonDidTap:)];
     [_scanButton setTintColor:kBarTintColor];
     _donebutton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonDidTap:)];    
     [_donebutton setTintColor:kBarTintColor];
     
     [[self editButtonItem] setTintColor:kBarTintColor];
-    [[self navigationItem] setLeftBarButtonItem:[self editButtonItem]];
     [[self navigationItem] setRightBarButtonItem:_scanButton];
-    [[self navigationItem] setTitleView:titleButton];
     
     // Toolbarを初期化
     
@@ -147,8 +135,8 @@
     [bottomShadowLayer setShadowPath:[dpsPath CGPath]];
     
     
-    NSLog(@"%@", [_gridShelfViewController view]);
-    NSLog(@"%@", [_gridShelfViewController bookShelfView]);
+//    NSLog(@"%@", [_gridShelfViewController view]);
+//    NSLog(@"%@", [_gridShelfViewController bookShelfView]);
 //    NSLog(@"%@",_tableShelfViewController.view);
 
 }
@@ -178,6 +166,21 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)insertNewObject:(NSDictionary *)book
+{
+    SFBook *newBook = [[SFCoreDataManager sharedManager] insertNewBook];
+
+    [newBook setTitle:[book objectForKey:@"title"]];
+    [newBook setAuthor:[book objectForKey:@"author"]];
+    [newBook setCreated:[NSDate date]];
+    [newBook setUpdated:[NSDate date]];
+
+    NSError *error = nil;
+    if(![[[SFCoreDataManager sharedManager] managedObjectContext] save:&error]){
+        NSLog(@"Failed to save : %@",error);
+        abort();
+    }     
+}
 
 
 #pragma mark - ZBarReaderView
@@ -218,6 +221,7 @@
                 [SVProgressHUD dismissWithSuccess:[JSON objectForKey:@"title"] afterDelay:3.0f];
             }
             @catch (NSException *exception) {
+                NSLog(@"exception:%@",exception);
                 NSLog(@"data not found : %@",responseString);
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                 [SVProgressHUD dismissWithError:@"Product not found" afterDelay:3.0f];

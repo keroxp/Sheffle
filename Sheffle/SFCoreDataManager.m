@@ -26,7 +26,6 @@ static SFCoreDataManager *_sharedInstance;
 @implementation SFCoreDataManager
 
 @synthesize managedObjectContext = __managedObjectContext;
-@synthesize fetchedResultController = __fetchedResultController;
 
 + (id)sharedManager
 {
@@ -48,7 +47,8 @@ static SFCoreDataManager *_sharedInstance;
 
 - (SFBook *)insertNewBook
 {
-    SFBook *book = [NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:[self managedObjectContext]];
+    SFBook *book = (SFBook*)[NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:[self managedObjectContext]];
+    
     [book setIdentifier:[self insertNewIdentifier]];
     
     //TODO:indexを設置する
@@ -155,15 +155,6 @@ static SFCoreDataManager *_sharedInstance;
     }
     
     return __persistentStoreCoordinator;
-}
-
-- (NSFetchedResultsController *)fetchedResultController
-{
-    if (__fetchedResultController) {
-        return __fetchedResultController;
-    }
-    
-    
 }
 
 - (void)saveContext

@@ -15,17 +15,17 @@
 
 @property (nonatomic, retain) NSString * artistName;
 @property (nonatomic, retain) NSString * author;
-@property (nonatomic) NSTimeInterval created;
+@property (nonatomic, retain) NSDate * created;
 @property (nonatomic, retain) NSString * isbnjan;
 @property (nonatomic, retain) NSString * itemCaption;
 @property (nonatomic, retain) NSString * itemUrl;
 @property (nonatomic, retain) NSData * largeImage;
 @property (nonatomic, retain) NSData * mediumImage;
 @property (nonatomic, retain) NSString * publisherName;
-@property (nonatomic) NSTimeInterval salesDate;
+@property (nonatomic, retain) NSDate * salesDate;
 @property (nonatomic, retain) NSData * smallImage;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic) NSTimeInterval updated;
+@property (nonatomic) NSDate * updated;
 @property (nonatomic, retain) NSString * identifier;
 @property (nonatomic) int16_t index;
 @property (nonatomic, retain) SFShelf *shelf;

@@ -15,7 +15,6 @@
 @interface SFCoreDataManager : NSObject
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSFetchedResultsController *fetchedResultController;
 
 + (id)sharedManager;
 

@@ -13,9 +13,9 @@
 
 @interface SFShelf : NSManagedObject
 
-@property (nonatomic) NSTimeInterval created;
+@property (nonatomic, retain) NSDate * created;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic) NSTimeInterval updated;
+@property (nonatomic, retain) NSDate * updated;
 @property (nonatomic, retain) NSString * identifier;
 @property (nonatomic) int16_t index;
 @property (nonatomic, retain) NSSet *books;

@@ -7,6 +7,8 @@
 //
 
 #import "SFTableShelfViewController.h"
+#define kBarTintColor [UIColor colorWithRed:214.0f/255.0f green:168.0f/255.0f blue:91.0f/255.0f alpha:1.0f]
+
 
 @interface SFTableShelfViewController ()
 {
@@ -34,7 +36,7 @@
 {
     
     [self.tableView clearsContextBeforeDrawing];
-    
+    [[self editButtonItem] setTintColor:kBarTintColor];
 //    [self.tableView setFrame:self.view.superview.frame];
     
     __managedObjectContext = [[SFCoreDataManager sharedManager] managedObjectContext];
@@ -47,6 +49,7 @@
     [__searchDisplayController setSearchResultsDataSource:self];
     
     [[self tableView] setTableHeaderView:searchBar];
+    [[self tableView] setAllowsMultipleSelectionDuringEditing:YES];
 }
 
 - (void)viewDidUnload {
@@ -106,7 +109,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (!tableView.editing) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
 }
 
 #pragma mark - Fetched results controller
