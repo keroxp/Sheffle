@@ -26,8 +26,7 @@ typedef enum{
 }SFShelfViewMode;
 
 @interface SFShelfViewController : UIViewController 
-<ZBarReaderViewDelegate
-,SFImageDownloaderDelegate>
+<ZBarReaderViewDelegate>
 
 // View Controllers
 @property (strong, nonatomic) SFGridShelfViewController *gridShelfViewController;
@@ -36,7 +35,5 @@ typedef enum{
 // UI
 @property (strong, nonatomic) UIView *readerView;
 @property (strong, nonatomic) UIView *shelfView;
-
-+ (id)sharedController;
 
 @end

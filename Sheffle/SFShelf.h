@@ -13,12 +13,13 @@
 
 @interface SFShelf : NSManagedObject
 
-@property (nonatomic, retain) NSDate * created;
-@property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSDate * updated;
 @property (nonatomic, retain) NSString * identifier;
-@property (nonatomic) int16_t index;
+@property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSDate * created;
+@property (nonatomic, retain) NSDate * updated;
+@property (nonatomic) NSInteger index;
 @property (nonatomic, retain) NSSet *books;
+
 @end
 
 @interface SFShelf (CoreDataGeneratedAccessors)

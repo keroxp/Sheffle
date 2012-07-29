@@ -14,6 +14,7 @@
 {
     NSManagedObjectContext *__managedObjectContext;
     SFShelf *_currentShelf;
+    NSIndexPath *_selectedPath;
     UISearchDisplayController *__searchDisplayController;
 }
 
@@ -109,8 +110,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    _selectedPath = indexPath;
     if (!tableView.editing) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//        [self performSegueWithIdentifier:@"showBook" sender:self];
     }
 }
 
@@ -217,21 +220,18 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"reload table");
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    //    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
-    [cell.textLabel setText:[[object valueForKey:@"title"] description]];
-    [cell.detailTextLabel setText:[[object valueForKey:@"author"] description]];
-    if ([object valueForKey:@"mediumImage"]) {        
-        [cell.imageView setImage:[UIImage imageWithData:[object valueForKey:@"mediumImage"]]];
-    }
+    SFBook *book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [cell.textLabel setText:book.title];
+    [cell.detailTextLabel setText:book.author];
+    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    static NSString *segueIDForBook = @"showDetail";
+    static NSString *segueIDForBook = @"showBook";
     if ([[segue identifier] isEqualToString:segueIDForBook]) {
         SFBookViewController *bvc = (SFBookViewController*)[segue destinationViewController];
-        [bvc setManagedObjectContext:__managedObjectContext];
+        [bvc setBook:[self.fetchedResultsController objectAtIndexPath:_selectedPath]];
     }
 }
 

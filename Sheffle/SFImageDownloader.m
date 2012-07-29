@@ -40,6 +40,7 @@
     NSLog(@"start dl : %@",_URL);
     NSURLRequest *req = [NSURLRequest requestWithURL:_URL];
     _connection = [NSURLConnection connectionWithRequest:req delegate:self];
+    [_connection start];
 }
 
 - (void)cancelDownload{

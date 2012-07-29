@@ -22,6 +22,7 @@
     UIBarButtonItem *_addButton;
     UIBarButtonItem *_segmentedControlItem;
     UISegmentedControl *_segmentedControl;
+    SFShelf *_currentShelf;
     ZBarReaderView *_readerView;
     SFShelfViewMode _shelfViewMode;
 }
@@ -31,16 +32,17 @@
 - (void)doneButtonDidTap:(id)sender;
 - (void)addButtonDidTap:(id)sender;
 - (void)segmentedControlDidChange:(UISegmentedControl*)sender;
-- (void)insertNewObject:(NSDictionary*)book;
+- (void)insertNewObject:(NSDictionary*)book image:(UIImage*)image;
+- (UIImage*)resizeImage:(UIImage*)image;
 
 @end
 
 @implementation SFShelfViewController
 
-@synthesize readerView = _readerView;
-@synthesize shelfView = _shelfView;
-@synthesize tableShelfViewController = _tableShelfViewController;
-@synthesize gridShelfViewController = _gridShelfViewController;
+//@synthesize readerView = _readerView;
+//@synthesize shelfView = _shelfView;
+//@synthesize tableShelfViewController = _tableShelfViewController;
+//@synthesize gridShelfViewController = _gridShelfViewController;
 
 - (void)viewDidLoad
 {
@@ -83,7 +85,17 @@
     
     // NavigationBarを初期化
     
-    [self setTitle:@"Shelves"];
+//    [self setTitle:@"Shelves"];
+    
+    UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [titleButton setTintColor:kBarTintColor];
+    [titleButton setTitle:@"Shelf" forState:UIControlStateNormal];
+    [[titleButton titleLabel] setFont:[UIFont boldSystemFontOfSize:20.0f]];
+    [titleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [titleButton setFrame:CGRectMake(0, 0, 130, 33)];
+    [titleButton addTarget:self action:@selector(titleDidTap:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [[self navigationItem] setTitleView:titleButton];
     
     _scanButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(scanButtonDidTap:)];
     [_scanButton setTintColor:kBarTintColor];
@@ -166,20 +178,49 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)insertNewObject:(NSDictionary *)book
+- (void)insertNewObject:(NSDictionary *)book image:(UIImage *)image
 {
     SFBook *newBook = [[SFCoreDataManager sharedManager] insertNewBook];
+    
+    if ([newBook identifier]) {
+        // 内部情報をセット
+        [newBook setCreated:[NSDate date]];
+        [newBook setUpdated:[NSDate date]];
+        [newBook setImage2x:UIImagePNGRepresentation(image)];
+        [newBook setImage:UIImagePNGRepresentation([self resizeImage:image])];
+        [newBook setShelf:_currentShelf];
+        
+        [newBook setAuthor:[book objectForKey:@"author"]];
+        [newBook setAuthorKana:[book objectForKey:@"authorKana"]];
+        [newBook setTitle:[book objectForKey:@"title"]];
+        [newBook setTitleKana:[book objectForKey:@"titleKana"]];
+        [newBook setSeriesName:[book objectForKey:@"seriesName"]];
+        [newBook setSeriesNameKana:[book objectForKey:@"seriesNameKana"]];
+        [newBook setIsbn:[book objectForKey:@"isbn"]];
+        [newBook setItemCaption:[book objectForKey:@"itemCaption"]];
+        [newBook setItemPrice:[[book objectForKey:@"itemPrice"] intValue]];
+        [newBook setItemUrl:[book objectForKey:@"itemUrl"]];
+        
+        NSDateFormatter *dfm = [[NSDateFormatter alloc] init];
+        [dfm setDateFormat:@"yyyy年MM月"];
+        [newBook setSalesDate:[dfm dateFromString:[book objectForKey:@"salesDate"]]];
+        [newBook setBookSize:[book objectForKey:@"size"]];
+        
+        [_currentShelf addBooks:[NSSet setWithObject:newBook]];
+    }    
+    [[SFCoreDataManager sharedManager] saveContext];
+}
 
-    [newBook setTitle:[book objectForKey:@"title"]];
-    [newBook setAuthor:[book objectForKey:@"author"]];
-    [newBook setCreated:[NSDate date]];
-    [newBook setUpdated:[NSDate date]];
-
-    NSError *error = nil;
-    if(![[[SFCoreDataManager sharedManager] managedObjectContext] save:&error]){
-        NSLog(@"Failed to save : %@",error);
-        abort();
-    }     
+- (UIImage *)resizeImage:(UIImage *)image
+{
+    // サムネイル用の処理
+    CGSize resized = CGSizeMake(image.size.width/2, image.size.height);
+    UIGraphicsBeginImageContextWithOptions(resized, NO, 0.0);
+    CGRect itemRect = CGRectMake(0.0, 0.0, resized.width, resized.height);
+    [image drawInRect:itemRect];
+    UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return resizedImage;
 }
 
 
@@ -198,10 +239,11 @@
         
         NSMutableString *apiURIString = [NSMutableString stringWithString:@"http://api.rakuten.co.jp/rws/3.0/json?"];
         [apiURIString appendFormat:@"developerId=%@&",kRakutenAPPID];
-        [apiURIString appendString:@"operation=BooksTotalSearch&"];
+        //　2012/07/30 総合検索から書籍検索へ切り替えた
+        [apiURIString appendString:@"operation=BooksBookSearch&"];
         [apiURIString appendString:@"version=2011-12-01&"];
-        [apiURIString appendFormat:@"isbnjan=%@",resultText];
-        //        NSLog(@"url is %@",apiURIString);        
+        [apiURIString appendFormat:@"isbn=%@",resultText];
+//        NSLog(@"url is %@",apiURIString);
         
         // HTTPRequestを構築
         R9HTTPRequest *req = [[R9HTTPRequest alloc] initWithURL:[NSURL URLWithString:[apiURIString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
@@ -209,6 +251,7 @@
         // ぐるぐるを表示
         [SVProgressHUD showWithStatus:@"Loading"];
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        [[self view] setUserInteractionEnabled:NO];
         
         // 成功時および失敗時のハンドラをセット
         [req setCompletionHandler:^(NSHTTPURLResponse *responseHeader, NSString *responseString){
@@ -216,8 +259,14 @@
             //        NSLog(@"body is %@",responseString);
             NSDictionary *JSON = [NSDictionary dictionary];
             @try {
-                JSON = [[[[[[responseString JSONValue] objectForKey:@"Body"] objectForKey:@"BooksTotalSearch"] objectForKey:@"Items"] objectForKey:@"Item"] objectAtIndex:0];
-                [self insertNewObject:JSON];
+                JSON = [[[[[[responseString JSONValue] objectForKey:@"Body"] objectForKey:@"BooksBookSearch"] objectForKey:@"Items"] objectForKey:@"Item"] objectAtIndex:0];
+                NSError *error = nil;
+                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[JSON objectForKey:@"largeImageUrl"]] options:NSDataReadingUncached error: &error];
+                UIImage *cover = [UIImage imageWithData:data];
+                if (error) {
+                    NSLog(@"Error : %@", error);
+                }
+                [self insertNewObject:JSON image:cover];
                 [SVProgressHUD dismissWithSuccess:[JSON objectForKey:@"title"] afterDelay:3.0f];
             }
             @catch (NSException *exception) {
@@ -228,6 +277,7 @@
             }
             @finally {
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                [[self view] setUserInteractionEnabled:YES];
                 [_readerView start];
             }                      
         }];
@@ -292,17 +342,4 @@
 {
     NSLog(@"segmented control did change index : %i",[_segmentedControl selectedSegmentIndex]);
 }
-
-#pragma mark - Downloader
-
-- (void)downloader:(SFImageDownloader *)downloader didFailWithError:(NSError *)error
-{
-    NSLog(@"dl error");
-}
-
-- (void)downloader:(SFImageDownloader *)downloader didFinishLoading:(NSData *)data
-{
-    NSLog(@"iameg dl finied");
-}
-
 @end

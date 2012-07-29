@@ -10,6 +10,9 @@
 
 @protocol SFImageDownloaderDelegate;
 
+typedef void(^SFDownloadCompletionHandler)(NSHTTPURLResponse *res, NSData *data);
+typedef void(^SFDownloadFailedHandler)(NSError* error);
+
 typedef enum{
     SFImageDownloadIndexTypeIndex = 0,
     SFImageDownloadIndexTypeIndexPath
@@ -19,6 +22,8 @@ typedef enum{
 
 @property (weak, nonatomic) id<SFImageDownloaderDelegate> delegate;
 @property (readonly) SFImageDownloadIndexType indexType;
+@property (copy, nonatomic) SFDownloadCompletionHandler completionHander;
+@property (copy, nonatomic) SFDownloadFailedHandler failedHandler;
 
 - (id)initWithURL:(NSURL*)url;
 - (void)startDownload;

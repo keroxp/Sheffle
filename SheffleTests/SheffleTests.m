@@ -8,6 +8,7 @@
 
 #import "SheffleTests.h"
 
+
 @implementation SheffleTests
 
 - (void)setUp
@@ -24,9 +25,9 @@
     [super tearDown];
 }
 
-- (void)testExample
+- (void)imageDownloadTest
 {
-    STFail(@"Unit tests are not implemented yet in SheffleTests");
+
 }
 
 @end

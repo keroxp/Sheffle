@@ -26,26 +26,57 @@
                     <navigationItem key="navigationItem" id="cDV-lN-8bz"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="FUa-M4-BAn" id="EQD-Tp-hn8"/>
-                        <segue destination="uxJ-Oe-mKz" kind="push" identifier="showBook" id="uWY-rX-n2t"/>
+                        <segue destination="jYO-vu-AXV" kind="push" identifier="showBook" id="yeA-Ua-hvz"/>
                     </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="270" y="-49"/>
         </scene>
         <!--Book View Controller-->
-        <scene sceneID="gI9-Kb-Zf8">
+        <scene sceneID="nid-qq-5Gd">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dne-OV-Wpb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="uxJ-Oe-mKz" customClass="SFBookViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="KNe-Oj-8lQ">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oOf-As-k01" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="jYO-vu-AXV" customClass="SFBookViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="R7R-lr-Xcj">
                         <rect key="frame" x="0.0" y="64" width="320" height="372"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="DQT-qT-1qj"/>
-                </viewController>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BookCell" textLabel="Hsn-69-9Aq" detailTextLabel="yRm-R9-pJT" style="IBUITableViewCellStyleValue1" id="wWh-0e-fhE">
+                                <rect key="frame" x="0.0" y="46" width="320" height="46"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Hsn-69-9Aq">
+                                            <rect key="frame" x="10" y="11" width="35" height="21"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yRm-R9-pJT">
+                                            <rect key="frame" x="246" y="11" width="44" height="21"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.2196078431372549" green="0.32941176470588235" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="jYO-vu-AXV" id="6HS-Ex-p3O"/>
+                            <outlet property="delegate" destination="jYO-vu-AXV" id="FeF-XF-1Wc"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="yrM-Mm-1Mh"/>
+                </tableViewController>
             </objects>
-            <point key="canvasLocation" x="739" y="-49"/>
+            <point key="canvasLocation" x="678" y="-49"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1fj-et-YaO">

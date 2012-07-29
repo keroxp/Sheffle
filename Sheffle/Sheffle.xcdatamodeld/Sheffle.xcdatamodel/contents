@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="12A269" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Book" representedClassName="SFBook" syncable="YES">
-        <attribute name="artistName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="author" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="authorKana" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bookSize" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="isbnjan" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="image2x" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="isbn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemCaption" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="itemPrice" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="itemUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="largeImage" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="mediumImage" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="publisherName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="salesDate" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="smallImage" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="seriesName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seriesNameKana" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="titleKana" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updated" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="shelf" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Shelf" inverseName="books" inverseEntity="Shelf" syncable="YES"/>
     </entity>
