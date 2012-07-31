@@ -16,7 +16,6 @@
 #import "SVProgressHUD.h"
 
 #import "SFBookViewController.h"
-#import "SFImageDownloader.h"
 #import "SFTableShelfViewController.h"
 #import "SFGridShelfViewController.h"
 

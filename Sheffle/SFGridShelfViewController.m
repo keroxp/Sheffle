@@ -26,6 +26,8 @@
     UIBarButtonItem *_addBarButton;
 }
 
+- (void)managedObjectContextDidSave:(NSManagedObjectContext*)managedObjectContext;
+
 @end
 
 @implementation SFGridShelfViewController
@@ -41,16 +43,6 @@
     }
     return self;
 }
-
-/*
- // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed.
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
- {
- // In the simplest, most efficient, case, reload the table view.
- [self.tableView reloadData];
- }
- */
 
 #pragma mark - View lifecycle
 
@@ -70,9 +62,11 @@
     
     _bookShelfView = [[GSBookShelfView alloc] initWithFrame:CGRectMake(0, 0, 320, 460 - 88)];
     [_bookShelfView setDataSource:self];
-    //[_bookShelfView setShelfViewDelegate:self];
     
     [self.view addSubview:_bookShelfView];
+    
+    // MOCの保存通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:self.managedObjectContext];
     
     //[self performSelector:@selector(testScrollToRow) withObject:self afterDelay:3];
     
@@ -343,44 +337,5 @@
     }
     return __managedObjectContext;
 }
-
-- (NSFetchedResultsController *)fetchedResultsController
-{
-    if (__fetchedResultsController != nil) {
-        return __fetchedResultsController;
-    }
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:__managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
-    // Set the batch size to a suitable number.
-    [fetchRequest setFetchBatchSize:20];
-    
-    // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
-    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
-    
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    
-    // Edit the section name key path and cache name if appropriate.
-    // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:__managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
-    [aFetchedResultsController setDelegate:self];
-    __fetchedResultsController = aFetchedResultsController;
-    
-	NSError *error = nil;
-	if (![self.fetchedResultsController performFetch:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
-	}
-    
-    return __fetchedResultsController;
-    
-}
-
 
 @end

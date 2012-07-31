@@ -57,22 +57,20 @@
     _readerView = [[ZBarReaderView alloc] initWithImageScanner:scanner];
     [_readerView setFrame:kDefaultReaderViewFrame];
     [_readerView setReaderDelegate:self];
-//    [_readerView setBackgroundColor:[UIColor blueColor]];
-//    [[self view] setBackgroundColor:[UIColor blackColor]];
     [[self view] addSubview:_readerView];
         
     // Shelf Viewの初期化
     
     // ２種類のShelfViewControllerを構築
     _tableShelfViewController = [[SFTableShelfViewController alloc] initWithStyle:UITableViewStylePlain];
-//    _gridShelfViewController = [[SFGridShelfViewController alloc] init];
+    _gridShelfViewController = [[SFGridShelfViewController alloc] init];
     
     [[_tableShelfViewController view] setFrame:kDefaultShelfViewFrame];
-//    [[_gridShelfViewController view] setFrame:kDefaultShelfViewFrame];
+    [[_gridShelfViewController view] setFrame:kDefaultShelfViewFrame];
     [_tableShelfViewController didMoveToParentViewController:self];
     
     [self addChildViewController:_tableShelfViewController];
-//    [self addChildViewController:_gridShelfViewController];
+    [self addChildViewController:_gridShelfViewController];
     
 
     [_shelfView setFrame:kDefaultShelfViewFrame];

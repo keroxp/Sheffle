@@ -54,7 +54,6 @@
 		A64E74BD15C41519003464FE /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A64E74BC15C41519003464FE /* Default.png */; };
 		A64E74BF15C4151B003464FE /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A64E74BE15C4151B003464FE /* Default@2x.png */; };
 		A685A2BC15BC370C000A1AD5 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A685A2B915BC36E3000A1AD5 /* libiconv.dylib */; };
-		A68E54A515BC7618007C0E15 /* SFImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A68E54A415BC7618007C0E15 /* SFImageDownloader.m */; };
 		A6A9CB1C15BC274600C02AD5 /* SFShelfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A9CB1B15BC274600C02AD5 /* SFShelfViewController.m */; };
 		A6A9CB2115BC27D800C02AD5 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6A9CB2015BC27D800C02AD5 /* MainStoryboard_iPad.storyboard */; };
 		A6A9CB3215BC31EE00C02AD5 /* Sheffle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A6A9CB2C15BC31EE00C02AD5 /* Sheffle.xcdatamodeld */; };
@@ -184,8 +183,6 @@
 		A64E74BC15C41519003464FE /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		A64E74BE15C4151B003464FE /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
 		A685A2B915BC36E3000A1AD5 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
-		A68E54A315BC7618007C0E15 /* SFImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFImageDownloader.h; sourceTree = "<group>"; };
-		A68E54A415BC7618007C0E15 /* SFImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFImageDownloader.m; sourceTree = "<group>"; };
 		A6A9CB1A15BC274600C02AD5 /* SFShelfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFShelfViewController.h; sourceTree = "<group>"; };
 		A6A9CB1B15BC274600C02AD5 /* SFShelfViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFShelfViewController.m; sourceTree = "<group>"; };
 		A6A9CB2015BC27D800C02AD5 /* MainStoryboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
@@ -463,8 +460,6 @@
 				A64E749815C3C0CC003464FE /* ShelfView */,
 				A6B9989215B98D1200D0919C /* SFAppDelegate.h */,
 				A6B9989315B98D1200D0919C /* SFAppDelegate.m */,
-				A68E54A315BC7618007C0E15 /* SFImageDownloader.h */,
-				A68E54A415BC7618007C0E15 /* SFImageDownloader.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -697,7 +692,6 @@
 				A6B9989415B98D1200D0919C /* SFAppDelegate.m in Sources */,
 				A6A9CB1C15BC274600C02AD5 /* SFShelfViewController.m in Sources */,
 				A6A9CB3215BC31EE00C02AD5 /* Sheffle.xcdatamodeld in Sources */,
-				A68E54A515BC7618007C0E15 /* SFImageDownloader.m in Sources */,
 				A6408C6615BDCDDD001AF716 /* SFTableShelfViewController.m in Sources */,
 				A62A41ED15C0611500959355 /* SFCoreDataManager.m in Sources */,
 				A64E732E15C3ABD7003464FE /* SFShelf.m in Sources */,
@@ -831,7 +825,7 @@
 					"\"$(SRCROOT)/Sheffle/ZBarSDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -849,7 +843,7 @@
 					"\"$(SRCROOT)/Sheffle/ZBarSDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
