@@ -96,24 +96,10 @@
 //        [_bookStatus addObject:[NSNumber numberWithInt:BOOK_UNSELECTED]];
 //    }
 //
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@""];
-    NSEntityDescription *entiry = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:[self managedObjectContext]];
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:NO];
-    
-//    [request setFetchBatchSize:20];
-    [request setEntity:entiry];
-    [request setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-    [request setPredicate:predicate];
-    
-    NSError *error = nil;
-    _bookArray = [NSMutableArray arrayWithArray:[[self managedObjectContext] executeFetchRequest:request error:&error]];
-    if (error) {
-        NSLog(@"Failed to fetch books data");
-    }
+    _bookArray = [NSMutableArray arrayWithArray:[self.currentShelf sortedBooks]];
     _bookStatus = [NSMutableArray arrayWithCapacity:[_bookArray count]];
     for (int i = 0 , max = [_bookStatus count]; i < max; i++) {
-        [_bookArray addObject:[NSNumber numberWithInt:BOOK_UNSELECTED]];
+        [_bookArray addObject:@(BOOK_UNSELECTED)];
     }
     _booksIndexsToBeRemoved = [NSMutableIndexSet indexSet];
 }
@@ -139,7 +125,7 @@
     [self.navigationItem setRightBarButtonItem:_trashBarButton];
     
     for (int i = 0; i < [_bookArray count]; i++) {
-        [_bookStatus addObject:[NSNumber numberWithInt:BOOK_UNSELECTED]];
+        [_bookStatus addObject:@(BOOK_UNSELECTED)];
     }
     
     for (SFShelfBookView *bookView in [_bookShelfView visibleBookViews]) {
@@ -299,8 +285,8 @@
     NSMutableArray *stat = [NSMutableArray array];
     for (int i = 0; i < 6; i++) {
         [indexSet addIndex:a[i]];
-        [arr addObject:[NSNumber numberWithInt:1]];
-        [stat addObject:[NSNumber numberWithInt:BOOK_UNSELECTED]];
+        [arr addObject:@1];
+        [stat addObject:@(BOOK_UNSELECTED)];
     }
     [_bookArray insertObjects:arr atIndexes:indexSet];
     [_bookStatus insertObjects:stat atIndexes:indexSet];

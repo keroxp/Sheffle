@@ -7,6 +7,7 @@
 //
 
 #import "SFTableShelfViewController.h"
+#import "SFShelfViewController.h"
 #define kBarTintColor [UIColor colorWithRed:214.0f/255.0f green:168.0f/255.0f blue:91.0f/255.0f alpha:1.0f]
 
 
@@ -23,7 +24,6 @@
 @implementation SFTableShelfViewController
 
 @synthesize fetchedResultsController = __fetchedResultsController;
-@synthesize delegate = _delegate;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -50,7 +50,7 @@
     [__searchDisplayController setSearchResultsDataSource:self];
     
     [[self tableView] setTableHeaderView:searchBar];
-    [[self tableView] setAllowsMultipleSelectionDuringEditing:YES];
+//    [[self tableView] setAllowsMultipleSelectionDuringEditing:YES];        
 }
 
 - (void)viewDidUnload {
@@ -58,7 +58,7 @@
     [super viewDidUnload];
 }
 
-#pragma mark - Table View
+#pragma mark - Table View Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -108,12 +108,14 @@
     }   
 }
 
+#pragma mark - Table View Delegate
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     _selectedPath = indexPath;
     if (!tableView.editing) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//        [self performSegueWithIdentifier:@"showBook" sender:self];
+        [self.parentViewController performSegueWithIdentifier:@"showBook" sender:self];
     }
 }
 
@@ -135,7 +137,7 @@
     
     // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
-    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor, nil];
+    NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
@@ -183,11 +185,11 @@
     
     switch(type) {
         case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeUpdate:
@@ -195,8 +197,8 @@
             break;
             
         case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertRowsAtIndexPaths:@[newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
 }

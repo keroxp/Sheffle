@@ -11,6 +11,7 @@
 
 #import "SFBook.h"
 #import "SFShelf.h"
+#import "SFShelf+SortedBooks.h"
 
 @interface SFCoreDataManager : NSObject
 
@@ -21,7 +22,8 @@
 - (SFShelf*)insertNewShelf;
 - (SFBook*)insertNewBook;
 
-- (NSArray*)sortedShelves;
+- (NSArray*)shelves;
+- (NSFetchedResultsController*)fechedResultsController;
 
 - (void)saveContext;
 - (NSURL*)applicationDocumentsDirectory;

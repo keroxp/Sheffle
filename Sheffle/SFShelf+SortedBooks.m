@@ -10,4 +10,15 @@
 
 @implementation SFShelf (SortedBooks)
 
+- (NSArray *)sortedBooks
+{
+    NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:@"titleKana" ascending:NO];
+    NSSortDescriptor *author = [[NSSortDescriptor alloc] initWithKey:@"authorKana" ascending:NO];
+    NSSortDescriptor *created = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:NO];
+    NSSortDescriptor *size = [[NSSortDescriptor alloc] initWithKey:@"size" ascending:NO];
+    
+    NSArray *books = [self.books sortedArrayUsingDescriptors:@[title,author,created,size]];
+    return books;
+}
+
 @end

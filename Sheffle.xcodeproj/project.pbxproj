@@ -54,8 +54,10 @@
 		A64E74BD15C41519003464FE /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A64E74BC15C41519003464FE /* Default.png */; };
 		A64E74BF15C4151B003464FE /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A64E74BE15C4151B003464FE /* Default@2x.png */; };
 		A685A2BC15BC370C000A1AD5 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A685A2B915BC36E3000A1AD5 /* libiconv.dylib */; };
+		A6A4A9AB15CEBBC9007EFB0E /* SFEditableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A4A9AA15CEBBC9007EFB0E /* SFEditableCell.m */; };
+		A6A4A9B315CEC891007EFB0E /* UITextField+IndexPath.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A4A9B215CEC891007EFB0E /* UITextField+IndexPath.m */; };
+		A6A4A9B615CECC51007EFB0E /* SFTextFieldInTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A4A9B515CECC51007EFB0E /* SFTextFieldInTableView.m */; };
 		A6A9CB1C15BC274600C02AD5 /* SFShelfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A9CB1B15BC274600C02AD5 /* SFShelfViewController.m */; };
-		A6A9CB2115BC27D800C02AD5 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6A9CB2015BC27D800C02AD5 /* MainStoryboard_iPad.storyboard */; };
 		A6A9CB3215BC31EE00C02AD5 /* Sheffle.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A6A9CB2C15BC31EE00C02AD5 /* Sheffle.xcdatamodeld */; };
 		A6B9988415B98D1100D0919C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B9988315B98D1100D0919C /* UIKit.framework */; };
 		A6B9988615B98D1200D0919C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B9988515B98D1100D0919C /* Foundation.framework */; };
@@ -76,6 +78,8 @@
 		A6B998F915B995A500D0919C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B998F815B995A500D0919C /* CoreMedia.framework */; };
 		A6D0916A15C5A07400B128C8 /* SFBook.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D0916915C5A07400B128C8 /* SFBook.m */; };
 		A6D0917315C5B0A400B128C8 /* SFBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D0917115C5B0A400B128C8 /* SFBookViewController.m */; };
+		A6F5CD4B15CE613F00AEC20C /* SFShelf+SortedBooks.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F5CD4A15CE613E00AEC20C /* SFShelf+SortedBooks.m */; };
+		A6F5CD4E15CE62BB00AEC20C /* SFShelvesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F5CD4D15CE62BB00AEC20C /* SFShelvesViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -183,9 +187,17 @@
 		A64E74BC15C41519003464FE /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		A64E74BE15C4151B003464FE /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
 		A685A2B915BC36E3000A1AD5 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		A6A4A9A915CEBBC9007EFB0E /* SFEditableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFEditableCell.h; sourceTree = "<group>"; };
+		A6A4A9AA15CEBBC9007EFB0E /* SFEditableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFEditableCell.m; sourceTree = "<group>"; };
+		A6A4A9B115CEC891007EFB0E /* UITextField+IndexPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+IndexPath.h"; sourceTree = "<group>"; };
+		A6A4A9B215CEC891007EFB0E /* UITextField+IndexPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+IndexPath.m"; sourceTree = "<group>"; };
+		A6A4A9B415CECC51007EFB0E /* SFTextFieldInTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFTextFieldInTableView.h; sourceTree = "<group>"; };
+		A6A4A9B515CECC51007EFB0E /* SFTextFieldInTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFTextFieldInTableView.m; sourceTree = "<group>"; };
+		A6A4A9B715CED718007EFB0E /* ja */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ja; path = ja.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		A6A4A9B815CED718007EFB0E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A6A4A9B915CED718007EFB0E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A6A9CB1A15BC274600C02AD5 /* SFShelfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFShelfViewController.h; sourceTree = "<group>"; };
 		A6A9CB1B15BC274600C02AD5 /* SFShelfViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFShelfViewController.m; sourceTree = "<group>"; };
-		A6A9CB2015BC27D800C02AD5 /* MainStoryboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		A6A9CB2D15BC31EE00C02AD5 /* Sheffle.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Sheffle.xcdatamodel; sourceTree = "<group>"; };
 		A6B9987F15B98D1100D0919C /* Sheffle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sheffle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6B9988315B98D1100D0919C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -213,6 +225,10 @@
 		A6D0916915C5A07400B128C8 /* SFBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFBook.m; path = Sheffle/SFBook.m; sourceTree = "<group>"; };
 		A6D0917015C5B0A400B128C8 /* SFBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBookViewController.h; sourceTree = "<group>"; };
 		A6D0917115C5B0A400B128C8 /* SFBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBookViewController.m; sourceTree = "<group>"; };
+		A6F5CD4915CE613E00AEC20C /* SFShelf+SortedBooks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SFShelf+SortedBooks.h"; path = "Sheffle/SFShelf+SortedBooks.h"; sourceTree = "<group>"; };
+		A6F5CD4A15CE613E00AEC20C /* SFShelf+SortedBooks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SFShelf+SortedBooks.m"; path = "Sheffle/SFShelf+SortedBooks.m"; sourceTree = "<group>"; };
+		A6F5CD4C15CE62BB00AEC20C /* SFShelvesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFShelvesViewController.h; sourceTree = "<group>"; };
+		A6F5CD4D15CE62BB00AEC20C /* SFShelvesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFShelvesViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -443,8 +459,13 @@
 		A6A9CB1815BC260A00C02AD5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A6A4A9A915CEBBC9007EFB0E /* SFEditableCell.h */,
+				A6A4A9AA15CEBBC9007EFB0E /* SFEditableCell.m */,
+				A6A4A9B115CEC891007EFB0E /* UITextField+IndexPath.h */,
+				A6A4A9B215CEC891007EFB0E /* UITextField+IndexPath.m */,
+				A6A4A9B415CECC51007EFB0E /* SFTextFieldInTableView.h */,
+				A6A4A9B515CECC51007EFB0E /* SFTextFieldInTableView.m */,
 				A6B9989515B98D1200D0919C /* MainStoryboard_iPhone.storyboard */,
-				A6A9CB2015BC27D800C02AD5 /* MainStoryboard_iPad.storyboard */,
 				A64E749915C3C1E5003464FE /* SFShelfBookView.h */,
 				A64E749A15C3C1E5003464FE /* SFShelfBookView.m */,
 				A64E749C15C3C1FE003464FE /* SFShelfRowView.h */,
@@ -456,8 +477,9 @@
 		A6A9CB1915BC261900C02AD5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				A64E74B315C3D7FD003464FE /* BookView */,
+				A6F5CD4F15CE641700AEC20C /* ShelvesView */,
 				A64E749815C3C0CC003464FE /* ShelfView */,
+				A64E74B315C3D7FD003464FE /* BookView */,
 				A6B9989215B98D1200D0919C /* SFAppDelegate.h */,
 				A6B9989315B98D1200D0919C /* SFAppDelegate.m */,
 			);
@@ -469,6 +491,8 @@
 			children = (
 				A64E732C15C3ABD7003464FE /* SFShelf.h */,
 				A64E732D15C3ABD7003464FE /* SFShelf.m */,
+				A6F5CD4915CE613E00AEC20C /* SFShelf+SortedBooks.h */,
+				A6F5CD4A15CE613E00AEC20C /* SFShelf+SortedBooks.m */,
 				A6A9CB2C15BC31EE00C02AD5 /* Sheffle.xcdatamodeld */,
 				A6D0916815C5A07400B128C8 /* SFBook.h */,
 				A6D0916915C5A07400B128C8 /* SFBook.m */,
@@ -558,6 +582,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A6F5CD4F15CE641700AEC20C /* ShelvesView */ = {
+			isa = PBXGroup;
+			children = (
+				A6F5CD4C15CE62BB00AEC20C /* SFShelvesViewController.h */,
+				A6F5CD4D15CE62BB00AEC20C /* SFShelvesViewController.m */,
+			);
+			name = ShelvesView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -632,7 +665,6 @@
 			files = (
 				A6B9988E15B98D1200D0919C /* InfoPlist.strings in Resources */,
 				A6B9989715B98D1200D0919C /* MainStoryboard_iPhone.storyboard in Resources */,
-				A6A9CB2115BC27D800C02AD5 /* MainStoryboard_iPad.storyboard in Resources */,
 				A64E749115C3BDAF003464FE /* SVProgressHUD.bundle in Resources */,
 				A64E749415C3BDAF003464FE /* zbar-back.png in Resources */,
 				A64E749515C3BDAF003464FE /* zbar-help.html in Resources */,
@@ -718,6 +750,11 @@
 				A64E749E15C3C1FE003464FE /* SFShelfRowView.m in Sources */,
 				A6D0916A15C5A07400B128C8 /* SFBook.m in Sources */,
 				A6D0917315C5B0A400B128C8 /* SFBookViewController.m in Sources */,
+				A6F5CD4B15CE613F00AEC20C /* SFShelf+SortedBooks.m in Sources */,
+				A6F5CD4E15CE62BB00AEC20C /* SFShelvesViewController.m in Sources */,
+				A6A4A9AB15CEBBC9007EFB0E /* SFEditableCell.m in Sources */,
+				A6A4A9B315CEC891007EFB0E /* UITextField+IndexPath.m in Sources */,
+				A6A4A9B615CECC51007EFB0E /* SFTextFieldInTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -744,6 +781,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				A6B9988D15B98D1200D0919C /* en */,
+				A6A4A9B815CED718007EFB0E /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -752,6 +790,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				A6B9989615B98D1200D0919C /* en */,
+				A6A4A9B715CED718007EFB0E /* ja */,
 			);
 			name = MainStoryboard_iPhone.storyboard;
 			sourceTree = "<group>";
@@ -760,6 +799,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				A6B998B615B98D1200D0919C /* en */,
+				A6A4A9B915CED718007EFB0E /* ja */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

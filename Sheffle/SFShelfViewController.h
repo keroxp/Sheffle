@@ -29,10 +29,14 @@ typedef enum{
 
 // View Controllers
 @property (strong, nonatomic) SFGridShelfViewController *gridShelfViewController;
-@property (strong, nonatomic) SFTableShelfViewController *tableShelfViewController; 
-
+@property (strong, nonatomic) SFTableShelfViewController *tableShelfViewController;
+// View Mode
+@property (readonly) SFShelfViewMode shelfViewMode;
+// Core Data
+@property (weak, nonatomic) SFShelf *shelf;
 // UI
 @property (strong, nonatomic) UIView *readerView;
 @property (strong, nonatomic) UIView *shelfView;
+
 
 @end

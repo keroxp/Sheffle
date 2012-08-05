@@ -146,7 +146,7 @@
 }
 
 - (void)parser:(SBJsonStreamParser*)parser foundBoolean:(BOOL)x {
-	[self parser:parser found:[NSNumber numberWithBool:x]];
+	[self parser:parser found:@(x)];
 }
 
 - (void)parserFoundNull:(SBJsonStreamParser*)parser {

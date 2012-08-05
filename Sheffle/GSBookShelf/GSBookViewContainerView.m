@@ -564,14 +564,14 @@ typedef enum {
         if (distanceFromTop < kScroll_trigger_dis) {
             double rate = (kScroll_trigger_dis - distanceFromTop) / 6.0;
             NSTimeInterval interval = fmax(kScroll_interval_min, kScroll_interval_max / rate);
-            _scrollTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(dragScroll:) userInfo:[NSNumber numberWithBool:YES] repeats:YES];
+            _scrollTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(dragScroll:) userInfo:@(YES) repeats:YES];
             
         }
         else if (distanceFromTop > _visibleRect.size.height - kScroll_trigger_dis) {
             
             double rate = (kScroll_trigger_dis - (_visibleRect.size.height - distanceFromTop)) / 6.0;
             NSTimeInterval interval = fmax(kScroll_interval_min, kScroll_interval_max / rate);
-            _scrollTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(dragScroll:) userInfo:[NSNumber numberWithBool:NO] repeats:YES];
+            _scrollTimer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(dragScroll:) userInfo:@(NO) repeats:YES];
             
         }
     }
@@ -795,7 +795,7 @@ typedef enum {
                                          NSInteger realIndex = [self convertToIndexFromVisibleBookViewIndex:moveFromIndex] - steps;
                                          [_indexsOfBookViewNotShown addIndex:realIndex];
                                          
-                                         [stepsArray addObject:[NSNumber numberWithInt:-steps]];
+                                         [stepsArray addObject:@(-steps)];
                                          
                                          moveFromIndex++;
                                      }
@@ -810,7 +810,7 @@ typedef enum {
                              NSInteger realIndex = [self convertToIndexFromVisibleBookViewIndex:moveFromIndex] - steps;
                              [_indexsOfBookViewNotShown addIndex:realIndex];
                              
-                             [stepsArray addObject:[NSNumber numberWithInt:-steps]];
+                             [stepsArray addObject:@(-steps)];
                               
                              moveFromIndex++;
                          }

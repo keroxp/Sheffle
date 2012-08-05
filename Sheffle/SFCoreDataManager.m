@@ -14,6 +14,7 @@ static SFCoreDataManager *_sharedInstance;
 {
     NSManagedObjectModel *__managedObjectModel;
     NSPersistentStoreCoordinator *__persistentStoreCoordinator;
+    NSFetchedResultsController *__fetchedResultsController;
 }
 
 - (NSString*)insertNewIdentifier;
@@ -39,6 +40,8 @@ static SFCoreDataManager *_sharedInstance;
 {
     SFShelf *shelf = [NSEntityDescription insertNewObjectForEntityForName:@"Shelf" inManagedObjectContext:[self managedObjectContext]];
     [shelf setIdentifier:[self insertNewIdentifier]];
+    shelf.created = [NSDate date];
+    shelf.updated = [NSDate date];
     
     //TODO:indexを設置
     
@@ -50,20 +53,23 @@ static SFCoreDataManager *_sharedInstance;
     SFBook *book = (SFBook*)[NSEntityDescription insertNewObjectForEntityForName:@"Book" inManagedObjectContext:[self managedObjectContext]];
     
     [book setIdentifier:[self insertNewIdentifier]];
+    [book setCreated:[NSDate date]];
+    [book setUpdated:[NSDate date]];
     
     //TODO:indexを設置する
     
     return book;
 }
 
-- (NSArray *)sortedShelves
+- (NSArray *)shelves
 {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Shelf" inManagedObjectContext:[self managedObjectContext]];
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:YES];
+    NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+    NSSortDescriptor *index = [[NSSortDescriptor alloc] initWithKey:@"index" ascending:NO];
     
     [request setEntity:entity];
-    [request setSortDescriptors:[NSArray arrayWithObject:sort]];
+    [request setSortDescriptors:@[title,index]];
     
     NSError *error = nil;
     NSArray *results = [[self managedObjectContext] executeFetchRequest:request error:&error];
@@ -157,6 +163,43 @@ static SFCoreDataManager *_sharedInstance;
     return __persistentStoreCoordinator;
 }
 
+- (NSFetchedResultsController *)fechedResultsController
+{
+    if (__fetchedResultsController != nil) {
+        return __fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Shelf" inManagedObjectContext:__managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+    // Set the batch size to a suitable number.
+    [fetchRequest setFetchBatchSize:20];
+    
+    // Edit the sort key as appropriate.
+    NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
+    NSSortDescriptor *index = [[NSSortDescriptor alloc] initWithKey:@"index" ascending:NO];
+    NSArray *sortDescriptors = @[title,index];
+    
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:__managedObjectContext sectionNameKeyPath:@"title" cacheName:@"Master"];
+    __fetchedResultsController = aFetchedResultsController;
+    
+	NSError *error = nil;
+	if (![__fetchedResultsController performFetch:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	    abort();
+	}
+    
+    return __fetchedResultsController;
+}
+
 - (void)saveContext
 {
     NSError *error = nil;
@@ -167,7 +210,11 @@ static SFCoreDataManager *_sharedInstance;
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
+        }else{
+            NSLog(@"successfully saved");
         }
+    }else{
+        NSLog(@"context is nil");
     }
 }
 

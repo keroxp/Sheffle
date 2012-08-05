@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SFCoreDataManager.h"
+#import "SFEditableCell.h"
+#import "UITextField+IndexPath.h"
 
 @interface SFShelvesViewController : UITableViewController
+<NSFetchedResultsControllerDelegate
+,UITextFieldDelegate
+,UISearchDisplayDelegate>
+
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end

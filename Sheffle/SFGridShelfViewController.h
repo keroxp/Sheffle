@@ -27,6 +27,7 @@ typedef enum {
 ,GSBookShelfViewDelegate
 ,GSBookShelfViewDataSource>
 
+@property (weak, nonatomic) SFShelf *currentShelf;
 @property (strong, nonatomic) GSBookShelfView *bookShelfView;
 @property (readonly) NSFetchedResultsController *fetchedResultsController;
 @property (readonly) NSManagedObjectContext *managedObjectContext;

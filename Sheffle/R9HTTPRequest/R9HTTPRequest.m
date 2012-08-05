@@ -88,7 +88,7 @@ static NSString *boundary = @"----------0xKhTmLbOuNdArY";
 
 - (void)start
 {
-    [self setValue:[NSNumber numberWithBool:YES] forKey:@"isExecuting"];
+    [self setValue:@(YES) forKey:@"isExecuting"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:_url];
     if ([_headers count] > 0) {
         [request setAllHTTPHeaderFields:_headers];
@@ -205,8 +205,8 @@ static NSString *boundary = @"----------0xKhTmLbOuNdArY";
 {
     if (totalBytesExpectedToWrite == 0) return;
     if (self.uploadProgressHandler) {
-        float progress = [[NSNumber numberWithInteger:totalBytesWritten] floatValue];
-        float total = [[NSNumber numberWithInteger: totalBytesExpectedToWrite] floatValue];
+        float progress = [@(totalBytesWritten) floatValue];
+        float total = [@(totalBytesExpectedToWrite) floatValue];
         self.uploadProgressHandler(progress / total);
     }
 }
@@ -233,8 +233,8 @@ static NSString *boundary = @"----------0xKhTmLbOuNdArY";
 
 - (void)finish
 {
-    [self setValue:[NSNumber numberWithBool:NO] forKey:@"isExecuting"];
-    [self setValue:[NSNumber numberWithBool:YES] forKey:@"isFinished"];
+    [self setValue:@(NO) forKey:@"isExecuting"];
+    [self setValue:@(YES) forKey:@"isFinished"];
 }
 
 @end

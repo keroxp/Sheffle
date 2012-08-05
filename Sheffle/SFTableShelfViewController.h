@@ -10,8 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "SFCoreDataManager.h"
 #import "SFBookViewController.h"
-
-@protocol SFTableShelfViewDelegate;
+//#import "SFShelfViewController.h"
 
 @interface SFTableShelfViewController : UITableViewController
 <UISearchBarDelegate
@@ -21,14 +20,5 @@
 
 // Core Data
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-
-// Delegation
-@property (weak, nonatomic) id<SFTableShelfViewDelegate> delegate;
-
-@end
-
-@protocol SFTableShelfViewDelegate
-
-- (void)shelfViewModeWillChange:(NSUInteger)mode;
 
 @end

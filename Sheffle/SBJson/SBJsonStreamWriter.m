@@ -54,8 +54,8 @@ static NSNumber *kNegativeInfinity;
 	kNotANumber = [NSDecimalNumber notANumber];
     kPositiveInfinity = [NSNumber numberWithDouble:+INFINITY];
     kNegativeInfinity = [NSNumber numberWithDouble:-INFINITY];
-    kTrue = [NSNumber numberWithBool:YES];
-    kFalse = [NSNumber numberWithBool:NO];
+    kTrue = @(YES);
+    kFalse = @(NO);
 }
 
 #pragma mark Housekeeping
