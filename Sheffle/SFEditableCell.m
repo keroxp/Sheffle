@@ -23,15 +23,17 @@
 {
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     if (self) {
-        _textField = [[SFTextFieldInTableView alloc] initWithFrame:CGRectMake(10, 11, 35, 21) indexPath:indexPath];
+        _textField = [[SFTextFieldInTableView alloc] initWithFrame:CGRectMake(10, 11, self.frame.size.width - 20, 21) indexPath:indexPath];
 //        _textField = [[ alloc] initWithFrame:CGRectMake(10, 11, 35, 21)];
         _textField.indexPath = indexPath;
         self.textField.borderStyle = UITextBorderStyleNone;
-        self.textField.font = [UIFont boldSystemFontOfSize:18.0];
+        self.textField.font = [UIFont boldSystemFontOfSize:17.0];
         self.textField.returnKeyType = UIReturnKeyDone;
         self.textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         self.textField.text = text;
-        [self addSubview:self.textField];
+        self.autoresizesSubviews = YES;
+//        [self addSubview:self.textField];
+        self.accessoryView = self.textField;
     }
     return self;   
 }

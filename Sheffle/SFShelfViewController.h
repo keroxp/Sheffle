@@ -25,7 +25,8 @@ typedef enum{
 }SFShelfViewMode;
 
 @interface SFShelfViewController : UIViewController 
-<ZBarReaderViewDelegate>
+<ZBarReaderViewDelegate
+,NSFetchedResultsControllerDelegate>
 
 // View Controllers
 @property (strong, nonatomic) SFGridShelfViewController *gridShelfViewController;
@@ -33,6 +34,7 @@ typedef enum{
 // View Mode
 @property (readonly) SFShelfViewMode shelfViewMode;
 // Core Data
+@property (strong, nonatomic) NSFetchedResultsController* fetchedresultsController;
 @property (weak, nonatomic) SFShelf *shelf;
 // UI
 @property (strong, nonatomic) UIView *readerView;

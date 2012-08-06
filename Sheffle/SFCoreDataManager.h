@@ -23,7 +23,6 @@
 - (SFBook*)insertNewBook;
 
 - (NSArray*)shelves;
-- (NSFetchedResultsController*)fechedResultsController;
 
 - (void)saveContext;
 - (NSURL*)applicationDocumentsDirectory;

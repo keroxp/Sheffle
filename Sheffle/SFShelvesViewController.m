@@ -8,11 +8,12 @@
 
 #import "SFShelvesViewController.h"
 #import "SFShelfViewController.h"
-#define kBarTintColor [UIColor colorWithRed:214.0f/255.0f green:168.0f/255.0f blue:91.0f/255.0f alpha:1.0f]
 
 @interface SFShelvesViewController ()
 {
     BOOL _isEdittingTitle;
+    NSIndexPath *_selectedPath;
+    UIAlertView *_alertView;
 }
 
 - (void)configureCell:(UITableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath;
@@ -40,20 +41,14 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.editButtonItem.tintColor = kBarTintColor;
     
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forBarMetrics:UIBarMetricsDefault];
-    
-    [self.navigationController.toolbar setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
-    
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonDidTap:)];
-    cancelButton.tintColor = kBarTintColor;
+//    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonDidTap:)];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
     
     UIBarButtonItem *separator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     self.toolbarItems = @[separator,addButton];    
-    self.navigationItem.leftBarButtonItem = cancelButton;
+//    self.navigationItem.leftBarButtonItem = cancelButton;
     // Viewの初期化
     CALayer *topShadowLayer = [CALayer layer];
     topShadowLayer.frame = self.view.bounds;
@@ -94,19 +89,64 @@
 - (void)addButtonDidTap:(id)sender
 {
     NSLog(@"add");
-    [[SFCoreDataManager sharedManager] insertNewShelf];
-    [[SFCoreDataManager sharedManager] saveContext];
+    if (!_alertView) {
+        _alertView = [[UIAlertView alloc] initWithTitle:@"New Shelf" message:nil delegate:self cancelButtonTitle:@"Cencel" otherButtonTitles:@"Save", nil];
+        _alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+        UITextField *tf = [_alertView textFieldAtIndex:0];
+        tf.placeholder = @"Shelf Title";
+    }
+    [_alertView show];
+    
+//    [[SFCoreDataManager sharedManager] saveContext];
+//    static NSString *EditableCellIdentifier = @"EditableCell";
+//    SFEditableCell *ecell = (SFEditableCell*)[self.tableView dequeueReusableCellWithIdentifier:EditableCellIdentifier];
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+//    if (!ecell) {
+//        ecell = [[SFEditableCell alloc] initWithText:@"Undefined" indexPath:indexPath reuseIdentifier:EditableCellIdentifier];
+//    }
+//    [self.tableView insertRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
+//    [ecell.textField becomeFirstResponder];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            [alertView dismissWithClickedButtonIndex:0 animated:YES];
+            break;
+        case 1: {
+            UITextField *tf = [alertView textFieldAtIndex:0];
+            SFShelf *newShelf = [[SFCoreDataManager sharedManager] insertNewShelf];
+            if ([tf.text isEqualToString:@""]) {
+                newShelf.title = @"Undefined Shelf";
+            }else{
+                newShelf.title = tf.text;
+            }
+            [[SFCoreDataManager sharedManager] saveContext];
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - Text Field Delegate
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:textField.indexPath];
-    shelf.title = textField.text;
-    shelf.updated = [NSDate date];
-    [[SFCoreDataManager sharedManager] saveContext];
-}
+//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+//{
+//    if ([string isEqualToString:@""]) {
+//        _alertView.
+//    }
+//}
+
+//- (void)textFieldDidEndEditing:(UITextField *)textField
+//{
+//    SFTextFieldInTableView *_textfField = (SFTextFieldInTableView*)textField;
+//    SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:_textfField.indexPath];
+//    shelf.title = textField.text;
+//    shelf.updated = [NSDate date];
+//    [[SFCoreDataManager sharedManager] saveContext];
+//}
 
 #pragma mark - Table view data source
 
@@ -127,7 +167,7 @@
     static NSString *CellIdentifier = @"ShelvesCell";
     static NSString *EditableCellIdentifier = @"EditableCell";
 
-    if (_isEdittingTitle) {
+    if (NO) {
         // 編集モードの場合は全てをEditableなCellに
         SFEditableCell *ecell = (SFEditableCell*)[tableView dequeueReusableCellWithIdentifier:EditableCellIdentifier];
         if (!ecell) {
@@ -147,9 +187,10 @@
 {
     NSLog(@"configure cell");
     SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if (_isEdittingTitle) {
+    if (NO) {
         SFEditableCell *ecell = (SFEditableCell*)cell;
         ecell.textField.text = shelf.title;
+        ecell.autoresizesSubviews = YES;
         ecell.textField.delegate = self;
     }else{
         cell.textLabel.text = shelf.title;
@@ -202,10 +243,23 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    SFShelfViewController *svc = (SFShelfViewController*)self.presentingViewController;
-    svc.shelf = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [self dismissModalViewControllerAnimated:YES];
+    _selectedPath = indexPath;
+    if (!self.isEditing) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self performSegueWithIdentifier:@"showShelf" sender:self];
+    }
+}
+
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"showShelf"]) {
+        SFShelfViewController *svc = [segue destinationViewController];
+        svc.shelf = [self.fetchedResultsController objectAtIndexPath:_selectedPath];
+//        svc.fetchedresultsController = self.fetchedResultsController;
+//        self.fetchedResultsController.delegate = svc;
+    }
 }
 
 #pragma mark - Fetched Results Controller
@@ -229,10 +283,10 @@
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
-        case NSFetchedResultsChangeUpdate:
+        case NSFetchedResultsChangeUpdate: {
             [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+        }
             break;
-            
         case NSFetchedResultsChangeMove:
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [tableView insertRowsAtIndexPaths:@[newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
@@ -280,6 +334,9 @@
     
     NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:@"title" cacheName:@"Shelves"];
     frc.delegate = self;
+    
+    [NSFetchedResultsController deleteCacheWithName:@"Shelves"];
+    
     _fetchedResultsController = frc;
     
     NSError *error = nil;

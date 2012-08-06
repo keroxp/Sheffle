@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "SFCoreDataManager.h"
 #import "SFEditableCell.h"
-#import "UITextField+IndexPath.h"
+#import "SFTextFieldInTableView.h"
 
 @interface SFShelvesViewController : UITableViewController
 <NSFetchedResultsControllerDelegate
 ,UITextFieldDelegate
-,UISearchDisplayDelegate>
+,UISearchDisplayDelegate
+,UIAlertViewDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 

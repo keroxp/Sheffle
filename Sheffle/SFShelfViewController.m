@@ -9,7 +9,6 @@
 #import "SFShelfViewController.h"
 
 #define kRakutenAPPID @"1058212220451425377"
-#define kBarTintColor [UIColor colorWithRed:214.0f/255.0f green:168.0f/255.0f blue:91.0f/255.0f alpha:1.0f]
 #define kDefaultShelfViewFrame CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
 #define kDefaultReaderViewFrame CGRectMake(0, 0, self.view.frame.size.width, 0)
 #define kScanModeShelfViewFrame CGRectMake(0, 100.0f, self.view.frame.size.width, self.view.frame.size.height - 100.0f)
@@ -63,36 +62,26 @@
     // インスタンス変数の初期化
     
     _shelvesButton = [[UIBarButtonItem alloc] initWithTitle:@"Shelves" style:UIBarButtonItemStyleBordered target:self action:@selector(shelvesButtonDidTap:)];
-    _shelvesButton.tintColor = kBarTintColor;
     // 編集ボタン
     _editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(editButtonDidTap:)];
-//    self.editButtonItem.tintColor = kBarTintColor;
-    _editButton.tintColor = kBarTintColor;
     // スキャンボタン
     _scanButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(scanButtonDidTap:)];
-    _scanButton.tintColor = kBarTintColor;
     // 完了ボタン
     _donebutton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonDidTap:)];
-    _donebutton.tintColor = kBarTintColor;
     // ソート
     _sortControl = [[UISegmentedControl alloc] initWithItems:@[@"Title",@"Author",@"Date",@"Stared"]];
     _sortControl.selectedSegmentIndex = 0;
     _sortControl.segmentedControlStyle = UISegmentedControlStyleBar;
-    _sortControl.tintColor = kBarTintColor;
     [_sortControl addTarget:self action:@selector(segmentedControlDidChange:) forControlEvents:UIControlEventValueChanged];
     _sortControlItem = [[UIBarButtonItem alloc] initWithCustomView:_sortControl];
     // 追加ボタン
     _addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
-    _addButton.tintColor = kBarTintColor;
     // 消去ボタン
     _trashButton = [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStyleBordered target:self action:@selector(trashButtonDidTap:)];
-    _trashButton.tintColor = [UIColor redColor];
     // 移動ボタン
     _moveButton = [[UIBarButtonItem alloc] initWithTitle:@"Move" style:UIBarButtonItemStyleBordered target:self action:@selector(moveButtonDidTap:)];
-    _moveButton.tintColor = kBarTintColor;
     // ふぁぼボタン
     _staredButton = [[UIBarButtonItem alloc] initWithTitle:@"Favorite" style:UIBarButtonItemStyleBordered target:self action:@selector(staredButtonDidTap:)];
-    _staredButton.tintColor = kBarTintColor;
 
     // Reader Viewの初期化
     ZBarImageScanner *scanner = [[ZBarImageScanner alloc] init];
@@ -107,6 +96,8 @@
     // ２種類のShelfViewControllerを構築
     self.tableShelfViewController = [[SFTableShelfViewController alloc] initWithStyle:UITableViewStylePlain];
 //    _gridShelfViewController = [[SFGridShelfViewController alloc] init];
+    
+    self.tableShelfViewController.fetchedResultsController = self.fetchedresultsController;
     
     self.tableShelfViewController.view.frame = kDefaultShelfViewFrame;
 //    [[_gridShelfViewController view] setFrame:kDefaultShelfViewFrame];
@@ -127,12 +118,9 @@
     // NavigationBarを初期化
     
     self.title = @"Shelves";
-    self.navigationItem.leftBarButtonItem = _shelvesButton;
-    self.navigationItem.rightBarButtonItem = _editButton;
+//    self.navigationItem.leftBarButtonItem = _shelvesButton;
+    self.navigationItem.rightBarButtonItem = _editButton;    
 
-    // 編集モードのオブザーバをセット
-//    [self addObserver:self forKeyPath:@"editing" options:0 context:NULL];
-    
     // Toolbarを初期化
     
     self.toolbarItems = self.normalToolbarItems;
@@ -238,7 +226,7 @@
         // 内部情報をセット
         [newBook setImage2x:UIImagePNGRepresentation(image)];
         [newBook setImage:UIImagePNGRepresentation([self resizeImage:image])];
-        [newBook setShelf:self.shelf];
+//        [newBook setShelf:self.shelf];
         
         // 楽天の情報をセット
         [newBook setAuthor:[book objectForKey:@"author"]];
@@ -318,13 +306,13 @@
                     NSLog(@"Error : %@", error);
                 }
                 [self insertNewObject:JSON image:cover];
-                [SVProgressHUD dismissWithSuccess:[JSON objectForKey:@"title"] afterDelay:3.0f];
+                [SVProgressHUD dismissWithSuccess:[JSON objectForKey:@"title"] afterDelay:1.5f];
             }
             @catch (NSException *exception) {
                 NSLog(@"exception:%@",exception);
                 NSLog(@"data not found : %@",responseString);
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                [SVProgressHUD dismissWithError:@"Product not found" afterDelay:3.0f];
+                [SVProgressHUD dismissWithError:@"Product not found" afterDelay:2.0f];
             }
             @finally {
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
@@ -333,7 +321,7 @@
             }                      
         }];
         [req setFailedHandler:^(NSError *error){
-            [SVProgressHUD dismissWithError:@"Error happed" afterDelay:3.0f];
+            [SVProgressHUD dismissWithError:@"Error happed" afterDelay:2.0f];
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             NSLog(@"error happend : %@",error);
             [_readerView start];
@@ -469,6 +457,89 @@
         _normalToolbarItems = @[_sortControlItem,_addButton];
     }
     return _normalToolbarItems;
+}
+
+#pragma mark - Fetched Results Controller Delegate
+
+- (NSFetchedResultsController *)fetchedresultsController
+{
+    if (_fetchedresultsController) {
+        return _fetchedresultsController;
+    }
+    NSManagedObjectContext *context = [[SFCoreDataManager sharedManager] managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:context];
+    
+    request.entity = entity;
+    
+    NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:@"titleKana" ascending:NO];
+    NSSortDescriptor *author = [[NSSortDescriptor alloc] initWithKey:@"authorKana" ascending:NO];
+    NSSortDescriptor *created = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:NO];
+    NSSortDescriptor *size = [[NSSortDescriptor alloc] initWithKey:@"bookSize" ascending:NO];
+    
+    request.sortDescriptors = @[ title, author, created, size ];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shelf.identifier == %@",self.shelf.identifier];
+    
+    request.predicate = predicate;
+    
+    NSFetchedResultsController *controller = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:@"Book"];
+    controller.delegate = self;
+    
+    [NSFetchedResultsController deleteCacheWithName:@"Book"];
+    
+    NSError *error = nil;
+    if (![controller performFetch:&error]) {
+        NSLog(@"perform failed %@",error);
+        return nil;
+    }
+    _fetchedresultsController = controller;
+    return _fetchedresultsController;
+}
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableShelfViewController.tableView beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableShelfViewController.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        case NSFetchedResultsChangeDelete:
+            [self.tableShelfViewController.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath
+{    
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableShelfViewController.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        case NSFetchedResultsChangeDelete:
+            [self.tableShelfViewController.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        case NSFetchedResultsChangeUpdate:
+            [self.tableShelfViewController configureCell:[self.tableShelfViewController.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            break;
+        case NSFetchedResultsChangeMove:
+            [self.tableShelfViewController.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableShelfViewController.tableView insertRowsAtIndexPaths:@[newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableShelfViewController.tableView endUpdates];
 }
 
 @end

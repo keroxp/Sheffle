@@ -23,11 +23,11 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ShelvesCell" textLabel="qnz-J6-i4n" detailTextLabel="DW0-yz-que" style="IBUITableViewCellStyleValue1" id="iPI-QJ-2Iw">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ShelvesCell" textLabel="qnz-J6-i4n" detailTextLabel="DW0-yz-que" style="IBUITableViewCellStyleValue1" id="iPI-QJ-2Iw">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qnz-J6-i4n">
@@ -38,7 +38,7 @@
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DW0-yz-que">
-                                            <rect key="frame" x="266" y="11" width="44" height="21"/>
+                                            <rect key="frame" x="246" y="11" width="44" height="21"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.2196078431372549" green="0.32941176470588235" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
@@ -55,7 +55,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="CH9-ER-CCn" id="wsl-nq-JMn"/>
-                        <segue destination="iz4-nH-lps" kind="push" id="Poe-bm-S4U"/>
+                        <segue destination="fXz-FU-MVf" kind="push" identifier="showShelf" id="RwX-vZ-NbZ"/>
                     </connections>
                 </tableViewController>
                 <searchDisplayController id="CH9-ER-CCn">
@@ -68,41 +68,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1346" y="-354"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="hlE-In-4zx">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="L0X-B6-0Mx" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="iz4-nH-lps" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="WtB-fU-XtJ">
-                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="r7e-Wo-23c"/>
-                </viewController>
-            </objects>
-            <point key="canvasLocation" x="1793" y="-354"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="xb8-oX-4dj">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GGs-Gt-bFa" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <navigationController definesPresentationContext="YES" toolbarHidden="NO" id="FHp-Ah-62F" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="keg-3a-Nwx">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="hXv-EW-YLt">
-                        <rect key="frame" x="0.0" y="436" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
-                    <connections>
-                        <segue destination="EqQ-gZ-jNy" kind="relationship" relationship="rootViewController" id="MS9-n5-1cL"/>
-                    </connections>
-                </navigationController>
-            </objects>
-            <point key="canvasLocation" x="818" y="-354"/>
+            <point key="canvasLocation" x="442" y="-528"/>
         </scene>
         <!--Shelf View Controller-->
         <scene sceneID="v9f-aO-wjr">
@@ -128,11 +94,10 @@
                     <connections>
                         <outlet property="searchDisplayController" destination="FUa-M4-BAn" id="EQD-Tp-hn8"/>
                         <segue destination="jYO-vu-AXV" kind="push" identifier="showBook" id="yeA-Ua-hvz"/>
-                        <segue destination="FHp-Ah-62F" kind="modal" identifier="showShelves" modalTransitionStyle="flipHorizontal" id="dHo-VD-qNa"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="270" y="-49"/>
+            <point key="canvasLocation" x="894" y="-528"/>
         </scene>
         <!--Book View Controller-->
         <scene sceneID="nid-qq-5Gd">
@@ -178,7 +143,7 @@
                     <navigationItem key="navigationItem" id="yrM-Mm-1Mh"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="818" y="327"/>
+            <point key="canvasLocation" x="1342" y="-528"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1fj-et-YaO">
@@ -193,11 +158,11 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
-                        <segue destination="fXz-FU-MVf" kind="relationship" relationship="rootViewController" id="WAQ-5a-gyG"/>
+                        <segue destination="EqQ-gZ-jNy" kind="relationship" relationship="rootViewController" id="yBz-vo-odg"/>
                     </connections>
                 </navigationController>
             </objects>
-            <point key="canvasLocation" x="-180" y="-49"/>
+            <point key="canvasLocation" x="-12" y="-528"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

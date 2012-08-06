@@ -18,10 +18,12 @@
 {
     // Override point for customization after application launch.
     
-    // Root View Controllerを初期化
-    UINavigationController *rvc = (UINavigationController*)[[self window] rootViewController];
-    [[rvc navigationBar] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forBarMetrics:UIBarMetricsDefault];
-    [[rvc toolbar] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+    
+    [[UIBarButtonItem appearance] setTintColor:kBarTintColor];
+    [[UISegmentedControl appearance] setTintColor:kBarTintColor];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forBarMetrics:UIBarMetricsDefault];
+    
+    [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
 
     return YES;
 }
