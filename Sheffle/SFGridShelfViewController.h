@@ -29,7 +29,9 @@ typedef enum {
 
 @property (weak, nonatomic) SFShelf *currentShelf;
 @property (strong, nonatomic) GSBookShelfView *bookShelfView;
-@property (readonly) NSFetchedResultsController *fetchedResultsController;
-@property (readonly) NSManagedObjectContext *managedObjectContext;
+@property (weak,nonatomic) NSFetchedResultsController *fetchedResultsController;
+
+- (void)switchToNormalMode;
+- (void)switchToEditMode;
 
 @end

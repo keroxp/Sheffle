@@ -26,13 +26,10 @@
     UIBarButtonItem *_addBarButton;
 }
 
-- (void)managedObjectContextDidSave:(NSManagedObjectContext*)managedObjectContext;
-
 @end
 
 @implementation SFGridShelfViewController
 
-@synthesize managedObjectContext = __managedObjectContext;
 @synthesize fetchedResultsController = __fetchedResultsController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -54,20 +51,32 @@
 {
     [super viewDidLoad];
     
-    [self initBarButtons];
-    [self switchToNormalMode];
-	[self initBooks];
+    // ボタンの初期化（あとで消す）
+    _editBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonClicked:)];
+    _cancleBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancleButtonClicked:)];
     
+    _trashBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(trashButtonClicked:)];
+    _addBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonClicked:)];
+    
+    [self switchToNormalMode];
+    
+    // 本の初期化
+    _bookArray = [NSMutableArray arrayWithArray:self.fetchedResultsController.fetchedObjects];
+    _bookStatus = [NSMutableArray arrayWithCapacity:[_bookArray count]];
+    
+    for (int i = 0 , max = [_bookStatus count]; i < max; i++) {
+        [_bookStatus addObject:@(BOOK_UNSELECTED)];
+    }
+    _booksIndexsToBeRemoved = [NSMutableIndexSet indexSet];
+        
     [self.bookShelfView setContentOffset:CGPointMake(0, 120)];
     
     _bookShelfView = [[GSBookShelfView alloc] initWithFrame:CGRectMake(0, 0, 320, 460 - 88)];
-    [_bookShelfView setDataSource:self];
+    _bookShelfView.dataSource = self;
     
     [self.view addSubview:_bookShelfView];
     
-    // MOCの保存通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(managedObjectContextDidSave:) name:NSManagedObjectContextDidSaveNotification object:self.managedObjectContext];
-    
+    self.navigationController.toolbarHidden = YES;
     //[self performSelector:@selector(testScrollToRow) withObject:self afterDelay:3];
     
 }
@@ -86,31 +95,6 @@
     [_bookShelfView reloadData];
 }
 
-- (void)initBooks {
-//    NSInteger numberOfBooks = 100;
-//    _bookArray = [[NSMutableArray alloc] initWithCapacity:numberOfBooks];
-//    _bookStatus = [[NSMutableArray alloc] initWithCapacity:numberOfBooks];
-//    for (int i = 0; i < numberOfBooks; i++) {
-//        NSNumber *number = [NSNumber numberWithInt:i % 4 + 1];
-//        [_bookArray addObject:number];
-//        [_bookStatus addObject:[NSNumber numberWithInt:BOOK_UNSELECTED]];
-//    }
-//
-    _bookArray = [NSMutableArray arrayWithArray:[self.currentShelf sortedBooks]];
-    _bookStatus = [NSMutableArray arrayWithCapacity:[_bookArray count]];
-    for (int i = 0 , max = [_bookStatus count]; i < max; i++) {
-        [_bookArray addObject:@(BOOK_UNSELECTED)];
-    }
-    _booksIndexsToBeRemoved = [NSMutableIndexSet indexSet];
-}
-
-- (void)initBarButtons {
-    _editBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonClicked:)];
-    _cancleBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancleButtonClicked:)];
-    
-    _trashBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(trashButtonClicked:)];
-    _addBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonClicked:)];
-}
 
 - (void)switchToNormalMode {
     _editMode = NO; 
@@ -152,14 +136,16 @@
 - (UIView *)bookShelfView:(GSBookShelfView *)bookShelfView bookViewAtIndex:(NSInteger)index {
     static NSString *identifier = @"bookView";
     SFShelfBookView *bookView = (SFShelfBookView*)[bookShelfView dequeueReuseableBookViewWithIdentifier:identifier];
+    SFBook *book = [_bookArray objectAtIndex:index];
     if (bookView == nil) {
         bookView = [[SFShelfBookView alloc] initWithFrame:CGRectZero];
         bookView.reuseIdentifier = identifier;
         [bookView addTarget:self action:@selector(bookViewClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     [bookView setIndex:index];
-    [bookView setSelected:[(NSNumber *)[_bookStatus objectAtIndex:index] intValue]];
-    [bookView setBackgroundImage:[UIImage imageNamed:@"book.png"] forState:UIControlStateNormal];
+    //TODO:空配列への参照でエラーが出る
+//    [bookView setSelected:[(NSNumber *)[_bookStatus objectAtIndex:index] intValue]];
+    [bookView setBackgroundImage:[UIImage imageWithData:book.image] forState:UIControlStateNormal];
     return bookView;
 }
 
@@ -193,8 +179,8 @@
 
 - (UIView *)headerViewOfBookShelfView:(GSBookShelfView *)bookShelfView {
     
-    SFShelfRowView *srv = [[SFShelfRowView alloc] initWithFrame:CGRectMake(0, 0, 320, 120)];
-    return srv;
+//    SFShelfRowView *srv = [[SFShelfRowView alloc] initWithFrame:CGRectMake(0, 0, 320, 120)];
+//    return srv;
     
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
     if (UIDeviceOrientationIsLandscape(orientation)) {
@@ -233,6 +219,7 @@
 }
 
 - (void)bookShelfView:(GSBookShelfView *)bookShelfView moveBookFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
+    
     if ([(NSNumber *)[_bookStatus objectAtIndex:fromIndex] intValue] == BOOK_SELECTED) {
         [_booksIndexsToBeRemoved removeIndex:fromIndex];
         [_booksIndexsToBeRemoved addIndex:toIndex];
@@ -300,6 +287,7 @@
     
     if (_editMode) {
         NSNumber *status = [NSNumber numberWithInt:bookView.selected];
+        
         [_bookStatus replaceObjectAtIndex:bookView.index withObject:status];
         
         if (bookView.selected) {
@@ -312,16 +300,6 @@
     else {
         [bookView setSelected:NO];
     }
-}
-
-#pragma mark - Core Data
-
-- (NSManagedObjectContext *)managedObjectContext
-{
-    if (!__managedObjectContext) {
-        __managedObjectContext = [[SFCoreDataManager sharedManager] managedObjectContext];
-    }
-    return __managedObjectContext;
 }
 
 @end

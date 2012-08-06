@@ -21,8 +21,8 @@
     UIBarButtonItem *_donebutton;
     UIBarButtonItem *_scanButton;
     UIBarButtonItem *_addButton;
-    UIBarButtonItem *_displayControlItem;
     UISegmentedControl *_displayControl;
+    UIBarButtonItem *_displayControlItem;
     UIBarButtonItem *_trashButton;
     UIBarButtonItem *_moveButton;
     UIBarButtonItem *_staredButton;
@@ -32,6 +32,7 @@
     ZBarReaderView *_readerView;
 }
 
+@property (strong,nonatomic) NSArray *rightBarItems;
 @property (strong,nonatomic) NSArray *normalToolbarItems;
 @property (strong,nonatomic) NSArray *editToolbarItems;
 
@@ -41,7 +42,8 @@
 - (void)scanButtonDidTap:(id)sender;
 - (void)doneButtonDidTap:(id)sender;
 - (void)addButtonDidTap:(id)sender;
-- (void)segmentedControlDidChange:(UISegmentedControl*)sender;
+- (void)sortControlDidChange:(UISegmentedControl*)sender;
+- (void)displayControlDidChange:(UISegmentedControl*)sender;
 - (void)trashButtonDidTap:(id)sender;
 - (void)moveButtonDidTap:(id)sender;
 - (void)staredButtonDidTap:(id)sender;
@@ -62,18 +64,27 @@
     // インスタンス変数の初期化
     
     _shelvesButton = [[UIBarButtonItem alloc] initWithTitle:@"Shelves" style:UIBarButtonItemStyleBordered target:self action:@selector(shelvesButtonDidTap:)];
-    // 編集ボタン
+    // 編集
     _editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(editButtonDidTap:)];
-    // スキャンボタン
+    // スキャン
     _scanButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(scanButtonDidTap:)];
-    // 完了ボタン
+    // 完了
     _donebutton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonDidTap:)];
     // ソート
-    _sortControl = [[UISegmentedControl alloc] initWithItems:@[@"Title",@"Author",@"Date",@"Stared"]];
+    _sortControl = [[UISegmentedControl alloc] initWithItems:@[@"Title",@"Author",@"Date"]];
     _sortControl.selectedSegmentIndex = 0;
     _sortControl.segmentedControlStyle = UISegmentedControlStyleBar;
-    [_sortControl addTarget:self action:@selector(segmentedControlDidChange:) forControlEvents:UIControlEventValueChanged];
+    [_sortControl addTarget:self action:@selector(sortControlDidChange:) forControlEvents:UIControlEventValueChanged];
     _sortControlItem = [[UIBarButtonItem alloc] initWithCustomView:_sortControl];
+    
+    // 切り替え
+    _displayControl = [[UISegmentedControl alloc] initWithItems:@[@"Grid",@"Table"]];
+    _displayControl.selectedSegmentIndex = 0;
+    _displayControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    [_displayControl addTarget:self action:@selector(displayControlDidChange:) forControlEvents:UIControlEventValueChanged];
+    _displayControlItem = [[UIBarButtonItem alloc] initWithCustomView:_displayControl];
+
+    
     // 追加ボタン
     _addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
     // 消去ボタン
@@ -82,44 +93,11 @@
     _moveButton = [[UIBarButtonItem alloc] initWithTitle:@"Move" style:UIBarButtonItemStyleBordered target:self action:@selector(moveButtonDidTap:)];
     // ふぁぼボタン
     _staredButton = [[UIBarButtonItem alloc] initWithTitle:@"Favorite" style:UIBarButtonItemStyleBordered target:self action:@selector(staredButtonDidTap:)];
-
-    // Reader Viewの初期化
-    ZBarImageScanner *scanner = [[ZBarImageScanner alloc] init];
-    [scanner setSymbology: ZBAR_I25 config: ZBAR_CFG_ENABLE to: 0];
-    _readerView = [[ZBarReaderView alloc] initWithImageScanner:scanner];
-    _readerView.frame = kDefaultReaderViewFrame;
-    _readerView.readerDelegate = self;
-    [self.view addSubview:_readerView];
-        
-    // Shelf Viewの初期化
-    
-    // ２種類のShelfViewControllerを構築
-    self.tableShelfViewController = [[SFTableShelfViewController alloc] initWithStyle:UITableViewStylePlain];
-//    _gridShelfViewController = [[SFGridShelfViewController alloc] init];
-    
-    self.tableShelfViewController.fetchedResultsController = self.fetchedresultsController;
-    
-    self.tableShelfViewController.view.frame = kDefaultShelfViewFrame;
-//    [[_gridShelfViewController view] setFrame:kDefaultShelfViewFrame];
-    [_tableShelfViewController didMoveToParentViewController:self];
-    
-    [self addChildViewController:_tableShelfViewController];
-//    [self addChildViewController:_gridShelfViewController];
-    
-
-    _shelfView.frame = kDefaultShelfViewFrame;
-    _shelfView = self.tableShelfViewController.view;
-//    _shelfView = [_gridShelfViewController view];
-    
-    [self.view addSubview:_shelfView];
-    
-    _shelfViewMode = SFShelfViewModeTable;
     
     // NavigationBarを初期化
     
-    self.title = @"Shelves";
-//    self.navigationItem.leftBarButtonItem = _shelvesButton;
-    self.navigationItem.rightBarButtonItem = _editButton;    
+    self.title =  self.shelf.title;
+    self.navigationItem.rightBarButtonItems = self.rightBarItems;
 
     // Toolbarを初期化
     
@@ -149,11 +127,44 @@
     [bottomShadowLayer setShadowOffset:CGSizeMake(0, 2.5)];
     [bottomShadowLayer setShadowColor:[[UIColor blackColor] CGColor]];
     [bottomShadowLayer setShadowOpacity:0.75];
-    [bottomShadowLayer setShadowPath:[dpsPath CGPath]];    
+    [bottomShadowLayer setShadowPath:[dpsPath CGPath]];
     
-//    NSLog(@"%@", [_gridShelfViewController view]);
-//    NSLog(@"%@", [_gridShelfViewController bookShelfView]);
-//    NSLog(@"%@",_tableShelfViewController.view);
+    // Reader Viewの初期化
+    ZBarImageScanner *scanner = [[ZBarImageScanner alloc] init];
+    [scanner setSymbology: ZBAR_I25 config: ZBAR_CFG_ENABLE to: 0];
+    _readerView = [[ZBarReaderView alloc] initWithImageScanner:scanner];
+    _readerView.frame = kDefaultReaderViewFrame;
+    _readerView.readerDelegate = self;
+    [self.view addSubview:_readerView];
+    
+    // Shelf Viewの初期化
+    
+    self.shelfView = [[UIView alloc] initWithFrame:kDefaultShelfViewFrame];
+    [self.view addSubview:self.shelfView];
+    
+    // ２種類のShelfViewControllerを構築
+    self.tableShelfViewController = [[SFTableShelfViewController alloc] initWithStyle:UITableViewStylePlain];
+    self.gridShelfViewController = [[SFGridShelfViewController alloc] init];
+    
+    self.tableShelfViewController.fetchedResultsController = self.fetchedresultsController;
+    self.gridShelfViewController.fetchedResultsController = self.fetchedresultsController;
+    
+    self.tableShelfViewController.view.frame = kDefaultShelfViewFrame;
+    self.gridShelfViewController.view.frame = kDefaultShelfViewFrame;
+    
+    [self addChildViewController:_tableShelfViewController];
+    [self addChildViewController:_gridShelfViewController];
+    [self.tableShelfViewController didMoveToParentViewController:self];
+    [self.gridShelfViewController didMoveToParentViewController:self];
+    
+    [self.shelfView addSubview:self.tableShelfViewController.view];
+    [self.shelfView addSubview:self.gridShelfViewController.view];
+    
+//    _shelfView = self.tableShelfViewController.view;
+//    _shelfView = [_gridShelfViewController view];
+    
+    _shelfViewMode = SFShelfViewModeTable;
+
 
 }
 
@@ -167,6 +178,8 @@
     _donebutton = nil;
     _sortControl = nil;
     _sortControlItem = nil;
+    _displayControl = nil;
+    _displayControlItem = nil;
     _addButton = nil;
     _trashButton = nil;
     _moveButton = nil;
@@ -186,38 +199,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    NSLog(@"%@ value changed ", keyPath);
-    if ([keyPath isEqualToString:@"editing"]) {
-        if ([change objectForKey:NSKeyValueChangeNewKey] == @(YES)) {
-            // 編集モードへ
-            self.toolbarItems = self.editToolbarItems;
-            switch (_shelfViewMode) {
-                case SFShelfViewModeTable:
-                    [self.tableShelfViewController setEditing:YES animated:YES];
-                    break;
-                case SFShelfViewModeGrid:
-                    break;
-                default:
-                    break;
-            }
-        }else {
-            // ノーマルモードへ
-            self.toolbarItems = self.normalToolbarItems;
-            switch (_shelfViewMode) {
-                case SFShelfViewModeTable:
-                    [self.tableShelfViewController setEditing:NO animated:YES];
-                    break;
-                case SFShelfViewModeGrid:
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-}
-
 - (void)insertNewObject:(NSDictionary *)book image:(UIImage *)image
 {
     SFBook *newBook = [[SFCoreDataManager sharedManager] insertNewBook];
@@ -226,7 +207,6 @@
         // 内部情報をセット
         [newBook setImage2x:UIImagePNGRepresentation(image)];
         [newBook setImage:UIImagePNGRepresentation([self resizeImage:image])];
-//        [newBook setShelf:self.shelf];
         
         // 楽天の情報をセット
         [newBook setAuthor:[book objectForKey:@"author"]];
@@ -347,19 +327,29 @@
                 // 編集終了処理
                 _editButton.style = UIBarButtonItemStyleBordered;
                 _editButton.title = @"Edit";
+                [self.navigationItem setRightBarButtonItems:self.rightBarItems animated:YES];
                 [self setToolbarItems:[self normalToolbarItems] animated:YES];
                 [self.tableShelfViewController setEditing:NO animated:YES];
             }else{
                 // 編集開始処理
                 _editButton.style = UIBarButtonItemStyleDone;
                 _editButton.title = @"Done";
+                [self.navigationItem setRightBarButtonItem:_editButton animated:YES];
                 [self setToolbarItems:[self editToolbarItems] animated:YES];
                 [self.tableShelfViewController setEditing:YES animated:YES];
             }
         }
             break;
         case SFShelfViewModeGrid: {
-            
+            if (self.gridShelfViewController.isEditing) {
+                // 編集終了
+                [self. gridShelfViewController switchToNormalMode];
+                self.gridShelfViewController.editing = NO;
+            }else{
+                // 編集開始
+                [self.gridShelfViewController switchToEditMode];
+                self.gridShelfViewController.editing = YES;
+            }
         }
             break;
         default:
@@ -422,14 +412,51 @@
     }];
 }
 
-- (void)segmentedControlDidChange:(UISegmentedControl *)sender
+- (void)sortControlDidChange:(UISegmentedControl *)sender
 {
     NSLog(@"segmented control did change index : %i",[_sortControl selectedSegmentIndex]);
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            // タイトル
+            break;
+        case 1:
+            // 作者
+            break;
+        case 2:
+            // 日付
+            break;
+        case 3:
+            // 種類
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)displayControlDidChange:(UISegmentedControl *)sender
+{
+    NSLog(@"display change");
+    switch (sender.selectedSegmentIndex) {
+        case 0: {
+            // Gridへ
+            [self transitionFromViewController:self.tableShelfViewController toViewController:self.gridShelfViewController duration:0 options:UIViewAnimationCurveLinear animations:nil completion:nil];
+            _shelfViewMode = SFShelfViewModeGrid;
+        }
+            break;
+        case 1: {
+            // Tableへ
+            [self transitionFromViewController:self.gridShelfViewController toViewController:self.tableShelfViewController duration:0 options:UIViewAnimationCurveLinear animations:nil completion:nil];
+            _shelfViewMode = SFShelfViewModeTable;
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)trashButtonDidTap:(id)sender
 {
-    NSLog(@"trash");;
+    NSLog(@"trash");
 }
 
 - (void)moveButtonDidTap:(id)sender
@@ -443,10 +470,20 @@
 }
 
 #pragma mark - Toolbar Items
+
+- (NSArray *)rightBarItems
+{
+    if (!_rightBarItems) {
+        _rightBarItems = @[_scanButton, _editButton ];
+    }
+    return _rightBarItems;
+}
+
 - (NSArray *)editToolbarItems
 {
     if (!_editToolbarItems) {
-        _editToolbarItems = @[_trashButton, _moveButton, _staredButton];
+        UIBarButtonItem *sp1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        _editToolbarItems = @[_trashButton,sp1, _moveButton,sp1, _staredButton];
     }
     return _editToolbarItems;
 }
@@ -454,7 +491,8 @@
 - (NSArray *)normalToolbarItems
 {
     if (!_normalToolbarItems) {
-        _normalToolbarItems = @[_sortControlItem,_addButton];
+        UIBarButtonItem *spacor = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        _normalToolbarItems = @[_sortControlItem,spacor,_displayControlItem];
     }
     return _normalToolbarItems;
 }

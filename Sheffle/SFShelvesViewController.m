@@ -47,6 +47,8 @@
     
     UIBarButtonItem *separator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
+    self.title = [NSString stringWithFormat:@"Shefves   (%d)",self.fetchedResultsController.fetchedObjects.count];
+    
     self.toolbarItems = @[separator,addButton];    
 //    self.navigationItem.leftBarButtonItem = cancelButton;
     // Viewの初期化
