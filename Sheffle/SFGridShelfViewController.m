@@ -11,11 +11,7 @@
 #define ROW_HEIGHT 140.0f
 
 @interface SFGridShelfViewController ()
-{
-
-    NSMutableArray *_bookArray;
-    NSMutableArray *_bookStatus;
-    
+{    
     NSMutableIndexSet *_booksIndexsToBeRemoved;
     
     BOOL _editMode;
@@ -31,6 +27,8 @@
 @implementation SFGridShelfViewController
 
 @synthesize fetchedResultsController = __fetchedResultsController;
+@synthesize bookArray = _bookArray;
+@synthesize bookStatus = _bookStatus;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,14 +57,8 @@
     _addBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonClicked:)];
     
     [self switchToNormalMode];
+    [self initBooks];
     
-    // 本の初期化
-    _bookArray = [NSMutableArray arrayWithArray:self.fetchedResultsController.fetchedObjects];
-    _bookStatus = [NSMutableArray arrayWithCapacity:[_bookArray count]];
-    
-    for (int i = 0 , max = [_bookStatus count]; i < max; i++) {
-        [_bookStatus addObject:@(BOOK_UNSELECTED)];
-    }
     _booksIndexsToBeRemoved = [NSMutableIndexSet indexSet];
         
     [self.bookShelfView setContentOffset:CGPointMake(0, 120)];
@@ -95,6 +87,17 @@
     [_bookShelfView reloadData];
 }
 
+- (void)initBooks
+{
+    // 本の初期化
+    _bookArray = [NSMutableArray arrayWithArray:self.fetchedResultsController.fetchedObjects];
+    _bookStatus = [NSMutableArray arrayWithCapacity:[_bookArray count]];
+    
+    for (int i = 0 , max = [_bookStatus count]; i < max; i++) {
+        [_bookStatus addObject:@(BOOK_UNSELECTED)];
+    }
+}
+
 
 - (void)switchToNormalMode {
     _editMode = NO; 
@@ -120,6 +123,7 @@
 #pragma mark GSBookShelfViewDataSource
 
 - (NSInteger)numberOfBooksInBookShelfView:(GSBookShelfView *)bookShelfView {
+    NSLog(@"books are %i",[_bookArray count]);
     return [_bookArray count];
 }
 
@@ -137,6 +141,7 @@
     static NSString *identifier = @"bookView";
     SFShelfBookView *bookView = (SFShelfBookView*)[bookShelfView dequeueReuseableBookViewWithIdentifier:identifier];
     SFBook *book = [_bookArray objectAtIndex:index];
+    
     if (bookView == nil) {
         bookView = [[SFShelfBookView alloc] initWithFrame:CGRectZero];
         bookView.reuseIdentifier = identifier;
@@ -300,6 +305,30 @@
     else {
         [bookView setSelected:NO];
     }
+}
+
+#pragma mark - Accessor for Books data source
+
+- (void)insertBook:(SFBook *)book atIndex:(NSInteger)index
+{
+    [self.bookArray insertObject:book atIndex:index];
+    [self.bookShelfView reloadData];
+}
+
+- (void)removeBookAtIndex:(NSInteger)index
+{
+    [self.bookArray removeObjectAtIndex:index];
+    [self.bookShelfView reloadData];
+}
+
+#pragma mark - Setter / Getter
+
+-(void)setBookArray:(NSMutableArray *)bookArray
+{
+    if (bookArray != _bookArray) {
+        _bookArray = bookArray;
+    }    
+//    [self.bookShelfView reloadData];
 }
 
 @end

@@ -196,8 +196,7 @@
         ecell.textField.delegate = self;
     }else{
         cell.textLabel.text = shelf.title;
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%d",shelf.books.count];
-        cell.detailTextLabel.highlighted = YES;
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%i",shelf.books.count];
     }
 }
 
@@ -237,6 +236,7 @@
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the item to be re-orderable.
+    // shelfのindexの処理はここでやる
     return YES;
 }
 

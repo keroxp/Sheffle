@@ -85,6 +85,17 @@
     return cell;
 }
 
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"reload table");
+    SFBook *book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [cell.textLabel setText:book.title];
+    [cell.detailTextLabel setText:book.author];
+    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+}
+
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
@@ -216,15 +227,6 @@
  [self.tableView reloadData];
  }
  */
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    NSLog(@"reload table");
-    SFBook *book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [cell.textLabel setText:book.title];
-    [cell.detailTextLabel setText:book.author];
-    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-}
 
 #pragma mark - Segue
 

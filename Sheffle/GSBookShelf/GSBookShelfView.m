@@ -81,8 +81,9 @@
 
 - (void)didMoveToSuperview {
     [super didMoveToSuperview];
-    
-    [self reloadData];
+    if (self.superview) {
+        [self reloadData];
+    }
 }
 
 #pragma mark - Accessors
@@ -159,6 +160,7 @@
 #pragma mark - Public
 
 - (void)reloadData {
+    NSLog(@"reload grid");
 
     _numberOfBooksInCell = [_dataSource numberOFBooksInCellOfBookShelfView:self];
     

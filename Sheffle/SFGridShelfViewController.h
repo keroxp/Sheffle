@@ -31,6 +31,12 @@ typedef enum {
 @property (strong, nonatomic) GSBookShelfView *bookShelfView;
 @property (weak,nonatomic) NSFetchedResultsController *fetchedResultsController;
 
+@property (strong, nonatomic) NSMutableArray *bookArray;
+@property (strong, nonatomic) NSMutableArray *bookStatus;
+
+- (void)insertBook:(SFBook*)book atIndex:(NSInteger)index;
+- (void)removeBookAtIndex:(NSInteger)index;
+
 - (void)switchToNormalMode;
 - (void)switchToEditMode;
 

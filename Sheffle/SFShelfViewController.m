@@ -30,6 +30,7 @@
     UIBarButtonItem *_sortControlItem;
     SFShelf *_currentShelf;
     ZBarReaderView *_readerView;
+    id _contentsBeforeChange;
 }
 
 @property (strong,nonatomic) NSArray *rightBarItems;
@@ -192,6 +193,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -439,13 +445,13 @@
     switch (sender.selectedSegmentIndex) {
         case 0: {
             // Gridへ
-            [self transitionFromViewController:self.tableShelfViewController toViewController:self.gridShelfViewController duration:0 options:UIViewAnimationCurveLinear animations:nil completion:nil];
+            [self transitionFromViewController:self.tableShelfViewController toViewController:self.gridShelfViewController duration:1.0 options:UIViewAnimationOptionTransitionFlipFromRight animations:nil completion:nil];
             _shelfViewMode = SFShelfViewModeGrid;
         }
             break;
         case 1: {
             // Tableへ
-            [self transitionFromViewController:self.gridShelfViewController toViewController:self.tableShelfViewController duration:0 options:UIViewAnimationCurveLinear animations:nil completion:nil];
+            [self transitionFromViewController:self.gridShelfViewController toViewController:self.tableShelfViewController duration:1.0 options:UIViewAnimationOptionTransitionFlipFromRight animations:nil completion:nil];
             _shelfViewMode = SFShelfViewModeTable;
         }
             break;
@@ -545,8 +551,10 @@
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {    
     switch(type) {
-        case NSFetchedResultsChangeInsert:
+        case NSFetchedResultsChangeInsert: {
+            // TableShelfViewを更新
             [self.tableShelfViewController.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+        }
             break;
         case NSFetchedResultsChangeDelete:
             [self.tableShelfViewController.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
@@ -559,11 +567,26 @@
       newIndexPath:(NSIndexPath *)newIndexPath
 {    
     switch(type) {
-        case NSFetchedResultsChangeInsert:
+        case NSFetchedResultsChangeInsert: {
+            // Table Shelf View
             [self.tableShelfViewController.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+            // Grid Shelf View
+            NSInteger i = [self.fetchedresultsController.fetchedObjects indexOfObject:anObject];            
+            NSIndexSet *is = [NSIndexSet indexSetWithIndex:i];
+            [self.gridShelfViewController.bookShelfView insertBookViewsAtIndexs:is animate:YES];
+            self.gridShelfViewController.bookArray = [NSMutableArray arrayWithArray:self.fetchedresultsController.fetchedObjects];
+        }
             break;
-        case NSFetchedResultsChangeDelete:
+        case NSFetchedResultsChangeDelete: {
+            // Table Shelf View
             [self.tableShelfViewController.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            // Grid Shelf View
+            NSInteger i = [self.gridShelfViewController.bookArray indexOfObject:anObject];
+            NSIndexSet *is = [NSIndexSet indexSetWithIndex:i];
+            
+            [self.gridShelfViewController.bookShelfView removeBookViewsAtIndexs:is animate:YES];
+            self.gridShelfViewController.bookArray = [NSMutableArray arrayWithArray:self.fetchedresultsController.fetchedObjects];
+        }
             break;
         case NSFetchedResultsChangeUpdate:
             [self.tableShelfViewController configureCell:[self.tableShelfViewController.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];

@@ -35,7 +35,7 @@ typedef enum{
 @property (readonly) SFShelfViewMode shelfViewMode;
 // Core Data
 @property (strong, nonatomic) NSFetchedResultsController* fetchedresultsController;
-@property (weak, nonatomic) SFShelf *shelf;
+@property (strong, nonatomic) SFShelf *shelf;
 // UI
 @property (strong, nonatomic) UIView *readerView;
 @property (strong, nonatomic) UIView *shelfView;
