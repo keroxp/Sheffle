@@ -84,13 +84,13 @@
 
 - (void)cancelButtonDidTap:(id)sender
 {
-    NSLog(@"cencel");
+    $(@"cencel");
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)addButtonDidTap:(id)sender
 {
-    NSLog(@"add");
+    $(@"add");
     if (!_alertView) {
         _alertView = [[UIAlertView alloc] initWithTitle:@"New Shelf" message:nil delegate:self cancelButtonTitle:@"Cencel" otherButtonTitles:@"Save", nil];
         _alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
@@ -184,7 +184,7 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"configure cell");
+    $(@"configure cell");
     SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:indexPath];
     if (NO) {
         SFEditableCell *ecell = (SFEditableCell*)cell;
@@ -223,7 +223,7 @@
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            $(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
     }
@@ -276,7 +276,7 @@
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
-    NSLog(@"did change content");
+    $(@"did change content");
     UITableView *tableView = self.tableView;
     
     switch(type) {
@@ -346,7 +346,7 @@
     
     NSError *error = nil;
     if (![_fetchedResultsController performFetch:&error]) {
-        NSLog(@"unsolvable error : %@", [error userInfo]);
+        $(@"unsolvable error : %@", [error userInfo]);
         abort();
     }
     return _fetchedResultsController;

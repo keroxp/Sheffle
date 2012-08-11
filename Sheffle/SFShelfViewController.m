@@ -281,36 +281,35 @@
         
         // 成功時および失敗時のハンドラをセット
         [req setCompletionHandler:^(NSHTTPURLResponse *responseHeader, NSString *responseString){
-            //        NSLog(@"Reponse is : %@",responseHeader);
-            //        NSLog(@"body is %@",responseString);
-            NSDictionary *JSON = @{};
-            @try {
-                JSON = [[[[[[responseString JSONValue] objectForKey:@"Body"] objectForKey:@"BooksBookSearch"] objectForKey:@"Items"] objectForKey:@"Item"] objectAtIndex:0];
+            //        $(@"Reponse is : %@",responseHeader);
+            //        $(@"body is %@",responseString);
+            NSDictionary *JSON = [responseString JSONValue];
+            if ([JSON objectForKey:@"Body"] != nil && [JSON objectForKey:@"Body"] != [NSNull null]) {
+                // 成功時
+                JSON = [[[[[JSON objectForKey:@"Body"] objectForKey:@"BooksBookSearch"] objectForKey:@"Items"] objectForKey:@"Item"] objectAtIndex:0];
+                NSString *productURL = [JSON objectForKey:@"largeImageUrl"];
                 NSError *error = nil;
-                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[JSON objectForKey:@"largeImageUrl"]] options:NSDataReadingUncached error: &error];
+                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:productURL] options:NSDataReadingUncached error: &error];
                 UIImage *cover = [UIImage imageWithData:data];
                 if (error) {
-                    NSLog(@"Error : %@", error);
+                    $(@"Error : %@", error);
                 }
                 [self insertNewObject:JSON image:cover];
                 [SVProgressHUD dismissWithSuccess:[JSON objectForKey:@"title"] afterDelay:1.5f];
-            }
-            @catch (NSException *exception) {
-                NSLog(@"exception:%@",exception);
-                NSLog(@"data not found : %@",responseString);
+            }else{
+                // 失敗時
+                $(@"data might not be found");
                 [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                 [SVProgressHUD dismissWithError:@"Product not found" afterDelay:2.0f];
             }
-            @finally {
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                [[self view] setUserInteractionEnabled:YES];
-                [_readerView start];
-            }                      
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            [[self view] setUserInteractionEnabled:YES];
+            [_readerView start];
         }];
         [req setFailedHandler:^(NSError *error){
             [SVProgressHUD dismissWithError:@"Error happed" afterDelay:2.0f];
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            NSLog(@"error happend : %@",error);
+            $(@"error happend : %@",error);
             [_readerView start];
         }];
         
@@ -390,7 +389,7 @@
 }
 
 - (void)addButtonDidTap:(id)sender {
-    NSLog(@"add button did tap");
+    $(@"add button did tap");
     [_readerView start];
     switch (_shelfViewMode) {
         case SFShelfViewModeTable:
@@ -412,7 +411,7 @@
 
 - (void)sortControlDidChange:(UISegmentedControl *)sender
 {
-    NSLog(@"segmented control did change index : %i",[_sortControl selectedSegmentIndex]);
+    $(@"segmented control did change index : %i",[_sortControl selectedSegmentIndex]);
     switch (sender.selectedSegmentIndex) {
         case 0:
             // タイトル
@@ -433,7 +432,7 @@
 
 - (void)displayControlDidChange:(UISegmentedControl *)sender
 {
-    NSLog(@"display change");
+    $(@"display change");
     switch (sender.selectedSegmentIndex) {
         case 0: {
             // Gridへ
@@ -456,7 +455,7 @@
 
 - (void)trashButtonDidTap:(id)sender
 {
-    NSLog(@"trash");
+    $(@"trash");
     switch (self.shelfViewMode) {
         case SFShelfViewModeGrid: {
             NSIndexSet *is = self.gridShelfViewController.booksIndexsToBeRemoved;
@@ -487,12 +486,12 @@
 
 - (void)moveButtonDidTap:(id)sender
 {
-    NSLog(@"move");
+    $(@"move");
 }
 
 - (void)staredButtonDidTap:(id)sender
 {
-    NSLog(@"star");;
+    $(@"star");;
 }
 
 #pragma mark - Toolbar Items
@@ -555,7 +554,7 @@
     
     NSError *error = nil;
     if (![controller performFetch:&error]) {
-        NSLog(@"perform failed %@",error);
+        $(@"perform failed %@",error);
         return nil;
     }
     _fetchedresultsController = controller;

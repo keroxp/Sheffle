@@ -171,7 +171,7 @@ typedef enum {
         [_reuseableBookViews setObject:bookViewSet forKey:reuseIdentifier];
     }
     [bookViewSet addObject:bookView];
-    //NSLog(@"bookViewSet count:%d", [bookViewSet count]);
+    //$(@"bookViewSet count:%d", [bookViewSet count]);
 }
 
 - (UIView *)dequeueReusableBookViewWithIdentifier:(NSString *)identifier {
@@ -198,7 +198,7 @@ typedef enum {
         //bookView.tag = position.index; // set the tag as the index
         [bookView setFrame:[self bookViewRectAtBookViewPosition:position]];
         
-        //NSLog(@"bookView Frame:%@", NSStringFromCGRect(bookView.frame));
+        //$(@"bookView Frame:%@", NSStringFromCGRect(bookView.frame));
         /*if (![_indexsOfBookViewToBeRemoved containsIndex:position.index] && !_isRemoving) {
             [self addSubview:bookView];
         }*/
@@ -271,8 +271,8 @@ typedef enum {
     // only two of these four steps will happen for each situation. Thanks to these we don't need to consider about where to insert or remove a propper bookView. Just add or remove then at the head or tail.
 
     
-    //NSLog(@"bookViewContainer layout");
-    //NSLog(@"visibleRect %@", NSStringFromCGRect(visibleRect));
+    //$(@"bookViewContainer layout");
+    //$(@"visibleRect %@", NSStringFromCGRect(visibleRect));
     _visibleRect = visibleRect;
     
     NSInteger numberOfBooksInCell = _parentBookShelfView.numberOfBooksInCell;
@@ -285,7 +285,7 @@ typedef enum {
     NSInteger firstNeededRow = MAX(0, floorf(CGRectGetMinY(visibleRect) / _parentBookShelfView.cellHeight));
     NSInteger lastNeededRow = MIN(numberOfCells - 1, floorf(CGRectGetMaxY(visibleRect) / _parentBookShelfView.cellHeight));
     
-    //NSLog(@"\n------------\nfirstNeededRow:%d firstVisibleRow:%d\nlastNeededRow: %d lastVisibleRow: %d\n************", firstNeededRow, _firstVisibleRow, lastNeededRow, _lastVisibleRow);
+    //$(@"\n------------\nfirstNeededRow:%d firstVisibleRow:%d\nlastNeededRow: %d lastVisibleRow: %d\n************", firstNeededRow, _firstVisibleRow, lastNeededRow, _lastVisibleRow);
     
     // remove and add bookview according to the row
     if (_firstVisibleRow == -1) {
@@ -367,7 +367,7 @@ typedef enum {
     }
     
     //[self checkVisibleBookViewsValid];
-    //NSLog(@"visible count:%d", [_visibleBookViews count]);
+    //$(@"visible count:%d", [_visibleBookViews count]);
     _firstVisibleRow = firstNeededRow;
     _lastVisibleRow = lastNeededRow;
 }
@@ -771,7 +771,7 @@ typedef enum {
                         options:UIViewAnimationCurveLinear | UIViewAnimationOptionLayoutSubviews
                      animations:^{
                          // Dissmiss BookView
-                         //NSLog(@"disappear animation");
+                         //$(@"disappear animation");
                          
                          __block NSInteger steps = 0;
                          __block NSInteger moveFromIndex = 0;
@@ -804,7 +804,7 @@ typedef enum {
 
                              steps++;
                              
-                             //NSLog(@"index not shown: %@", [_indexsOfBookViewNotShown description]);
+                             //$(@"index not shown: %@", [_indexsOfBookViewNotShown description]);
                          }];
                          while (moveFromIndex < [_visibleBookViews count]) {
                              NSInteger realIndex = [self convertToIndexFromVisibleBookViewIndex:moveFromIndex] - steps;
@@ -815,13 +815,13 @@ typedef enum {
                              moveFromIndex++;
                          }
                      }completion:^(BOOL finished) {
-                         //NSLog(@"disappear animation completion");
+                         //$(@"disappear animation completion");
                          
                          [UIView animateWithDuration:animate ? 0.3 : 0.0
                                                delay:0.01
                                              options:UIViewAnimationCurveLinear
                                           animations:^ {
-                                              //NSLog(@"move animation");
+                                              //$(@"move animation");
                                               for (int i = 0; i < [_visibleBookViews count]; i++) {
                                                   UIView *bookView = [_visibleBookViews objectAtIndex:i];
                                                   [self moveBookView:bookView steps:[(NSNumber *)[stepsArray objectAtIndex:i] intValue]];
@@ -829,7 +829,7 @@ typedef enum {
                                               return;
                                           }
                                           completion:^(BOOL finished) {
-                                              //NSLog(@"move animation completion");
+                                              //$(@"move animation completion");
                                               [_indexsOfBookViewToBeRemoved removeAllIndexes];
                                               [_indexsOfBookViewNotShown removeAllIndexes];
                                               
@@ -972,15 +972,15 @@ typedef enum {
 #pragma mark - test
 
 - (void)checkVisibleBookViewsValid {
-    //NSLog(@"---------------------------");
+    //$(@"---------------------------");
     int i = ((UIView *)[_visibleBookViews objectAtIndex:0]).tag;
     for (UIView *view in _visibleBookViews) {
         if (i != view.tag) {
-            NSLog(@"$$$$$$ checkVisibleBookViewsValid error");
+            $(@"$$$$$$ checkVisibleBookViewsValid error");
         }
         i++;
     }
-    //NSLog(@"***************************");
+    //$(@"***************************");
 }
 
 @end

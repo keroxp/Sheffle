@@ -107,7 +107,7 @@
 }
 
 - (void)resetContentSize {
-    //NSLog(@"resetContentSize");
+    //$(@"resetContentSize");
     
     // Use the flowing code beteen /* */ to set a custom position for header
     /*
@@ -137,7 +137,7 @@
     
     [_belowBottomView setFrame:CGRectMake(0, self.contentSize.height, _belowBottomView.frame.size.width, _belowBottomView.frame.size.height)];
     
-    //NSLog(@"cellContainerView frame:%@", NSStringFromCGRect(_cellContainerView.frame));
+    //$(@"cellContainerView frame:%@", NSStringFromCGRect(_cellContainerView.frame));
 }
 
 - (void)resetContentOffset {
@@ -149,7 +149,7 @@
 #pragma mark - Layout
 
 - (void)layoutSubviews {
-    //NSLog(@"layout");
+    //$(@"layout");
     [super layoutSubviews];
     
     //[_bookViewContainerView setNeedsLayout];
@@ -160,7 +160,7 @@
 #pragma mark - Public
 
 - (void)reloadData {
-    NSLog(@"reload grid");
+    $(@"reload grid");
 
     _numberOfBooksInCell = [_dataSource numberOFBooksInCellOfBookShelfView:self];
     

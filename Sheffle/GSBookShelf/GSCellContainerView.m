@@ -94,7 +94,7 @@ typedef enum {
         cellSet = [[NSMutableSet alloc] initWithCapacity:0];
         [_reuseableCells setObject:cellSet forKey:reuseIdentifier];
     }
-    //NSLog(@"cellset count: %d", [cellSet count]);
+    //$(@"cellset count: %d", [cellSet count]);
     [cellSet addObject:cell];
 }
 
@@ -214,7 +214,7 @@ typedef enum {
         }
     }
     
-    //NSLog(@"visible count:%d", [_visibleCells count]);
+    //$(@"visible count:%d", [_visibleCells count]);
     _firstVisibleRow = firstNeededRow;
     _lastVisibleRow = lastNeededRow;
     

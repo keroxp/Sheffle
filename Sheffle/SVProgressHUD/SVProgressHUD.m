@@ -427,8 +427,8 @@
                                  }];
                                  
                                  // uncomment to make sure UIWindow is gone from app.windows
-                                 //NSLog(@"%@", [UIApplication sharedApplication].windows);
-                                 //NSLog(@"keyWindow = %@", [UIApplication sharedApplication].keyWindow);
+                                 //$(@"%@", [UIApplication sharedApplication].windows);
+                                 //$(@"keyWindow = %@", [UIApplication sharedApplication].keyWindow);
                              }
                          }];
     });

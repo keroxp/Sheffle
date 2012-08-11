@@ -98,7 +98,7 @@
 
 
 - (void)switchToNormalMode {
-    NSLog(@"Switch to normal mode");
+    $(@"Switch to normal mode");
     _editMode = NO;
     for (int i = 0; i < [_bookArray count]; i++) {
         [_bookStatus addObject:@(BOOK_UNSELECTED)];
@@ -109,7 +109,7 @@
 }
 
 - (void)switchToEditMode {
-    NSLog(@"Switch to edit mode");
+    $(@"Switch to edit mode");
     _editMode = YES;
     [_booksIndexsToBeRemoved removeAllIndexes];
 //    for (int i = 0; i < [_bookArray count]; i++) {

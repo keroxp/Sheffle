@@ -88,7 +88,7 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"reload table");
+    $(@"reload table");
     SFBook *book = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [cell.textLabel setText:book.title];
     [cell.detailTextLabel setText:book.author];
@@ -112,7 +112,7 @@
         if (![context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            $(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
     }   

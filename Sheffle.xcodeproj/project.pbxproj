@@ -551,10 +551,10 @@
 		A6B9988A15B98D1200D0919C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				A6B9988B15B98D1200D0919C /* Sheffle-Info.plist */,
-				A6B9988C15B98D1200D0919C /* InfoPlist.strings */,
 				A6B9988F15B98D1200D0919C /* main.m */,
 				A6B9989115B98D1200D0919C /* Sheffle-Prefix.pch */,
+				A6B9988B15B98D1200D0919C /* Sheffle-Info.plist */,
+				A6B9988C15B98D1200D0919C /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
