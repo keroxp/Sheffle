@@ -97,17 +97,9 @@
         UITextField *tf = [_alertView textFieldAtIndex:0];
         tf.placeholder = @"Shelf Title";
     }
+    [_alertView textFieldAtIndex:0].text = nil;
     [_alertView show];
-    
-//    [[SFCoreDataManager sharedManager] saveContext];
-//    static NSString *EditableCellIdentifier = @"EditableCell";
-//    SFEditableCell *ecell = (SFEditableCell*)[self.tableView dequeueReusableCellWithIdentifier:EditableCellIdentifier];
-//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-//    if (!ecell) {
-//        ecell = [[SFEditableCell alloc] initWithText:@"Undefined" indexPath:indexPath reuseIdentifier:EditableCellIdentifier];
-//    }
-//    [self.tableView insertRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
-//    [ecell.textField becomeFirstResponder];
+
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -167,6 +159,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"ShelvesCell";
+    static NSString *BadgedCellIdentifier = @"BadgedCell";
     static NSString *EditableCellIdentifier = @"EditableCell";
 
     if (NO) {
@@ -179,7 +172,11 @@
         [self configureCell:ecell atIndexPath:indexPath];
         return ecell;
     }else{
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        TDBadgedCell *cell = [tableView dequeueReusableCellWithIdentifier:BadgedCellIdentifier];
+        if (!cell) {
+            cell = [[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BadgedCellIdentifier];
+        }
         [self configureCell:cell atIndexPath:indexPath];
          return cell;
     }
@@ -195,8 +192,14 @@
         ecell.autoresizesSubviews = YES;
         ecell.textField.delegate = self;
     }else{
-        cell.textLabel.text = shelf.title;
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%i",shelf.books.count];
+        TDBadgedCell *bcell = (TDBadgedCell*)cell;
+        bcell.textLabel.text = shelf.title;
+        bcell.badgeString = [NSString stringWithFormat:@" %i ",shelf.books.count];
+//        bcell.badgeColor = [UIColor darkGrayColor];
+        bcell.badge.radius = 10.0f;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        bcell.detailTextLabel.text = [NSString stringWithFormat:@"%i",shelf.books.count];
+//        bcell.detailTextLabel.textColor = [UIColor whiteColor];
     }
 }
 

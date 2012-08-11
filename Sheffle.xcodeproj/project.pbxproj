@@ -77,6 +77,7 @@
 		A6B998F915B995A500D0919C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B998F815B995A500D0919C /* CoreMedia.framework */; };
 		A6D0916A15C5A07400B128C8 /* SFBook.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D0916915C5A07400B128C8 /* SFBook.m */; };
 		A6D0917315C5B0A400B128C8 /* SFBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D0917115C5B0A400B128C8 /* SFBookViewController.m */; };
+		A6F55B5515D69E3700500E2B /* TDBadgedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F55B5415D69E3700500E2B /* TDBadgedCell.m */; };
 		A6F5CD4B15CE613F00AEC20C /* SFShelf+SortedBooks.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F5CD4A15CE613E00AEC20C /* SFShelf+SortedBooks.m */; };
 		A6F5CD4E15CE62BB00AEC20C /* SFShelvesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F5CD4D15CE62BB00AEC20C /* SFShelvesViewController.m */; };
 /* End PBXBuildFile section */
@@ -219,6 +220,8 @@
 		A6D0916915C5A07400B128C8 /* SFBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFBook.m; path = Sheffle/SFBook.m; sourceTree = "<group>"; };
 		A6D0917015C5B0A400B128C8 /* SFBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBookViewController.h; sourceTree = "<group>"; };
 		A6D0917115C5B0A400B128C8 /* SFBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBookViewController.m; sourceTree = "<group>"; };
+		A6F55B5315D69E3700500E2B /* TDBadgedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDBadgedCell.h; sourceTree = "<group>"; };
+		A6F55B5415D69E3700500E2B /* TDBadgedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDBadgedCell.m; sourceTree = "<group>"; };
 		A6F5CD4915CE613E00AEC20C /* SFShelf+SortedBooks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SFShelf+SortedBooks.h"; path = "Sheffle/SFShelf+SortedBooks.h"; sourceTree = "<group>"; };
 		A6F5CD4A15CE613E00AEC20C /* SFShelf+SortedBooks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SFShelf+SortedBooks.m"; path = "Sheffle/SFShelf+SortedBooks.m"; sourceTree = "<group>"; };
 		A6F5CD4C15CE62BB00AEC20C /* SFShelvesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFShelvesViewController.h; sourceTree = "<group>"; };
@@ -418,6 +421,7 @@
 		A685A2ED15BC3CDE000A1AD5 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				A6F55B5215D69E3700500E2B /* TDBadgedCell */,
 				A64E743615C3BDAF003464FE /* GSBookShelf */,
 				A64E744115C3BDAF003464FE /* R9HTTPRequest */,
 				A64E744415C3BDAF003464FE /* SBJson */,
@@ -572,6 +576,16 @@
 				A6B998B515B98D1200D0919C /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A6F55B5215D69E3700500E2B /* TDBadgedCell */ = {
+			isa = PBXGroup;
+			children = (
+				A6F55B5315D69E3700500E2B /* TDBadgedCell.h */,
+				A6F55B5415D69E3700500E2B /* TDBadgedCell.m */,
+			);
+			name = TDBadgedCell;
+			path = Sheffle/TDBadgedCell;
 			sourceTree = "<group>";
 		};
 		A6F5CD4F15CE641700AEC20C /* ShelvesView */ = {
@@ -746,6 +760,7 @@
 				A6F5CD4E15CE62BB00AEC20C /* SFShelvesViewController.m in Sources */,
 				A6A4A9AB15CEBBC9007EFB0E /* SFEditableCell.m in Sources */,
 				A6A4A9B615CECC51007EFB0E /* SFTextFieldInTableView.m in Sources */,
+				A6F55B5515D69E3700500E2B /* TDBadgedCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

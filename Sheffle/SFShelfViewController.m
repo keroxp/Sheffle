@@ -23,14 +23,11 @@
     UIBarButtonItem *_addButton;
     UISegmentedControl *_displayControl;
     UIBarButtonItem *_displayControlItem;
-    UIBarButtonItem *_trashButton;
-    UIBarButtonItem *_moveButton;
-    UIBarButtonItem *_staredButton;
     UISegmentedControl *_sortControl;
     UIBarButtonItem *_sortControlItem;
     SFShelf *_currentShelf;
     ZBarReaderView *_readerView;
-    id _contentsBeforeChange;
+    NSString *_previousBarcode;
 }
 
 @property (strong,nonatomic) NSArray *rightBarItems;
@@ -164,8 +161,7 @@
 //    _shelfView = self.tableShelfViewController.view;
 //    _shelfView = [_gridShelfViewController view];
     
-    _shelfViewMode = SFShelfViewModeTable;
-
+    _shelfViewMode = SFShelfViewModeGrid;
 
 }
 
@@ -260,6 +256,12 @@
         
         NSString *resultText = [symbol data];
         
+        // 同じ商品を連続で認識しても登録しない
+        if ([resultText isEqualToString:_previousBarcode]) {
+            [SVProgressHUD showErrorWithStatus:@"Same Product" duration:1.5f];
+            return;
+        }
+        
         // 楽天ブックス総合検索APIのURL
         
         NSMutableString *apiURIString = [NSMutableString stringWithString:@"http://api.rakuten.co.jp/rws/3.0/json?"];
@@ -268,7 +270,6 @@
         [apiURIString appendString:@"operation=BooksBookSearch&"];
         [apiURIString appendString:@"version=2011-12-01&"];
         [apiURIString appendFormat:@"isbn=%@",resultText];
-//        NSLog(@"url is %@",apiURIString);
         
         // HTTPRequestを構築
         R9HTTPRequest *req = [[R9HTTPRequest alloc] initWithURL:[NSURL URLWithString:[apiURIString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
@@ -315,6 +316,9 @@
         
         // リクエストをスタート
         [req startRequest];
+        
+        // 登録
+        _previousBarcode = resultText;
     }
 }
 
@@ -327,39 +331,26 @@
 
 - (void)editButtonDidTap:(id)sender
 {
-    switch (self.shelfViewMode) {
-        case SFShelfViewModeTable: {
-            if (self.tableShelfViewController.isEditing) {
-                // 編集終了処理
-                _editButton.style = UIBarButtonItemStyleBordered;
-                _editButton.title = @"Edit";
-                [self.navigationItem setRightBarButtonItems:self.rightBarItems animated:YES];
-                [self setToolbarItems:[self normalToolbarItems] animated:YES];
-                [self.tableShelfViewController setEditing:NO animated:YES];
-            }else{
-                // 編集開始処理
-                _editButton.style = UIBarButtonItemStyleDone;
-                _editButton.title = @"Done";
-                [self.navigationItem setRightBarButtonItem:_editButton animated:YES];
-                [self setToolbarItems:[self editToolbarItems] animated:YES];
-                [self.tableShelfViewController setEditing:YES animated:YES];
-            }
-        }
-            break;
-        case SFShelfViewModeGrid: {
-            if (self.gridShelfViewController.isEditing) {
-                // 編集終了
-                [self. gridShelfViewController switchToNormalMode];
-                self.gridShelfViewController.editing = NO;
-            }else{
-                // 編集開始
-                [self.gridShelfViewController switchToEditMode];
-                self.gridShelfViewController.editing = YES;
-            }
-        }
-            break;
-        default:
-            break;
+    if (self.isEditing) {
+        // 編集終了処理
+        _editButton.style = UIBarButtonItemStyleBordered;
+        _editButton.title = @"Edit";
+        [self.navigationItem setRightBarButtonItems:self.rightBarItems animated:YES];
+        [self setToolbarItems:[self normalToolbarItems] animated:YES];
+        [self.tableShelfViewController setEditing:NO animated:YES];
+        [self.gridShelfViewController switchToNormalMode];
+        self.editing = NO;
+    }else{
+        // 編集開始処理
+        // ToolBar
+        _editButton.style = UIBarButtonItemStyleDone;
+        _editButton.title = @"Done";
+        [self.navigationItem setRightBarButtonItem:_editButton animated:YES];
+        [self setToolbarItems:[self editToolbarItems] animated:YES];
+        // Child View Controller
+        [self.tableShelfViewController setEditing:YES animated:YES];
+        [self.gridShelfViewController switchToEditMode];
+        self.editing = YES;
     }
 }
 
@@ -387,6 +378,7 @@
 
 - (void)doneButtonDidTap:(id)sender
 {
+    _previousBarcode = nil;
     [_readerView stop];
     [UIView animateWithDuration:0.25f delay:0.0 options:(UIViewAnimationCurveEaseIn <<  16) animations:^(void){
         _readerView.frame = kDefaultReaderViewFrame;
@@ -447,12 +439,14 @@
             // Gridへ
             [self transitionFromViewController:self.tableShelfViewController toViewController:self.gridShelfViewController duration:1.0 options:UIViewAnimationOptionTransitionFlipFromRight animations:nil completion:nil];
             _shelfViewMode = SFShelfViewModeGrid;
+            [self.gridShelfViewController.bookShelfView reloadData];
         }
             break;
         case 1: {
             // Tableへ
             [self transitionFromViewController:self.gridShelfViewController toViewController:self.tableShelfViewController duration:1.0 options:UIViewAnimationOptionTransitionFlipFromRight animations:nil completion:nil];
             _shelfViewMode = SFShelfViewModeTable;
+            [self.tableShelfViewController.tableView reloadData];
         }
             break;
         default:
@@ -463,6 +457,32 @@
 - (void)trashButtonDidTap:(id)sender
 {
     NSLog(@"trash");
+    switch (self.shelfViewMode) {
+        case SFShelfViewModeGrid: {
+            NSIndexSet *is = self.gridShelfViewController.booksIndexsToBeRemoved;
+//            [self.gridShelfViewController.bookArray removeObjectsAtIndexes:is];
+            [self.gridShelfViewController.bookStatus removeObjectsAtIndexes:is];
+//            [self.gridShelfViewController.bookShelfView removeBookViewsAtIndexs:is animate:YES];
+            NSArray *books = [self.fetchedresultsController.fetchedObjects objectsAtIndexes:is];
+            NSSet *set = [NSSet setWithArray:books];
+            [self.shelf removeBooks:set];
+            [[SFCoreDataManager sharedManager] saveContext];
+        }
+            break;
+        case SFShelfViewModeTable: {
+            NSArray *selected = [self.tableShelfViewController.tableView indexPathsForSelectedRows];
+            NSMutableArray *toBeDeleted = [NSMutableArray array];
+            for (NSIndexPath *ip in selected) {
+                [toBeDeleted addObject:[self.fetchedresultsController objectAtIndexPath:ip]];
+            }
+            NSSet *set = [NSSet setWithArray:toBeDeleted];
+            [self.shelf removeBooks:set];
+            [[SFCoreDataManager sharedManager] saveContext];
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)moveButtonDidTap:(id)sender
@@ -574,18 +594,18 @@
             NSInteger i = [self.fetchedresultsController.fetchedObjects indexOfObject:anObject];            
             NSIndexSet *is = [NSIndexSet indexSetWithIndex:i];
             [self.gridShelfViewController.bookShelfView insertBookViewsAtIndexs:is animate:YES];
-            self.gridShelfViewController.bookArray = [NSMutableArray arrayWithArray:self.fetchedresultsController.fetchedObjects];
+            [self.gridShelfViewController initBooks];
         }
             break;
         case NSFetchedResultsChangeDelete: {
             // Table Shelf View
             [self.tableShelfViewController.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            // Grid Shelf View
-            NSInteger i = [self.gridShelfViewController.bookArray indexOfObject:anObject];
+//            // Grid Shelf View
+            NSUInteger i = [self.gridShelfViewController.bookArray indexOfObject:anObject];
             NSIndexSet *is = [NSIndexSet indexSetWithIndex:i];
-            
             [self.gridShelfViewController.bookShelfView removeBookViewsAtIndexs:is animate:YES];
             self.gridShelfViewController.bookArray = [NSMutableArray arrayWithArray:self.fetchedresultsController.fetchedObjects];
+            [self.gridShelfViewController initBooks];
         }
             break;
         case NSFetchedResultsChangeUpdate:

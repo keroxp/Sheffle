@@ -7,15 +7,12 @@
 //
 
 #import "SFGridShelfViewController.h"
+#import "SFShelfViewController.h"
 
 #define ROW_HEIGHT 140.0f
 
 @interface SFGridShelfViewController ()
 {    
-    NSMutableIndexSet *_booksIndexsToBeRemoved;
-    
-    BOOL _editMode;
-    
     UIBarButtonItem *_editBarButton;
     UIBarButtonItem *_cancleBarButton;
     UIBarButtonItem *_trashBarButton;
@@ -93,37 +90,40 @@
     _bookArray = [NSMutableArray arrayWithArray:self.fetchedResultsController.fetchedObjects];
     _bookStatus = [NSMutableArray arrayWithCapacity:[_bookArray count]];
     
-    for (int i = 0 , max = [_bookStatus count]; i < max; i++) {
+    for (int i = 0 , max = [_bookArray count]; i < max; i++) {
         [_bookStatus addObject:@(BOOK_UNSELECTED)];
     }
+    
 }
 
 
 - (void)switchToNormalMode {
-    _editMode = NO; 
-    [self.navigationItem setLeftBarButtonItem:_editBarButton];
-    [self.navigationItem setRightBarButtonItem:_addBarButton];
-}
-
-- (void)switchToEditMode {
-    _editMode = YES;
-    [_booksIndexsToBeRemoved removeAllIndexes];
-    [self.navigationItem setLeftBarButtonItem:_cancleBarButton];
-    [self.navigationItem setRightBarButtonItem:_trashBarButton];
-    
+    NSLog(@"Switch to normal mode");
+    _editMode = NO;
     for (int i = 0; i < [_bookArray count]; i++) {
         [_bookStatus addObject:@(BOOK_UNSELECTED)];
     }
-    
     for (SFShelfBookView *bookView in [_bookShelfView visibleBookViews]) {
         [bookView setSelected:NO];
     }
 }
 
+- (void)switchToEditMode {
+    NSLog(@"Switch to edit mode");
+    _editMode = YES;
+    [_booksIndexsToBeRemoved removeAllIndexes];
+//    for (int i = 0; i < [_bookArray count]; i++) {
+//        [_bookStatus addObject:@(BOOK_UNSELECTED)];
+//    }
+//    
+//    for (SFShelfBookView *bookView in [_bookShelfView visibleBookViews]) {
+//        [bookView setSelected:NO];
+//    }
+}
+
 #pragma mark GSBookShelfViewDataSource
 
 - (NSInteger)numberOfBooksInBookShelfView:(GSBookShelfView *)bookShelfView {
-    NSLog(@"books are %i",[_bookArray count]);
     return [_bookArray count];
 }
 
@@ -301,6 +301,21 @@
         else {
             [_booksIndexsToBeRemoved removeIndex:bookView.index];
         }
+        int nob = _booksIndexsToBeRemoved.count;
+        NSString *deleteButtonTitle = [NSString stringWithFormat:@"Delete (%i)", nob];
+        NSString *moveButtonTitle = [NSString stringWithFormat:@"Move (%i)", nob];
+        NSString *staredButtonTitle = [NSString stringWithFormat:@"Stared (%i)", nob];
+        
+        if (_booksIndexsToBeRemoved.count == self.fetchedResultsController.fetchedObjects.count){
+            deleteButtonTitle = @"Delete all";
+            moveButtonTitle = @"Move all";
+            staredButtonTitle = @"Stared all";
+        }
+        
+        SFShelfViewController *svc = (SFShelfViewController*)self.parentViewController;
+        svc.trashButton.title = deleteButtonTitle;
+        svc.moveButton.title = moveButtonTitle;
+        svc.staredButton.title = staredButtonTitle;
     }
     else {
         [bookView setSelected:NO];

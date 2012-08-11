@@ -20,8 +20,8 @@
 #import "SFGridShelfViewController.h"
 
 typedef enum{
-    SFShelfViewModeTable = 0,
-    SFShelfViewModeGrid
+    SFShelfViewModeGrid = 0,
+    SFShelfViewModeTable
 }SFShelfViewMode;
 
 @interface SFShelfViewController : UIViewController 
@@ -39,6 +39,10 @@ typedef enum{
 // UI
 @property (strong, nonatomic) UIView *readerView;
 @property (strong, nonatomic) UIView *shelfView;
+// Buttons
+@property (strong, nonatomic) UIBarButtonItem *trashButton;
+@property (strong, nonatomic) UIBarButtonItem *moveButton;
+@property (strong, nonatomic) UIBarButtonItem *staredButton;
 
 
 @end

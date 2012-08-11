@@ -33,7 +33,10 @@ typedef enum {
 
 @property (strong, nonatomic) NSMutableArray *bookArray;
 @property (strong, nonatomic) NSMutableArray *bookStatus;
+@property (strong, nonatomic) NSMutableIndexSet *booksIndexsToBeRemoved;
+@property (nonatomic) BOOL editMode;
 
+- (void)initBooks;
 - (void)insertBook:(SFBook*)book atIndex:(NSInteger)index;
 - (void)removeBookAtIndex:(NSInteger)index;
 
