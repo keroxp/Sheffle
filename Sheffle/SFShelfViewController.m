@@ -61,13 +61,23 @@
     
     // インスタンス変数の初期化
     
-    _shelvesButton = [[UIBarButtonItem alloc] initWithTitle:@"Shelves" style:UIBarButtonItemStyleBordered target:self action:@selector(shelvesButtonDidTap:)];
+    _shelvesButton = [[UIBarButtonItem alloc] initWithTitle:@"Shelves"
+                                                      style:UIBarButtonItemStyleBordered
+                                                     target:self
+                                                     action:@selector(shelvesButtonDidTap:)];
     // 編集
-    _editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(editButtonDidTap:)];
+    _editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
+                                                   style:UIBarButtonItemStyleBordered
+                                                  target:self
+                                                  action:@selector(editButtonDidTap:)];
     // スキャン
-    _scanButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(scanButtonDidTap:)];
+    _scanButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
+                                                                target:self
+                                                                action:@selector(scanButtonDidTap:)];
     // 完了
-    _donebutton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonDidTap:)];
+    _donebutton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                target:self
+                                                                action:@selector(doneButtonDidTap:)];
     // ソート
     _sortControl = [[UISegmentedControl alloc] initWithItems:@[@"Title",@"Author",@"Date"]];
     _sortControl.selectedSegmentIndex = 0;
@@ -84,13 +94,24 @@
 
     
     // 追加ボタン
-    _addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
+    _addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                               target:self
+                                                               action:@selector(addButtonDidTap:)];
     // 消去ボタン
-    _trashButton = [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStyleBordered target:self action:@selector(trashButtonDidTap:)];
+    _trashButton = [[UIBarButtonItem alloc] initWithTitle:@"Delete"
+                                                    style:UIBarButtonItemStyleBordered
+                                                   target:self
+                                                   action:@selector(trashButtonDidTap:)];
     // 移動ボタン
-    _moveButton = [[UIBarButtonItem alloc] initWithTitle:@"Move" style:UIBarButtonItemStyleBordered target:self action:@selector(moveButtonDidTap:)];
+    _moveButton = [[UIBarButtonItem alloc] initWithTitle:@"Move"
+                                                   style:UIBarButtonItemStyleBordered
+                                                  target:self
+                                                  action:@selector(moveButtonDidTap:)];
     // ふぁぼボタン
-    _staredButton = [[UIBarButtonItem alloc] initWithTitle:@"Favorite" style:UIBarButtonItemStyleBordered target:self action:@selector(staredButtonDidTap:)];
+    _staredButton = [[UIBarButtonItem alloc] initWithTitle:@"Favorite"
+                                                     style:UIBarButtonItemStyleBordered
+                                                    target:self
+                                                    action:@selector(staredButtonDidTap:)];
     
     // NavigationBarを初期化
     
@@ -157,10 +178,7 @@
     
     [self.shelfView addSubview:self.tableShelfViewController.view];
     [self.shelfView addSubview:self.gridShelfViewController.view];
-    
-//    _shelfView = self.tableShelfViewController.view;
-//    _shelfView = [_gridShelfViewController view];
-    
+
     _shelfViewMode = SFShelfViewModeGrid;
 
 }
@@ -411,23 +429,58 @@
 
 - (void)sortControlDidChange:(UISegmentedControl *)sender
 {
-    $(@"segmented control did change index : %i",[_sortControl selectedSegmentIndex]);
+    $(@"%i",[_sortControl selectedSegmentIndex]);
     switch (sender.selectedSegmentIndex) {
-        case 0:
+        case 0: {
             // タイトル
+            self.fetchedresultsController = [self fetchedResultsControllerWithEntityName:@"titleKana"];
+        }
             break;
-        case 1:
+        case 1: {
             // 作者
+            self.fetchedresultsController = [self fetchedResultsControllerWithEntityName:@"authorKana"];
+        }
             break;
-        case 2:
+        case 2: {
             // 日付
+            self.fetchedresultsController = [self fetchedResultsControllerWithEntityName:@"created"];
+        }
             break;
-        case 3:
+        case 3: {
             // 種類
+            self.fetchedresultsController = [self fetchedResultsControllerWithEntityName:@"size"];
+        }
             break;
         default:
             break;
     }
+    [self.gridShelfViewController.bookShelfView reloadData];
+    [self.tableShelfViewController.tableView reloadData];
+}
+
+- (NSFetchedResultsController *)fetchedResultsControllerWithEntityName:(NSString *)entityName;
+{
+    NSManagedObjectContext *context = [[SFCoreDataManager sharedManager] managedObjectContext];
+    NSFetchRequest *req = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:context];
+    NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:entityName ascending:YES];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shelf == %@",self.shelf];
+    
+    req.sortDescriptors = @[ title ];
+    req.entity = entity;            
+    req.predicate = predicate;
+    
+    [NSFetchedResultsController deleteCacheWithName:@"Book"];
+    NSFetchedResultsController *fc = [[NSFetchedResultsController alloc] initWithFetchRequest:req
+                                                                         managedObjectContext:context
+                                                                           sectionNameKeyPath:entityName
+                                                                                    cacheName:@"Book"];
+    NSError *e = nil;
+    if (![fc performFetch:&e]) {
+        $(@"error : %@",e);
+    }
+    
+    return fc;
 }
 
 - (void)displayControlDidChange:(UISegmentedControl *)sender
@@ -599,11 +652,11 @@
         case NSFetchedResultsChangeDelete: {
             // Table Shelf View
             [self.tableShelfViewController.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-//            // Grid Shelf View
+            // Grid Shelf View
             NSUInteger i = [self.gridShelfViewController.bookArray indexOfObject:anObject];
             NSIndexSet *is = [NSIndexSet indexSetWithIndex:i];
             [self.gridShelfViewController.bookShelfView removeBookViewsAtIndexs:is animate:YES];
-            self.gridShelfViewController.bookArray = [NSMutableArray arrayWithArray:self.fetchedresultsController.fetchedObjects];
+//            self.gridShelfViewController.bookArray = [NSMutableArray arrayWithArray:self.fetchedresultsController.fetchedObjects];
             [self.gridShelfViewController initBooks];
         }
             break;

@@ -44,5 +44,6 @@ typedef enum{
 @property (strong, nonatomic) UIBarButtonItem *moveButton;
 @property (strong, nonatomic) UIBarButtonItem *staredButton;
 
+- (NSFetchedResultsController*)fetchedResultsControllerWithEntityName:(NSString*)entityName;
 
 @end
