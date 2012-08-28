@@ -70,6 +70,63 @@
             </objects>
             <point key="canvasLocation" x="442" y="-528"/>
         </scene>
+        <!--Table View Controller - Root View Controller-->
+        <scene sceneID="O1R-uL-3xp">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dDn-yg-F0y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="9BO-9M-xiQ" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="bax-zG-GM9">
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ShelfListCell" textLabel="bG4-Wj-dq8" detailTextLabel="Uua-FK-tFZ" style="IBUITableViewCellStyleValue1" id="tYs-Mf-zzR">
+                                <rect key="frame" x="0.0" y="46" width="320" height="46"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="10" y="1" width="300" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bG4-Wj-dq8">
+                                            <rect key="frame" x="10" y="11" width="35" height="21"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Uua-FK-tFZ">
+                                            <rect key="frame" x="246" y="11" width="44" height="21"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.2196078431372549" green="0.32941176470588235" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="7vn-bT-UQa"/>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="1912" y="-837"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Xo5-Pi-y5S">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cDO-ZG-dhJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController definesPresentationContext="YES" id="cXp-GR-ZA3" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hv6-ZR-7J8">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="9BO-9M-xiQ" kind="relationship" relationship="rootViewController" id="VVm-pc-fVS"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="1434" y="-837"/>
+        </scene>
         <!--Shelf View Controller-->
         <scene sceneID="v9f-aO-wjr">
             <objects>
@@ -94,6 +151,7 @@
                     <connections>
                         <outlet property="searchDisplayController" destination="FUa-M4-BAn" id="EQD-Tp-hn8"/>
                         <segue destination="jYO-vu-AXV" kind="push" identifier="showBook" id="yeA-Ua-hvz"/>
+                        <segue destination="cXp-GR-ZA3" kind="modal" identifier="showShelfList" id="rNQ-V3-7T9"/>
                     </connections>
                 </viewController>
             </objects>
@@ -143,7 +201,7 @@
                     <navigationItem key="navigationItem" id="yrM-Mm-1Mh"/>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="1342" y="-528"/>
+            <point key="canvasLocation" x="1434" y="-184"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1fj-et-YaO">
@@ -165,6 +223,17 @@
             <point key="canvasLocation" x="-12" y="-528"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="SFBookViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFBookViewController.h"/>
+        </class>
+        <class className="SFShelfViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFShelfViewController.h"/>
+        </class>
+        <class className="SFShelvesViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFShelvesViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

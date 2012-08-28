@@ -18,6 +18,7 @@
 #import "SFBookViewController.h"
 #import "SFTableShelfViewController.h"
 #import "SFGridShelfViewController.h"
+#import "SFShelfListViewController.h"
 
 typedef enum{
     SFShelfViewModeGrid = 0,

@@ -47,7 +47,10 @@
 - (void)staredButtonDidTap:(id)sender;
 // Private Methods
 - (void)insertNewObject:(NSDictionary*)book image:(UIImage*)image;
+- (NSSet*)booksToBeHandled;
 - (UIImage*)resizeImage:(UIImage*)image;
+// Method for DEBUG
+- (NSDictionary*)getFixture;
 
 @end
 
@@ -260,6 +263,37 @@
     UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return resizedImage;
+}
+
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"showShelfList"]) {
+        SFShelfListViewController *slvc = (SFShelfListViewController*)segue.destinationViewController;
+        slvc.shelves = [[SFCoreDataManager sharedManager] shelves];
+        slvc.currentShelf = self.shelf;
+        NSSet *booksToBeMoved;
+        switch (self.shelfViewMode) {
+            case SFShelfViewModeGrid: {
+                NSIndexSet *is = self.gridShelfViewController.booksIndexsToBeRemoved;
+                booksToBeMoved = [NSSet setWithArray:[self.fetchedresultsController.fetchedObjects objectsAtIndexes:is]];
+
+            }
+                break;
+            case SFShelfViewModeTable:{
+                NSArray *ips = [self.tableShelfViewController.tableView indexPathsForSelectedRows];
+                NSMutableArray *ma = [NSMutableArray arrayWithCapacity:ips.count];
+                for (int i = 0; i < ips.count; i++) {
+                    [ma addObject:[self.fetchedresultsController.fetchedObjects objectAtIndex:[ips objectAtIndex:i]]];
+                }
+            }
+                break;
+            default:
+                break;
+        }
+        slvc.booksToBeMoved = booksToBeMoved;
+    }
 }
 
 
@@ -506,40 +540,104 @@
     }
 }
 
+#pragma mark - Toolbar Action Handler (in edit mode)
+
+- (NSSet*)booksToBeHandled
+{
+    if (self.gridShelfViewController.booksIndexsToBeRemoved.count > 0 ||
+        self.tableShelfViewController.tableView.indexPathForSelectedRow.length > 0) {
+        switch (self.shelfViewMode) {
+            case SFShelfViewModeGrid: {
+                NSIndexSet *is = self.gridShelfViewController.booksIndexsToBeRemoved;
+                NSArray *books = [self.fetchedresultsController.fetchedObjects objectsAtIndexes:is];
+                NSSet *set = [NSSet setWithArray:books];
+                return set;
+            }
+                break;
+            case SFShelfViewModeTable: {
+                NSArray *selected = [self.tableShelfViewController.tableView indexPathsForSelectedRows];
+                NSMutableArray *toBeHandled = [NSMutableArray array];
+                for (NSIndexPath *ip in selected) {
+                    [toBeHandled addObject:[self.fetchedresultsController objectAtIndexPath:ip]];
+                }
+                NSSet *set = [NSSet setWithArray:toBeHandled];
+                return set;
+            }
+                break;
+            default:
+                break;
+        }
+    }
+    return nil;
+}
+
 - (void)trashButtonDidTap:(id)sender
 {
     $(@"trash");
-    switch (self.shelfViewMode) {
-        case SFShelfViewModeGrid: {
-            NSIndexSet *is = self.gridShelfViewController.booksIndexsToBeRemoved;
-//            [self.gridShelfViewController.bookArray removeObjectsAtIndexes:is];
-            [self.gridShelfViewController.bookStatus removeObjectsAtIndexes:is];
-//            [self.gridShelfViewController.bookShelfView removeBookViewsAtIndexs:is animate:YES];
-            NSArray *books = [self.fetchedresultsController.fetchedObjects objectsAtIndexes:is];
-            NSSet *set = [NSSet setWithArray:books];
-            [self.shelf removeBooks:set];
-            [[SFCoreDataManager sharedManager] saveContext];
-        }
-            break;
-        case SFShelfViewModeTable: {
-            NSArray *selected = [self.tableShelfViewController.tableView indexPathsForSelectedRows];
-            NSMutableArray *toBeDeleted = [NSMutableArray array];
-            for (NSIndexPath *ip in selected) {
-                [toBeDeleted addObject:[self.fetchedresultsController objectAtIndexPath:ip]];
+    if (self.gridShelfViewController.booksIndexsToBeRemoved.count > 0 ||
+        self.tableShelfViewController.tableView.indexPathForSelectedRow.length > 0) {
+        switch (self.shelfViewMode) {
+            case SFShelfViewModeGrid: {
+                NSIndexSet *is = self.gridShelfViewController.booksIndexsToBeRemoved;
+                [self.gridShelfViewController.bookStatus removeObjectsAtIndexes:is];
+                NSArray *books = [self.fetchedresultsController.fetchedObjects objectsAtIndexes:is];
+                NSSet *set = [NSSet setWithArray:books];
+                [self.shelf removeBooks:set];
+                [[SFCoreDataManager sharedManager] saveContext];
             }
-            NSSet *set = [NSSet setWithArray:toBeDeleted];
-            [self.shelf removeBooks:set];
-            [[SFCoreDataManager sharedManager] saveContext];
+                break;
+            case SFShelfViewModeTable: {
+                NSArray *selected = [self.tableShelfViewController.tableView indexPathsForSelectedRows];
+                NSMutableArray *toBeDeleted = [NSMutableArray array];
+                for (NSIndexPath *ip in selected) {
+                    [toBeDeleted addObject:[self.fetchedresultsController objectAtIndexPath:ip]];
+                }
+                NSSet *set = [NSSet setWithArray:toBeDeleted];
+                [self.shelf removeBooks:set];
+                [[SFCoreDataManager sharedManager] saveContext];
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        default:
-            break;
+        [self.gridShelfViewController initBooks];
+        [self editButtonDidTap:nil];
     }
 }
 
 - (void)moveButtonDidTap:(id)sender
 {
     $(@"move");
+    if (self.gridShelfViewController.booksIndexsToBeRemoved.count > 0 ||
+        self.tableShelfViewController.tableView.indexPathForSelectedRow.length > 0) {
+        switch (self.shelfViewMode) {
+            case SFShelfViewModeGrid: {
+                NSIndexSet *is = self.gridShelfViewController.booksIndexsToBeRemoved;
+                [self.gridShelfViewController.bookStatus removeObjectsAtIndexes:is];
+                NSArray *books = [self.fetchedresultsController.fetchedObjects objectsAtIndexes:is];
+                NSSet *set = [NSSet setWithArray:books];
+                [self.shelf removeBooks:set];
+                [[SFCoreDataManager sharedManager] saveContext];
+            }
+                break;
+            case SFShelfViewModeTable: {
+                NSArray *selected = [self.tableShelfViewController.tableView indexPathsForSelectedRows];
+                NSMutableArray *toBeDeleted = [NSMutableArray array];
+                for (NSIndexPath *ip in selected) {
+                    [toBeDeleted addObject:[self.fetchedresultsController objectAtIndexPath:ip]];
+                }
+                NSSet *set = [NSSet setWithArray:toBeDeleted];
+                [self.shelf removeBooks:set];
+                [[SFCoreDataManager sharedManager] saveContext];
+            }
+                break;
+            default:
+                break;
+        }
+        [self.gridShelfViewController initBooks];
+        [self editButtonDidTap:nil];
+        [self performSegueWithIdentifier:@"showShelfList" sender:self];
+    }
 }
 
 - (void)staredButtonDidTap:(id)sender
@@ -646,6 +744,7 @@
             NSInteger i = [self.fetchedresultsController.fetchedObjects indexOfObject:anObject];            
             NSIndexSet *is = [NSIndexSet indexSetWithIndex:i];
             [self.gridShelfViewController.bookShelfView insertBookViewsAtIndexs:is animate:YES];
+            //TODO: 複数登録の処理が必要になったらここで初期化してはいけない
             [self.gridShelfViewController initBooks];
         }
             break;
@@ -656,8 +755,6 @@
             NSUInteger i = [self.gridShelfViewController.bookArray indexOfObject:anObject];
             NSIndexSet *is = [NSIndexSet indexSetWithIndex:i];
             [self.gridShelfViewController.bookShelfView removeBookViewsAtIndexs:is animate:YES];
-//            self.gridShelfViewController.bookArray = [NSMutableArray arrayWithArray:self.fetchedresultsController.fetchedObjects];
-            [self.gridShelfViewController initBooks];
         }
             break;
         case NSFetchedResultsChangeUpdate:
