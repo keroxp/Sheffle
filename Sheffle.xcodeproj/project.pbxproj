@@ -44,6 +44,8 @@
 		A680D393162A956F0088FEB6 /* GSBookViewContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D38D162A956E0088FEB6 /* GSBookViewContainerView.m */; };
 		A680D394162A956F0088FEB6 /* GSCellContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D38F162A956F0088FEB6 /* GSCellContainerView.m */; };
 		A680D395162A956F0088FEB6 /* NSMutableArray+Rearrange.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D391162A956F0088FEB6 /* NSMutableArray+Rearrange.m */; };
+		A680D3AE162AA19E0088FEB6 /* libSBJson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A680D378162A94F80088FEB6 /* libSBJson.a */; };
+		A680D3AF162AA7810088FEB6 /* libSBJson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A680D378162A94F80088FEB6 /* libSBJson.a */; };
 		A685A2BC15BC370C000A1AD5 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A685A2B915BC36E3000A1AD5 /* libiconv.dylib */; };
 		A6A4A9AB15CEBBC9007EFB0E /* SFEditableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A4A9AA15CEBBC9007EFB0E /* SFEditableCell.m */; };
 		A6A4A9B615CECC51007EFB0E /* SFTextFieldInTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A4A9B515CECC51007EFB0E /* SFTextFieldInTableView.m */; };
@@ -78,6 +80,13 @@
 			containerPortal = A680D370162A94F70088FEB6 /* SBJson.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = A680D201162A85E40088FEB6;
+			remoteInfo = SBJson;
+		};
+		A680D3AC162AA0F20088FEB6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A680D370162A94F70088FEB6 /* SBJson.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A680D200162A85E40088FEB6;
 			remoteInfo = SBJson;
 		};
 		A6B998B015B98D1200D0919C /* PBXContainerItemProxy */ = {
@@ -220,6 +229,7 @@
 				A6B9988615B98D1200D0919C /* Foundation.framework in Frameworks */,
 				A6B9988815B98D1200D0919C /* CoreGraphics.framework in Frameworks */,
 				A680D2E1162A8B2B0088FEB6 /* libzbar.a in Frameworks */,
+				A680D3AE162AA19E0088FEB6 /* libSBJson.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,6 +237,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A680D3AF162AA7810088FEB6 /* libSBJson.a in Frameworks */,
 				A6B998AD15B98D1200D0919C /* SenTestingKit.framework in Frameworks */,
 				A6B998AE15B98D1200D0919C /* UIKit.framework in Frameworks */,
 				A6B998AF15B98D1200D0919C /* Foundation.framework in Frameworks */,
@@ -239,14 +250,14 @@
 		A64E749815C3C0CC003464FE /* ShelfView */ = {
 			isa = PBXGroup;
 			children = (
-				A6ACA14015ECE48900F11A67 /* SFShelfListViewController.h */,
-				A6ACA14115ECE48900F11A67 /* SFShelfListViewController.m */,
 				A6A9CB1A15BC274600C02AD5 /* SFShelfViewController.h */,
 				A6A9CB1B15BC274600C02AD5 /* SFShelfViewController.m */,
 				A6408C6415BDCDDD001AF716 /* SFTableShelfViewController.h */,
 				A6408C6515BDCDDD001AF716 /* SFTableShelfViewController.m */,
 				A64E733C15C3B922003464FE /* SFGridShelfViewController.h */,
 				A64E733D15C3B922003464FE /* SFGridShelfViewController.m */,
+				A6ACA14015ECE48900F11A67 /* SFShelfListViewController.h */,
+				A6ACA14115ECE48900F11A67 /* SFShelfListViewController.m */,
 			);
 			name = ShelfView;
 			sourceTree = "<group>";
@@ -398,7 +409,7 @@
 			name = R9HTTPRequest;
 			sourceTree = "<group>";
 		};
-		A685A2ED15BC3CDE000A1AD5 /* Libraries */ = {
+		A680D3AB162A9C3D0088FEB6 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				A680D396162A95730088FEB6 /* GSBookShelf */,
@@ -406,6 +417,13 @@
 				A680D37C162A953C0088FEB6 /* SVPullToRefresh */,
 				A680D397162A95800088FEB6 /* R9HTTPRequest */,
 				A680D36C162A94EB0088FEB6 /* TDBadgedCell */,
+			);
+			name = Modules;
+			sourceTree = "<group>";
+		};
+		A685A2ED15BC3CDE000A1AD5 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
 				A680D2C2162A8B2B0088FEB6 /* ZBarSDK */,
 			);
 			name = Libraries;
@@ -482,6 +500,7 @@
 		A6B9987415B98D1100D0919C = {
 			isa = PBXGroup;
 			children = (
+				A680D3AB162A9C3D0088FEB6 /* Modules */,
 				A680D246162A89C60088FEB6 /* Dependencies */,
 				A685A2ED15BC3CDE000A1AD5 /* Libraries */,
 				A6B9988915B98D1200D0919C /* Sheffle */,
@@ -582,6 +601,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A680D3AD162AA0F20088FEB6 /* PBXTargetDependency */,
 			);
 			name = Sheffle;
 			productName = Sheffle;
@@ -753,6 +773,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A680D3AD162AA0F20088FEB6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SBJson;
+			targetProxy = A680D3AC162AA0F20088FEB6 /* PBXContainerItemProxy */;
+		};
 		A6B998B115B98D1200D0919C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A6B9987E15B98D1100D0919C /* Sheffle */;
@@ -802,7 +827,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/Libraries/**";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/Libraries/**",
+					"$(BUILT_PRODUCTS_DIR)/**",
+				);
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = armv7;
 			};
@@ -823,8 +852,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/Libraries/**";
+				LIBRARY_SEARCH_PATHS = (
+					"$(SRCROOT)/Libraries/**",
+					"$(BUILT_PRODUCTS_DIR)/**",
+				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = armv7;
@@ -838,11 +871,7 @@
 				GCC_PREFIX_HEADER = "Sheffle/Sheffle-Prefix.pch";
 				INFOPLIST_FILE = "Sheffle/Sheffle-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Libraries/SBJson\"",
-					"\"$(SRCROOT)/Libraries/ZBarSDK\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
@@ -858,11 +887,7 @@
 				GCC_PREFIX_HEADER = "Sheffle/Sheffle-Prefix.pch";
 				INFOPLIST_FILE = "Sheffle/Sheffle-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Libraries/SBJson\"",
-					"\"$(SRCROOT)/Libraries/ZBarSDK\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";

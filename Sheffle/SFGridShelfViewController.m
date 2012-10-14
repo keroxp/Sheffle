@@ -13,10 +13,6 @@
 
 @interface SFGridShelfViewController ()
 {    
-//    UIBarButtonItem *_editBarButton;
-//    UIBarButtonItem *_cancleBarButton;
-//    UIBarButtonItem *_trashBarButton;
-//    UIBarButtonItem *_addBarButton;
 }
 
 @end
@@ -61,6 +57,12 @@
 //    self.navigationController.toolbarHidden = YES;
 //    [self performSelector:@selector(testScrollToRow) withObject:self afterDelay:3];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.bookShelfView reloadData];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {

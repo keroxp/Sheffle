@@ -9,16 +9,12 @@
 #import "SFShelvesViewController.h"
 #import "SFShelfViewController.h"
 
-@interface SFShelvesViewController ()
-{
-    BOOL _isEdittingTitle;
-    NSIndexPath *_selectedPath;
-    UIAlertView *_alertView;
-}
+@interface SFShelvesViewController (Private)
 
 - (void)configureCell:(UITableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath;
 - (void)cancelButtonDidTap:(id)sender;
 - (void)addButtonDidTap:(id)sender;
+
 @end
 
 @implementation SFShelvesViewController
@@ -42,15 +38,13 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-//    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonDidTap:)];
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
-    
     UIBarButtonItem *separator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    self.title = [NSString stringWithFormat:@"Shefves   (%d)",self.fetchedResultsController.fetchedObjects.count];
+    self.title = [NSString stringWithFormat:@"Shekves (%d)",self.fetchedResultsController.fetchedObjects.count];
     
-    self.toolbarItems = @[separator,addButton];    
-//    self.navigationItem.leftBarButtonItem = cancelButton;
+    self.toolbarItems = @[separator,addButton];
+    
     // Viewの初期化
     CALayer *topShadowLayer = [CALayer layer];
     topShadowLayer.frame = self.view.bounds;
@@ -65,6 +59,13 @@
     
     self.searchDisplayController.delegate = self;
     self.searchDisplayController.searchResultsDataSource = self;
+    
+    // PullToAdd
+    
+    [self.tableView addPullToRefreshWithActionHandler:^(void) {
+        [self addButtonDidTap:nil];
+    }];
+    
 }
 
 - (void)viewDidUnload

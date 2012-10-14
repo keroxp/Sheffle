@@ -183,6 +183,8 @@
     [self.shelfView addSubview:self.gridShelfViewController.view];
 
     _shelfViewMode = SFShelfViewModeGrid;
+    
+    // PullToRefreshの追加
 
 }
 
@@ -330,6 +332,9 @@
         [SVProgressHUD showWithStatus:@"Loading"];
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         [[self view] setUserInteractionEnabled:NO];
+        for (UIBarButtonItem*b in self.navigationItem.rightBarButtonItems) {
+            [b setEnabled:NO];
+        }
         
         // 成功時および失敗時のハンドラをセット
         [req setCompletionHandler:^(NSHTTPURLResponse *responseHeader, NSString *responseString){
@@ -356,6 +361,9 @@
             }
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             [[self view] setUserInteractionEnabled:YES];
+            for (UIBarButtonItem*b in self.navigationItem.rightBarButtonItems) {
+                [b setEnabled:YES];
+            }
             [_readerView start];
         }];
         [req setFailedHandler:^(NSError *error){
@@ -523,14 +531,14 @@
     switch (sender.selectedSegmentIndex) {
         case 0: {
             // Gridへ
-            [self transitionFromViewController:self.tableShelfViewController toViewController:self.gridShelfViewController duration:1.0 options:UIViewAnimationOptionTransitionFlipFromRight animations:nil completion:nil];
+            [self transitionFromViewController:self.tableShelfViewController toViewController:self.gridShelfViewController duration:0.0 options:UIViewAnimationOptionTransitionNone animations:nil completion:nil];
             _shelfViewMode = SFShelfViewModeGrid;
             [self.gridShelfViewController.bookShelfView reloadData];
         }
             break;
         case 1: {
             // Tableへ
-            [self transitionFromViewController:self.gridShelfViewController toViewController:self.tableShelfViewController duration:1.0 options:UIViewAnimationOptionTransitionFlipFromRight animations:nil completion:nil];
+            [self transitionFromViewController:self.gridShelfViewController toViewController:self.tableShelfViewController duration:0.0 options:UIViewAnimationOptionTransitionNone animations:nil completion:nil];
             _shelfViewMode = SFShelfViewModeTable;
             [self.tableShelfViewController.tableView reloadData];
         }

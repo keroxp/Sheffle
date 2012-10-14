@@ -17,6 +17,11 @@
 ,UISearchDisplayDelegate
 ,NSFetchedResultsControllerDelegate
 >
+{
+    NSManagedObjectContext *__managedObjectContext;
+    NSIndexPath *_selectedPath;
+    UISearchDisplayController *__searchDisplayController;
+}
 
 // Core Data
 @property (weak, nonatomic) NSFetchedResultsController *fetchedResultsController;

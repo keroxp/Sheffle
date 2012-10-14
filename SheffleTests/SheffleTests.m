@@ -7,7 +7,7 @@
 //
 
 #import "SheffleTests.h"
-
+#import <SBJson/SBJson.h>
 
 @implementation SheffleTests
 
@@ -25,9 +25,11 @@
     [super tearDown];
 }
 
-- (void)imageDownloadTest
+- (void)sbjsontest
 {
-
+    NSString *json = @"{ hoge : 'hoge' , fuga : 1 , bar : ['hoge', 'foo', 'bar']}";
+    NSDictionary *jsonv = [json JSONValue];
+    NSLog(@"%@",jsonv);
 }
 
 @end

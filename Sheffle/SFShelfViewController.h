@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import <QuartzCore/QuartzCore.h>
+#import <SBJson/SBJson.h>
 
 #import "R9HTTPRequest.h"
 #import "ZBarSDK.h"
-#import "SBJson.h"
 #import "SVProgressHUD.h"
+#import "SVPullToRefresh.h"
 
 #import "SFBookViewController.h"
 #import "SFTableShelfViewController.h"
@@ -35,7 +36,7 @@ typedef enum{
 // View Mode
 @property (readonly) SFShelfViewMode shelfViewMode;
 // Core Data
-@property (strong, nonatomic) NSFetchedResultsController* fetchedresultsController;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedresultsController;
 @property (strong, nonatomic) SFShelf *shelf;
 // UI
 @property (strong, nonatomic) UIView *readerView;
