@@ -30,21 +30,20 @@
 		A64E74BD15C41519003464FE /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A64E74BC15C41519003464FE /* Default.png */; };
 		A64E74BF15C4151B003464FE /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A64E74BE15C4151B003464FE /* Default@2x.png */; };
 		A680D1D3162A7DC50088FEB6 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A680D1D2162A7DC50088FEB6 /* MainStoryboard_iPhone.storyboard */; };
-		A680D261162A8A0C0088FEB6 /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D260162A8A0C0088FEB6 /* SVPullToRefresh.m */; };
-		A680D29F162A8AAC0088FEB6 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A680D29C162A8AAC0088FEB6 /* SVProgressHUD.bundle */; };
-		A680D2A0162A8AAC0088FEB6 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D29E162A8AAC0088FEB6 /* SVProgressHUD.m */; };
 		A680D2E1162A8B2B0088FEB6 /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A680D2DA162A8B2B0088FEB6 /* libzbar.a */; };
 		A680D2E2162A8B2B0088FEB6 /* zbar-back.png in Resources */ = {isa = PBXBuildFile; fileRef = A680D2DC162A8B2B0088FEB6 /* zbar-back.png */; };
 		A680D2E3162A8B2B0088FEB6 /* zbar-help.html in Resources */ = {isa = PBXBuildFile; fileRef = A680D2DD162A8B2B0088FEB6 /* zbar-help.html */; };
 		A680D2E4162A8B2B0088FEB6 /* zbar-helpicons.png in Resources */ = {isa = PBXBuildFile; fileRef = A680D2DE162A8B2B0088FEB6 /* zbar-helpicons.png */; };
 		A680D2E5162A8B2B0088FEB6 /* zbar-samples.png in Resources */ = {isa = PBXBuildFile; fileRef = A680D2DF162A8B2B0088FEB6 /* zbar-samples.png */; };
-		A680D33A162A8BC80088FEB6 /* GSBookShelfView.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D306162A8BC80088FEB6 /* GSBookShelfView.m */; };
-		A680D33B162A8BC80088FEB6 /* GSBookViewContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D309162A8BC80088FEB6 /* GSBookViewContainerView.m */; };
-		A680D33C162A8BC80088FEB6 /* GSCellContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D30B162A8BC80088FEB6 /* GSCellContainerView.m */; };
-		A680D345162A8BC80088FEB6 /* NSMutableArray+Rearrange.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D318162A8BC80088FEB6 /* NSMutableArray+Rearrange.m */; };
-		A680D353162A8BDF0088FEB6 /* R9HTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D352162A8BDF0088FEB6 /* R9HTTPRequest.m */; };
-		A680D366162A8D310088FEB6 /* libSBJson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A680D360162A8D110088FEB6 /* libSBJson.a */; };
-		A680D36B162A91C60088FEB6 /* TDBadgedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D36A162A91C60088FEB6 /* TDBadgedCell.m */; };
+		A680D36F162A94EB0088FEB6 /* TDBadgedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D36E162A94EB0088FEB6 /* TDBadgedCell.m */; };
+		A680D380162A95450088FEB6 /* SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D37E162A953C0088FEB6 /* SVPullToRefresh.m */; };
+		A680D381162A95500088FEB6 /* R9HTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D37A162A95310088FEB6 /* R9HTTPRequest.m */; };
+		A680D386162A955A0088FEB6 /* SVProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A680D383162A955A0088FEB6 /* SVProgressHUD.bundle */; };
+		A680D387162A955A0088FEB6 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D385162A955A0088FEB6 /* SVProgressHUD.m */; };
+		A680D392162A956F0088FEB6 /* GSBookShelfView.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D38A162A956E0088FEB6 /* GSBookShelfView.m */; };
+		A680D393162A956F0088FEB6 /* GSBookViewContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D38D162A956E0088FEB6 /* GSBookViewContainerView.m */; };
+		A680D394162A956F0088FEB6 /* GSCellContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D38F162A956F0088FEB6 /* GSCellContainerView.m */; };
+		A680D395162A956F0088FEB6 /* NSMutableArray+Rearrange.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D391162A956F0088FEB6 /* NSMutableArray+Rearrange.m */; };
 		A685A2BC15BC370C000A1AD5 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A685A2B915BC36E3000A1AD5 /* libiconv.dylib */; };
 		A6A4A9AB15CEBBC9007EFB0E /* SFEditableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A4A9AA15CEBBC9007EFB0E /* SFEditableCell.m */; };
 		A6A4A9B615CECC51007EFB0E /* SFTextFieldInTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A4A9B515CECC51007EFB0E /* SFTextFieldInTableView.m */; };
@@ -74,18 +73,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		A680D35F162A8D110088FEB6 /* PBXContainerItemProxy */ = {
+		A680D377162A94F80088FEB6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A680D358162A8D100088FEB6 /* SBJson.xcodeproj */;
+			containerPortal = A680D370162A94F70088FEB6 /* SBJson.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = A680D201162A85E40088FEB6;
-			remoteInfo = SBJson;
-		};
-		A680D364162A8D220088FEB6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A680D358162A8D100088FEB6 /* SBJson.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A680D200162A85E40088FEB6;
 			remoteInfo = SBJson;
 		};
 		A6B998B015B98D1200D0919C /* PBXContainerItemProxy */ = {
@@ -127,11 +119,6 @@
 		A64E74BC15C41519003464FE /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Default.png; sourceTree = "<group>"; };
 		A64E74BE15C4151B003464FE /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "../Default@2x.png"; sourceTree = "<group>"; };
 		A680D1D2162A7DC50088FEB6 /* MainStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		A680D25F162A8A0C0088FEB6 /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
-		A680D260162A8A0C0088FEB6 /* SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPullToRefresh.m; sourceTree = "<group>"; };
-		A680D29C162A8AAC0088FEB6 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
-		A680D29D162A8AAC0088FEB6 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
-		A680D29E162A8AAC0088FEB6 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
 		A680D2C6162A8B2B0088FEB6 /* Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Decoder.h; sourceTree = "<group>"; };
 		A680D2C7162A8B2B0088FEB6 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Exception.h; sourceTree = "<group>"; };
 		A680D2C8162A8B2B0088FEB6 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
@@ -157,21 +144,26 @@
 		A680D2DD162A8B2B0088FEB6 /* zbar-help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "zbar-help.html"; sourceTree = "<group>"; };
 		A680D2DE162A8B2B0088FEB6 /* zbar-helpicons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zbar-helpicons.png"; sourceTree = "<group>"; };
 		A680D2DF162A8B2B0088FEB6 /* zbar-samples.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zbar-samples.png"; sourceTree = "<group>"; };
-		A680D304162A8BC80088FEB6 /* GSBookShelfCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSBookShelfCell.h; sourceTree = "<group>"; };
-		A680D305162A8BC80088FEB6 /* GSBookShelfView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSBookShelfView.h; sourceTree = "<group>"; };
-		A680D306162A8BC80088FEB6 /* GSBookShelfView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSBookShelfView.m; sourceTree = "<group>"; };
-		A680D307162A8BC80088FEB6 /* GSBookView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSBookView.h; sourceTree = "<group>"; };
-		A680D308162A8BC80088FEB6 /* GSBookViewContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSBookViewContainerView.h; sourceTree = "<group>"; };
-		A680D309162A8BC80088FEB6 /* GSBookViewContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSBookViewContainerView.m; sourceTree = "<group>"; };
-		A680D30A162A8BC80088FEB6 /* GSCellContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSCellContainerView.h; sourceTree = "<group>"; };
-		A680D30B162A8BC80088FEB6 /* GSCellContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSCellContainerView.m; sourceTree = "<group>"; };
-		A680D317162A8BC80088FEB6 /* NSMutableArray+Rearrange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Rearrange.h"; sourceTree = "<group>"; };
-		A680D318162A8BC80088FEB6 /* NSMutableArray+Rearrange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Rearrange.m"; sourceTree = "<group>"; };
-		A680D351162A8BDF0088FEB6 /* R9HTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = R9HTTPRequest.h; path = Dependencies/R9HTTPRequest/R9HTTPRequest/R9HTTPRequest.h; sourceTree = "<group>"; };
-		A680D352162A8BDF0088FEB6 /* R9HTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = R9HTTPRequest.m; path = Dependencies/R9HTTPRequest/R9HTTPRequest/R9HTTPRequest.m; sourceTree = "<group>"; };
-		A680D358162A8D100088FEB6 /* SBJson.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SBJson.xcodeproj; path = Libraries/SBJson/SBJson.xcodeproj; sourceTree = "<group>"; };
-		A680D369162A91C60088FEB6 /* TDBadgedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDBadgedCell.h; sourceTree = "<group>"; };
-		A680D36A162A91C60088FEB6 /* TDBadgedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDBadgedCell.m; sourceTree = "<group>"; };
+		A680D36D162A94EB0088FEB6 /* TDBadgedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDBadgedCell.h; sourceTree = "<group>"; };
+		A680D36E162A94EB0088FEB6 /* TDBadgedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDBadgedCell.m; sourceTree = "<group>"; };
+		A680D370162A94F70088FEB6 /* SBJson.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SBJson.xcodeproj; path = Dependencies/SBJson/SBJson.xcodeproj; sourceTree = "<group>"; };
+		A680D379162A95310088FEB6 /* R9HTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = R9HTTPRequest.h; path = Modules/R9HTTPRequest/R9HTTPRequest/R9HTTPRequest.h; sourceTree = "<group>"; };
+		A680D37A162A95310088FEB6 /* R9HTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = R9HTTPRequest.m; path = Modules/R9HTTPRequest/R9HTTPRequest/R9HTTPRequest.m; sourceTree = "<group>"; };
+		A680D37D162A953C0088FEB6 /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
+		A680D37E162A953C0088FEB6 /* SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPullToRefresh.m; sourceTree = "<group>"; };
+		A680D383162A955A0088FEB6 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SVProgressHUD.bundle; sourceTree = "<group>"; };
+		A680D384162A955A0088FEB6 /* SVProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProgressHUD.h; sourceTree = "<group>"; };
+		A680D385162A955A0088FEB6 /* SVProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProgressHUD.m; sourceTree = "<group>"; };
+		A680D388162A956E0088FEB6 /* GSBookShelfCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSBookShelfCell.h; path = Modules/GSBookShelf/BookShelf/GSBookShelfCell.h; sourceTree = "<group>"; };
+		A680D389162A956E0088FEB6 /* GSBookShelfView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSBookShelfView.h; path = Modules/GSBookShelf/BookShelf/GSBookShelfView.h; sourceTree = "<group>"; };
+		A680D38A162A956E0088FEB6 /* GSBookShelfView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GSBookShelfView.m; path = Modules/GSBookShelf/BookShelf/GSBookShelfView.m; sourceTree = "<group>"; };
+		A680D38B162A956E0088FEB6 /* GSBookView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSBookView.h; path = Modules/GSBookShelf/BookShelf/GSBookView.h; sourceTree = "<group>"; };
+		A680D38C162A956E0088FEB6 /* GSBookViewContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSBookViewContainerView.h; path = Modules/GSBookShelf/BookShelf/GSBookViewContainerView.h; sourceTree = "<group>"; };
+		A680D38D162A956E0088FEB6 /* GSBookViewContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GSBookViewContainerView.m; path = Modules/GSBookShelf/BookShelf/GSBookViewContainerView.m; sourceTree = "<group>"; };
+		A680D38E162A956E0088FEB6 /* GSCellContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GSCellContainerView.h; path = Modules/GSBookShelf/BookShelf/GSCellContainerView.h; sourceTree = "<group>"; };
+		A680D38F162A956F0088FEB6 /* GSCellContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GSCellContainerView.m; path = Modules/GSBookShelf/BookShelf/GSCellContainerView.m; sourceTree = "<group>"; };
+		A680D390162A956F0088FEB6 /* NSMutableArray+Rearrange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+Rearrange.h"; path = "Modules/GSBookShelf/BookShelf/NSMutableArray+Rearrange.h"; sourceTree = "<group>"; };
+		A680D391162A956F0088FEB6 /* NSMutableArray+Rearrange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+Rearrange.m"; path = "Modules/GSBookShelf/BookShelf/NSMutableArray+Rearrange.m"; sourceTree = "<group>"; };
 		A685A2B915BC36E3000A1AD5 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		A6A4A9A915CEBBC9007EFB0E /* SFEditableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFEditableCell.h; sourceTree = "<group>"; };
 		A6A4A9AA15CEBBC9007EFB0E /* SFEditableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFEditableCell.m; sourceTree = "<group>"; };
@@ -218,7 +210,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A680D366162A8D310088FEB6 /* libSBJson.a in Frameworks */,
 				A685A2BC15BC370C000A1AD5 /* libiconv.dylib in Frameworks */,
 				A6B998C815B993BC00D0919C /* CoreData.framework in Frameworks */,
 				A6B998F915B995A500D0919C /* CoreMedia.framework in Frameworks */,
@@ -272,30 +263,9 @@
 		A680D246162A89C60088FEB6 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				A680D358162A8D100088FEB6 /* SBJson.xcodeproj */,
+				A680D370162A94F70088FEB6 /* SBJson.xcodeproj */,
 			);
 			name = Dependencies;
-			sourceTree = "<group>";
-		};
-		A680D25E162A8A0C0088FEB6 /* SVPullToRefresh */ = {
-			isa = PBXGroup;
-			children = (
-				A680D25F162A8A0C0088FEB6 /* SVPullToRefresh.h */,
-				A680D260162A8A0C0088FEB6 /* SVPullToRefresh.m */,
-			);
-			name = SVPullToRefresh;
-			path = Dependencies/SVPullToRefresh/SVPullToRefresh;
-			sourceTree = "<group>";
-		};
-		A680D29B162A8AAB0088FEB6 /* SVProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				A680D29C162A8AAC0088FEB6 /* SVProgressHUD.bundle */,
-				A680D29D162A8AAC0088FEB6 /* SVProgressHUD.h */,
-				A680D29E162A8AAC0088FEB6 /* SVProgressHUD.m */,
-			);
-			name = SVProgressHUD;
-			path = Dependencies/SVProgressHUD/SVProgressHUD;
 			sourceTree = "<group>";
 		};
 		A680D2C2162A8B2B0088FEB6 /* ZBarSDK */ = {
@@ -363,59 +333,79 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		A680D2E6162A8BC80088FEB6 /* GSBookShelf */ = {
+		A680D36C162A94EB0088FEB6 /* TDBadgedCell */ = {
 			isa = PBXGroup;
 			children = (
-				A680D304162A8BC80088FEB6 /* GSBookShelfCell.h */,
-				A680D305162A8BC80088FEB6 /* GSBookShelfView.h */,
-				A680D306162A8BC80088FEB6 /* GSBookShelfView.m */,
-				A680D307162A8BC80088FEB6 /* GSBookView.h */,
-				A680D308162A8BC80088FEB6 /* GSBookViewContainerView.h */,
-				A680D309162A8BC80088FEB6 /* GSBookViewContainerView.m */,
-				A680D30A162A8BC80088FEB6 /* GSCellContainerView.h */,
-				A680D30B162A8BC80088FEB6 /* GSCellContainerView.m */,
-				A680D317162A8BC80088FEB6 /* NSMutableArray+Rearrange.h */,
-				A680D318162A8BC80088FEB6 /* NSMutableArray+Rearrange.m */,
+				A680D36D162A94EB0088FEB6 /* TDBadgedCell.h */,
+				A680D36E162A94EB0088FEB6 /* TDBadgedCell.m */,
 			);
-			name = GSBookShelf;
-			path = Dependencies/GSBookShelf/BookShelf;
+			name = TDBadgedCell;
+			path = Modules/TDBadgedCell;
 			sourceTree = "<group>";
 		};
-		A680D354162A8BE30088FEB6 /* R9HTTPRequest */ = {
+		A680D371162A94F70088FEB6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A680D351162A8BDF0088FEB6 /* R9HTTPRequest.h */,
-				A680D352162A8BDF0088FEB6 /* R9HTTPRequest.m */,
-			);
-			name = R9HTTPRequest;
-			sourceTree = "<group>";
-		};
-		A680D359162A8D100088FEB6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A680D360162A8D110088FEB6 /* libSBJson.a */,
+				A680D378162A94F80088FEB6 /* libSBJson.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A680D368162A91C60088FEB6 /* TDBadgedCell */ = {
+		A680D37C162A953C0088FEB6 /* SVPullToRefresh */ = {
 			isa = PBXGroup;
 			children = (
-				A680D369162A91C60088FEB6 /* TDBadgedCell.h */,
-				A680D36A162A91C60088FEB6 /* TDBadgedCell.m */,
+				A680D37D162A953C0088FEB6 /* SVPullToRefresh.h */,
+				A680D37E162A953C0088FEB6 /* SVPullToRefresh.m */,
 			);
-			name = TDBadgedCell;
-			path = Dependencies/TDBadgedCell;
+			name = SVPullToRefresh;
+			path = Modules/SVPullToRefresh/SVPullToRefresh;
+			sourceTree = "<group>";
+		};
+		A680D382162A955A0088FEB6 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				A680D383162A955A0088FEB6 /* SVProgressHUD.bundle */,
+				A680D384162A955A0088FEB6 /* SVProgressHUD.h */,
+				A680D385162A955A0088FEB6 /* SVProgressHUD.m */,
+			);
+			name = SVProgressHUD;
+			path = Modules/SVProgressHUD/SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		A680D396162A95730088FEB6 /* GSBookShelf */ = {
+			isa = PBXGroup;
+			children = (
+				A680D388162A956E0088FEB6 /* GSBookShelfCell.h */,
+				A680D389162A956E0088FEB6 /* GSBookShelfView.h */,
+				A680D38A162A956E0088FEB6 /* GSBookShelfView.m */,
+				A680D38B162A956E0088FEB6 /* GSBookView.h */,
+				A680D38C162A956E0088FEB6 /* GSBookViewContainerView.h */,
+				A680D38D162A956E0088FEB6 /* GSBookViewContainerView.m */,
+				A680D38E162A956E0088FEB6 /* GSCellContainerView.h */,
+				A680D38F162A956F0088FEB6 /* GSCellContainerView.m */,
+				A680D390162A956F0088FEB6 /* NSMutableArray+Rearrange.h */,
+				A680D391162A956F0088FEB6 /* NSMutableArray+Rearrange.m */,
+			);
+			name = GSBookShelf;
+			sourceTree = "<group>";
+		};
+		A680D397162A95800088FEB6 /* R9HTTPRequest */ = {
+			isa = PBXGroup;
+			children = (
+				A680D379162A95310088FEB6 /* R9HTTPRequest.h */,
+				A680D37A162A95310088FEB6 /* R9HTTPRequest.m */,
+			);
+			name = R9HTTPRequest;
 			sourceTree = "<group>";
 		};
 		A685A2ED15BC3CDE000A1AD5 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				A680D368162A91C60088FEB6 /* TDBadgedCell */,
-				A680D354162A8BE30088FEB6 /* R9HTTPRequest */,
-				A680D2E6162A8BC80088FEB6 /* GSBookShelf */,
-				A680D29B162A8AAB0088FEB6 /* SVProgressHUD */,
-				A680D25E162A8A0C0088FEB6 /* SVPullToRefresh */,
+				A680D396162A95730088FEB6 /* GSBookShelf */,
+				A680D382162A955A0088FEB6 /* SVProgressHUD */,
+				A680D37C162A953C0088FEB6 /* SVPullToRefresh */,
+				A680D397162A95800088FEB6 /* R9HTTPRequest */,
+				A680D36C162A94EB0088FEB6 /* TDBadgedCell */,
 				A680D2C2162A8B2B0088FEB6 /* ZBarSDK */,
 			);
 			name = Libraries;
@@ -592,7 +582,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				A680D365162A8D220088FEB6 /* PBXTargetDependency */,
 			);
 			name = Sheffle;
 			productName = Sheffle;
@@ -641,8 +630,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = A680D359162A8D100088FEB6 /* Products */;
-					ProjectRef = A680D358162A8D100088FEB6 /* SBJson.xcodeproj */;
+					ProductGroup = A680D371162A94F70088FEB6 /* Products */;
+					ProjectRef = A680D370162A94F70088FEB6 /* SBJson.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -654,11 +643,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		A680D360162A8D110088FEB6 /* libSBJson.a */ = {
+		A680D378162A94F80088FEB6 /* libSBJson.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libSBJson.a;
-			remoteRef = A680D35F162A8D110088FEB6 /* PBXContainerItemProxy */;
+			remoteRef = A680D377162A94F80088FEB6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -686,11 +675,11 @@
 				A64E74BD15C41519003464FE /* Default.png in Resources */,
 				A64E74BF15C4151B003464FE /* Default@2x.png in Resources */,
 				A680D1D3162A7DC50088FEB6 /* MainStoryboard_iPhone.storyboard in Resources */,
-				A680D29F162A8AAC0088FEB6 /* SVProgressHUD.bundle in Resources */,
 				A680D2E2162A8B2B0088FEB6 /* zbar-back.png in Resources */,
 				A680D2E3162A8B2B0088FEB6 /* zbar-help.html in Resources */,
 				A680D2E4162A8B2B0088FEB6 /* zbar-helpicons.png in Resources */,
 				A680D2E5162A8B2B0088FEB6 /* zbar-samples.png in Resources */,
+				A680D386162A955A0088FEB6 /* SVProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -742,14 +731,14 @@
 				A6A4A9AB15CEBBC9007EFB0E /* SFEditableCell.m in Sources */,
 				A6A4A9B615CECC51007EFB0E /* SFTextFieldInTableView.m in Sources */,
 				A6ACA14215ECE48900F11A67 /* SFShelfListViewController.m in Sources */,
-				A680D36B162A91C60088FEB6 /* TDBadgedCell.m in Sources */,
-				A680D261162A8A0C0088FEB6 /* SVPullToRefresh.m in Sources */,
-				A680D2A0162A8AAC0088FEB6 /* SVProgressHUD.m in Sources */,
-				A680D33A162A8BC80088FEB6 /* GSBookShelfView.m in Sources */,
-				A680D33B162A8BC80088FEB6 /* GSBookViewContainerView.m in Sources */,
-				A680D33C162A8BC80088FEB6 /* GSCellContainerView.m in Sources */,
-				A680D345162A8BC80088FEB6 /* NSMutableArray+Rearrange.m in Sources */,
-				A680D353162A8BDF0088FEB6 /* R9HTTPRequest.m in Sources */,
+				A680D36F162A94EB0088FEB6 /* TDBadgedCell.m in Sources */,
+				A680D380162A95450088FEB6 /* SVPullToRefresh.m in Sources */,
+				A680D381162A95500088FEB6 /* R9HTTPRequest.m in Sources */,
+				A680D387162A955A0088FEB6 /* SVProgressHUD.m in Sources */,
+				A680D392162A956F0088FEB6 /* GSBookShelfView.m in Sources */,
+				A680D393162A956F0088FEB6 /* GSBookViewContainerView.m in Sources */,
+				A680D394162A956F0088FEB6 /* GSCellContainerView.m in Sources */,
+				A680D395162A956F0088FEB6 /* NSMutableArray+Rearrange.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -764,11 +753,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		A680D365162A8D220088FEB6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SBJson;
-			targetProxy = A680D364162A8D220088FEB6 /* PBXContainerItemProxy */;
-		};
 		A6B998B115B98D1200D0919C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A6B9987E15B98D1100D0919C /* Sheffle */;

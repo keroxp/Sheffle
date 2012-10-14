@@ -1,397 +1,0 @@
-TSBJson
-v5
-r1
-cCheck dependencies
-cProcessPCH /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch.pth SBJson/SBJson-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterAccumulator.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterAccumulator.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterState.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterState.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/NSObject+SBJson.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/NSObject+SBJson.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonParser.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonParser.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParser.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParser.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAccumulator.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAccumulator.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAdapter.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAdapter.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserState.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserState.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriter.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriter.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonTokeniser.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonTokeniser.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonUTF8Stream.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonUTF8Stream.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonWriter.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonWriter.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cLibtool /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/libSBJson.a normal i386
-
-N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk
-c000000005076D7280000000000000110
-t1349965608
-s272
-
-N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/Foundation.framework/Foundation
-c000000005061C75E00000000003DCEF0
-t1348585310
-s4050672
-
-N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h
-c00000000502F1F3A00000000000015F7
-t1345265466
-s5623
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch.pth
-t2
-s0
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/NSObject+SBJson.o
-t2
-s0
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJson.LinkFileList
-c00000000507A4F6700000000000007C3
-t1350192999
-s1987
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonParser.o
-t2
-s0
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParser.o
-t2
-s0
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAccumulator.o
-t2
-s0
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAdapter.o
-t2
-s0
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserState.o
-t2
-s0
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriter.o
-t2
-s0
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterAccumulator.o
-t2
-s0
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterState.o
-t2
-s0
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonTokeniser.o
-t2
-s0
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonUTF8Stream.o
-t2
-s0
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonWriter.o
-t2
-s0
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/libSBJson.a
-t2
-s0
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/NSObject+SBJson.m
-c0000000050266FDD000000000000098F
-t1344696285
-s2447
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJson-Prefix.pch
-c00000000507A4E640000000000000099
-t1350192740
-s153
-i<Foundation/Foundation.h>
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonParser.m
-c00000000502641020000000000000C2A
-t1344684290
-s3114
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParser.m
-c00000000500D20220000000000001FF6
-t1343037474
-s8182
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAccumulator.m
-c00000000500D2022000000000000074B
-t1343037474
-s1867
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAdapter.m
-c00000000502641020000000000001125
-t1344684290
-s4389
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserState.m
-c00000000500D20220000000000001FB6
-t1343037474
-s8118
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriter.m
-c0000000050266FDD0000000000002952
-t1344696285
-s10578
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterAccumulator.m
-c00000000500D202200000000000007AE
-t1343037474
-s1966
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterState.m
-c00000000500D20220000000000000F61
-t1343037474
-s3937
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonTokeniser.m
-c00000000500D202200000000000034C3
-t1343037474
-s13507
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonUTF8Stream.m
-c00000000500D20220000000000000F4D
-t1343037474
-s3917
-
-N/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonWriter.m
-c00000000502641020000000000000D86
-t1344684290
-s3462
-
-CBuild AST from /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/NSObject+SBJson.m
-r0
-
-CBuild AST from /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonParser.m
-r0
-
-CBuild AST from /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParser.m
-r0
-
-CBuild AST from /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAccumulator.m
-r0
-
-CBuild AST from /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAdapter.m
-r0
-
-CBuild AST from /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserState.m
-r0
-
-CBuild AST from /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriter.m
-r0
-
-CBuild AST from /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterAccumulator.m
-r0
-
-CBuild AST from /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterState.m
-r0
-
-CBuild AST from /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonTokeniser.m
-r0
-
-CBuild AST from /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonUTF8Stream.m
-r0
-
-CBuild AST from /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonWriter.m
-r0
-
-CCheck dependencies
-r0
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies81d125e7862ab641^82026be7862ab641^---0#1#0#--18"Check dependencies36"AF991B7B-2B79-49A5-990C-2E39B3FF8FAF-
-
-CCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/NSObject+SBJson.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/NSObject+SBJson.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s371885802.191963
-e371885802.254641
-r1
-xCompileC
-xBuild/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/NSObject+SBJson.o
-x/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/NSObject+SBJson.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-o/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/NSObject+SBJson.m:40:9: warning: implicit declaration of function '$' is invalid in C99 [-Wimplicit-function-declaration]
-o        $(@"-JSONRepresentation failed. Error is: %@", writer.error);
-o        ^
-o1 warning generated.
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection87"Compile /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/NSObject+SBJson.m2c4631ea862ab641^f92e41ea862ab641^-285"/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/NSObject+SBJson.m:40:9: warning: implicit declaration of function '$' is invalid in C99 [-Wimplicit-function-declaration]        $(@"-JSONRepresentation failed. Error is: %@", writer.error);        ^1 warning generated.1(36%IDEClangDiagnosticActivityLogMessage2@54"Implicit declaration of function '$' is invalid in C99-371885802#18446744073709551615#0#-1#27"com.apple.dt.IDE.diagnostic23%DVTTextDocumentLocation3@95"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/NSObject+SBJson.m0000000000000000^39#8#39#8#1816#0#14"Semantic Issue--0#0#0#-19%DVTDocumentLocation4@95"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/NSObject+SBJson.m0000000000000000^3613"CompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/NSObject+SBJson.o SBJson/NSObject+SBJson.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wduplicate-method-match -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=5.1 -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-generated-files.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-own-target-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-all-target-headers.hmap -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-project-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/include -ISBJson -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources/i386 -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources -F/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator -include /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch -MMD -MT dependencies -MF /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/NSObject+SBJson.d --serialize-diagnostics /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/NSObject+SBJson.dia -c /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/NSObject+SBJson.m -o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/NSObject+SBJson.o36"42BC4ED2-43CD-4290-9350-EE89D3A1A301-
-
-CCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonParser.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonParser.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s371885802.241512
-e371885802.316464
-r1
-xCompileC
-xBuild/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonParser.o
-x/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonParser.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection84"Compile /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonParser.mbef53dea862ab641^1d0451ea862ab641^---0#0#0#-19%DVTDocumentLocation2@92"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonParser.m0000000000000000^3595"CompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonParser.o SBJson/SBJsonParser.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wduplicate-method-match -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=5.1 -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-generated-files.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-own-target-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-all-target-headers.hmap -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-project-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/include -ISBJson -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources/i386 -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources -F/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator -include /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch -MMD -MT dependencies -MF /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonParser.d --serialize-diagnostics /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonParser.dia -c /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonParser.m -o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonParser.o36"B1E1BC0F-A16A-4A42-ADFA-AF9061ED5165-
-
-CCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParser.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParser.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s371885802.256113
-e371885802.347653
-r1
-xCompileC
-xBuild/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParser.o
-x/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParser.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-o/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParser.m:115:82: warning: format specifies type 'unsigned long' but the argument has type 'NSUInteger' (aka 'unsigned int') [-Wformat]
-o    self.error = [NSString stringWithFormat:@"Input depth exceeds max depth of %lu", maxDepth];
-o                                                                               ~~^   ~~~~~~~~
-o                                                                               %u
-o1 warning generated.
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection90"Compile /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParser.mddb441ea862ab641^894059ea862ab641^-502"/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParser.m:115:82: warning: format specifies type 'unsigned long' but the argument has type 'NSUInteger' (aka 'unsigned int') [-Wformat]    self.error = [NSString stringWithFormat:@"Input depth exceeds max depth of %lu", maxDepth];                                                                               ~~^   ~~~~~~~~                                                                               %u1 warning generated.1(36%IDEClangDiagnosticActivityLogMessage2@97"Format specifies type 'unsigned long' but the argument has type 'NSUInteger' (aka 'unsigned int')-371885802#18446744073709551615#0#-1#27"com.apple.dt.IDE.diagnostic23%DVTTextDocumentLocation3@98"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParser.m0000000000000000^114#81#114#81#3121#0#19"Format String Issue3(3@98"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParser.m0000000000000000^114#85#114#93#3125#0#3@98"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParser.m0000000000000000^114#79#114#82#3119#3#3@98"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParser.m0000000000000000^114#79#114#82#3119#3#-0#0#0#-19%DVTDocumentLocation4@98"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParser.m0000000000000000^3631"CompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParser.o SBJson/SBJsonStreamParser.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wduplicate-method-match -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=5.1 -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-generated-files.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-own-target-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-all-target-headers.hmap -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-project-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/include -ISBJson -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources/i386 -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources -F/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator -include /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch -MMD -MT dependencies -MF /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParser.d --serialize-diagnostics /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParser.dia -c /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParser.m -o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParser.o36"CFDFB52B-6EE3-40D7-AFDD-5FD7A5CFCA53-
-
-CCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAccumulator.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAccumulator.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s371885802.317813
-e371885802.429451
-r1
-xCompileC
-xBuild/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAccumulator.o
-x/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAccumulator.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection101"Compile /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAccumulator.mdc7e51ea862ab641^e65b9fea862ab641^---0#0#0#-19%DVTDocumentLocation2@109"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAccumulator.m0000000000000000^3697"CompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAccumulator.o SBJson/SBJsonStreamParserAccumulator.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wduplicate-method-match -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=5.1 -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-generated-files.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-own-target-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-all-target-headers.hmap -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-project-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/include -ISBJson -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources/i386 -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources -F/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator -include /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch -MMD -MT dependencies -MF /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAccumulator.d --serialize-diagnostics /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAccumulator.dia -c /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAccumulator.m -o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAccumulator.o36"21D66298-8E78-47B4-9F57-2BDB0BCB5DB6-
-
-CCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAdapter.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAdapter.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s371885802.363580
-e371885802.445648
-r1
-xCompileC
-xBuild/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAdapter.o
-x/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAdapter.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection97"Compile /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAdapter.m44355dea862ab641^4a609fea862ab641^---0#0#0#-19%DVTDocumentLocation2@105"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAdapter.m0000000000000000^3673"CompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAdapter.o SBJson/SBJsonStreamParserAdapter.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wduplicate-method-match -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=5.1 -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-generated-files.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-own-target-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-all-target-headers.hmap -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-project-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/include -ISBJson -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources/i386 -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources -F/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator -include /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch -MMD -MT dependencies -MF /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAdapter.d --serialize-diagnostics /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAdapter.dia -c /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserAdapter.m -o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserAdapter.o36"DE7460B1-06CE-483E-8462-F78C83244CCB-
-
-CCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserState.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserState.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s371885802.430823
-e371885802.565314
-r1
-xCompileC
-xBuild/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserState.o
-x/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserState.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection95"Compile /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserState.m596d6eea862ab641^c66a9fea862ab641^---0#0#0#-19%DVTDocumentLocation2@103"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserState.m0000000000000000^3661"CompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserState.o SBJson/SBJsonStreamParserState.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wduplicate-method-match -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=5.1 -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-generated-files.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-own-target-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-all-target-headers.hmap -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-project-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/include -ISBJson -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources/i386 -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources -F/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator -include /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch -MMD -MT dependencies -MF /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserState.d --serialize-diagnostics /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserState.dia -c /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamParserState.m -o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamParserState.o36"DEB16902-0657-4772-AD42-315DBB7622CD-
-
-CCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriter.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriter.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s371885802.447038
-e371885802.617291
-r1
-xCompileC
-xBuild/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriter.o
-x/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriter.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-o/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriter.m:278:2: warning: implicit declaration of function '$' is invalid in C99 [-Wimplicit-function-declaration]
-o        $(@"FUTFUTFUT: -->'%c'<---", c);
-o        ^
-o1 warning generated.
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection90"Compile /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriter.m3e9672ea862ab641^86759fea862ab641^-260"/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriter.m:278:2: warning: implicit declaration of function '$' is invalid in C99 [-Wimplicit-function-declaration]        $(@"FUTFUTFUT: -->'%c'<---", c);        ^1 warning generated.1(36%IDEClangDiagnosticActivityLogMessage2@54"Implicit declaration of function '$' is invalid in C99-371885802#18446744073709551615#0#-1#27"com.apple.dt.IDE.diagnostic23%DVTTextDocumentLocation3@98"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriter.m0000000000000000^277#1#277#1#7768#0#14"Semantic Issue--0#0#0#-19%DVTDocumentLocation4@98"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriter.m0000000000000000^3631"CompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriter.o SBJson/SBJsonStreamWriter.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wduplicate-method-match -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=5.1 -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-generated-files.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-own-target-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-all-target-headers.hmap -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-project-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/include -ISBJson -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources/i386 -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources -F/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator -include /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch -MMD -MT dependencies -MF /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriter.d --serialize-diagnostics /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriter.dia -c /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriter.m -o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriter.o36"C7203DC1-E480-4B51-BA6A-9DB2F6DEB365-
-
-CCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterAccumulator.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterAccumulator.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s371885801.593613
-e371885802.190673
-r1
-xCompileC
-xBuild/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterAccumulator.o
-x/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterAccumulator.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection101"Compile /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterAccumulator.m8a2298e9862ab641^14d030ea862ab641^---0#0#0#-19%DVTDocumentLocation2@109"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterAccumulator.m0000000000000000^3697"CompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterAccumulator.o SBJson/SBJsonStreamWriterAccumulator.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wduplicate-method-match -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=5.1 -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-generated-files.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-own-target-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-all-target-headers.hmap -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-project-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/include -ISBJson -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources/i386 -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources -F/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator -include /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch -MMD -MT dependencies -MF /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterAccumulator.d --serialize-diagnostics /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterAccumulator.dia -c /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterAccumulator.m -o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterAccumulator.o36"5675AB82-CFD3-4581-8944-1196BDFE9B7F-
-
-CCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterState.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterState.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s371885801.594574
-e371885802.240247
-r1
-xCompileC
-xBuild/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterState.o
-x/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterState.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection95"Compile /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterState.m105998e9862ab641^809b3dea862ab641^---0#0#0#-19%DVTDocumentLocation2@103"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterState.m0000000000000000^3661"CompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterState.o SBJson/SBJsonStreamWriterState.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wduplicate-method-match -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=5.1 -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-generated-files.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-own-target-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-all-target-headers.hmap -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-project-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/include -ISBJson -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources/i386 -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources -F/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator -include /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch -MMD -MT dependencies -MF /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterState.d --serialize-diagnostics /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterState.dia -c /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonStreamWriterState.m -o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonStreamWriterState.o36"482CF3A4-2836-4792-8AFA-B7374E88D620-
-
-CCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonTokeniser.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonTokeniser.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s371885802.566686
-e371885802.722784
-r1
-xCompileC
-xBuild/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonTokeniser.o
-x/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonTokeniser.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection87"Compile /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonTokeniser.m9c3491ea862ab641^103cbaea862ab641^---0#0#0#-19%DVTDocumentLocation2@95"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonTokeniser.m0000000000000000^3613"CompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonTokeniser.o SBJson/SBJsonTokeniser.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wduplicate-method-match -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=5.1 -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-generated-files.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-own-target-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-all-target-headers.hmap -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-project-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/include -ISBJson -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources/i386 -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources -F/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator -include /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch -MMD -MT dependencies -MF /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonTokeniser.d --serialize-diagnostics /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonTokeniser.dia -c /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonTokeniser.m -o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonTokeniser.o36"7DC2D8B8-7020-4944-86BE-29ABC750EED4-
-
-CCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonUTF8Stream.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonUTF8Stream.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s371885802.618749
-e371885802.742865
-r1
-xCompileC
-xBuild/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonUTF8Stream.o
-x/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonUTF8Stream.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection88"Compile /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonUTF8Stream.m6e8b9eea862ab641^3737beea862ab641^---0#0#0#-19%DVTDocumentLocation2@96"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonUTF8Stream.m0000000000000000^3619"CompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonUTF8Stream.o SBJson/SBJsonUTF8Stream.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wduplicate-method-match -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=5.1 -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-generated-files.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-own-target-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-all-target-headers.hmap -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-project-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/include -ISBJson -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources/i386 -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources -F/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator -include /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch -MMD -MT dependencies -MF /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonUTF8Stream.d --serialize-diagnostics /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonUTF8Stream.dia -c /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonUTF8Stream.m -o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonUTF8Stream.o36"AC13EB32-2CAC-4A42-9745-AB7D1CC6A63A-
-
-CCompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonWriter.o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonWriter.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s371885802.724110
-e371885802.782549
-r1
-xCompileC
-xBuild/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonWriter.o
-x/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonWriter.m
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection84"Compile /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonWriter.m9d81b9ea862ab641^b955c8ea862ab641^---0#0#0#-19%DVTDocumentLocation2@92"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonWriter.m0000000000000000^3595"CompileC Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonWriter.o SBJson/SBJsonWriter.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wduplicate-method-match -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=5.1 -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-generated-files.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-own-target-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-all-target-headers.hmap -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-project-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/include -ISBJson -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources/i386 -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources -F/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator -include /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch -MMD -MT dependencies -MF /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonWriter.d --serialize-diagnostics /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonWriter.dia -c /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJsonWriter.m -o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJsonWriter.o36"249514DB-B33D-44C6-A6A0-9BA6E7F3A28B-
-
-CLibtool /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/libSBJson.a normal i386
-s371885802.789215
-e371885802.950265
-r1
-xLibtool
-x/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/libSBJson.a
-xnormal
-xi386
-o/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool: -dynamic not specified the following flags are invalid: -ObjC 
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection68"Libtool Build/Products/Debug-iphonesimulator/libSBJson.a normal i3864225caea862ab641^b553f3ea862ab641^-159"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool: -dynamic not specified the following flags are invalid: -ObjC -0#0#0#--1021"Libtool Build/Products/Debug-iphonesimulator/libSBJson.a normal i386    cd /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson    setenv IPHONEOS_DEPLOYMENT_TARGET 5.1    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool -static -arch_only i386 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -L/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator -filelist /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/Objects-normal/i386/SBJson.LinkFileList -ObjC -framework Foundation -o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/libSBJson.a36"058A72B6-41AD-46B0-8DDE-AE44887E5042-
-
-CProcessPCH /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch.pth SBJson/SBJson-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-s371885799.419224
-e371885801.586733
-r1
-xProcessPCH
-x/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch.pth
-xSBJson/SBJson-Prefix.pch
-xnormal
-xi386
-xobjective-c
-xcom.apple.compilers.llvm.clang.1_0.compiler
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection35"Precompile SBJson/SBJson-Prefix.pch9e7b6be7862ab641^806096e9862ab641^---0#0#0#-19%DVTDocumentLocation2@95"file://localhost/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJson-Prefix.pch0000000000000000^3446"ProcessPCH Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch.pth SBJson/SBJson-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson    setenv LANG en_US.US-ASCII    setenv PATH "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c-header -arch i386 -fmessage-length=0 -std=gnu99 -fobjc-arc -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wreturn-type -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wduplicate-method-match -Wformat -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wuninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk -fexceptions -fasm-blocks -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -fobjc-abi-version=2 -fobjc-legacy-dispatch "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -mios-simulator-version-min=5.1 -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-generated-files.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-own-target-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-all-target-headers.hmap -iquote /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/SBJson-project-headers.hmap -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator/include -ISBJson -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources/i386 -I/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/SBJson.build/Debug-iphonesimulator/SBJson.build/DerivedSources -F/Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Products/Debug-iphonesimulator --serialize-diagnostics /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch.dia -c /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/SBJson/SBJson-Prefix.pch -o /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch.pth -MMD -MT dependencies -MF /Users/keroxp/Development/iOS/Sheffle/Libraries/SBJson/Build/Intermediates/PrecompiledHeaders/SBJson-Prefix-cvvtjkhrfjkqsxfqjnsvqigpxayp/SBJson-Prefix.pch.d36"CFDFFFEB-9F3A-4407-902A-BCF5A4A25EAE-
-
-CProcessPCH /Users/keroxp/Library/Developer/Xcode/DerivedData/SBJson-diawcuixzoksvvfguurdmlgmixbp/Index/PrecompiledHeaders/SBJson-Prefix-ftegmgwbcrhoqwckygbnrnkexkdc_ast/SBJson-Prefix.pch.pth SBJson/SBJson-Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.astbuilder
-r0
-
