@@ -12,7 +12,7 @@
 #import "SFCoreDataManager.h"
 
 #import "GSBookShelfView.h"
-#import "R9HTTPRequest/R9HTTPRequest.h"
+#import "R9HTTPRequest.h"
 
 #import "SFShelfBookView.h"
 #import "SFShelfRowView.h"

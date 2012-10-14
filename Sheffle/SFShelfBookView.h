@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GSBookShelf/GSBookView.h"
+#import "GSBookView.h"
 
 @interface SFShelfBookView : UIButton
 <GSBookView>

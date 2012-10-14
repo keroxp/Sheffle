@@ -744,7 +744,7 @@
             NSInteger i = [self.fetchedresultsController.fetchedObjects indexOfObject:anObject];            
             NSIndexSet *is = [NSIndexSet indexSetWithIndex:i];
             [self.gridShelfViewController.bookShelfView insertBookViewsAtIndexs:is animate:YES];
-            //TODO: 複数登録の処理が必要になったらここで初期化してはいけない
+#warning 複数登録の処理が必要になったらここで初期化してはいけない
             [self.gridShelfViewController initBooks];
         }
             break;

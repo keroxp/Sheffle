@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "GSBookShelf/GSBookShelfCell.h"
+#import "GSBookShelfCell.h"
 
 @interface SFShelfRowView : UIView
 <GSBookShelfCell>
