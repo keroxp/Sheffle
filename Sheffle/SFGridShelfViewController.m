@@ -10,6 +10,8 @@
 #import "SFShelfViewController.h"
 
 #define ROW_HEIGHT 140.0f
+#define kNavigationBarHeight self.parentViewController.navigationController.navigationBar.frame.size.height
+#define kToolbarHeight self.parentViewController.navigationController.toolbar.frame.size.height
 
 @interface SFGridShelfViewController ()
 {    
@@ -40,8 +42,6 @@
 {
     [super viewDidLoad];
     
-    // ボタンの初期化（あとで消す）
-    
     [self switchToNormalMode];
     [self initBooks];
     
@@ -49,10 +49,11 @@
         
     [self.bookShelfView setContentOffset:CGPointMake(0, 120)];
     
-    _bookShelfView = [[GSBookShelfView alloc] initWithFrame:CGRectMake(0, 0, 320, 460 - 88)];
-    _bookShelfView.dataSource = self;
+    CGRect f = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - kNavigationBarHeight - kToolbarHeight);
+    self.bookShelfView = [[GSBookShelfView alloc] initWithFrame:f];
+    self.bookShelfView.dataSource = self;
     
-    [self.view addSubview:_bookShelfView];
+    [self.view addSubview:self.bookShelfView];
     
 //    self.navigationController.toolbarHidden = YES;
 //    [self performSelector:@selector(testScrollToRow) withObject:self afterDelay:3];
@@ -142,7 +143,7 @@
         [bookView addTarget:self action:@selector(bookViewClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     [bookView setIndex:index];
-    //TODO:空配列への参照でエラーが出る
+#warning 空配列への参照でエラーが出る
     [bookView setSelected:[(NSNumber *)[self.bookStatus objectAtIndex:index] intValue]];
     [bookView setBackgroundImage:[UIImage imageWithData:book.image] forState:UIControlStateNormal];
     return bookView;
@@ -310,9 +311,10 @@
         svc.trashButton.title = deleteButtonTitle;
         svc.moveButton.title = moveButtonTitle;
         svc.staredButton.title = staredButtonTitle;
-    }
-    else {
+    } else {
         [bookView setSelected:NO];
+        SFBook *book = [self.bookArray objectAtIndex:bookView.index];
+        [self.parentViewController performSegueWithIdentifier:@"showBook" sender:book];
     }
 }
 

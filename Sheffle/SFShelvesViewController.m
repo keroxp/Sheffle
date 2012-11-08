@@ -9,8 +9,12 @@
 #import "SFShelvesViewController.h"
 #import "SFShelfViewController.h"
 
-@interface SFShelvesViewController (Private)
-
+@interface SFShelvesViewController ()
+{
+    BOOL _isEdittingTitle;
+    NSIndexPath *_selectedPath;
+    UIAlertView *_alertView;
+}
 - (void)configureCell:(UITableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath;
 - (void)cancelButtonDidTap:(id)sender;
 - (void)addButtonDidTap:(id)sender;
@@ -39,32 +43,28 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
-    UIBarButtonItem *separator = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    self.title = [NSString stringWithFormat:@"Shekves (%d)",self.fetchedResultsController.fetchedObjects.count];
-    
-    self.toolbarItems = @[separator,addButton];
+    self.title = [NSString stringWithFormat:@"Shelves (%d)",self.fetchedResultsController.fetchedObjects.count];
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.navigationItem.rightBarButtonItem = addButton;
     
     // Viewの初期化
-    CALayer *topShadowLayer = [CALayer layer];
-    topShadowLayer.frame = self.view.bounds;
-    [self.view.layer addSublayer:topShadowLayer];
-    topShadowLayer.masksToBounds = YES;
-    CGRect shadowFrame = CGRectMake(-10.0, -10.0, topShadowLayer.bounds.size.width+10.0, 10.0);
-    UIBezierPath *path = [UIBezierPath bezierPathWithRect:shadowFrame];
-    topShadowLayer.shadowOffset = CGSizeMake(0, 2.5);
-    topShadowLayer.shadowColor = [[UIColor blackColor] CGColor];
-    topShadowLayer.shadowOpacity = 0.5;
-    topShadowLayer.shadowPath = [path CGPath];
     
     self.searchDisplayController.delegate = self;
     self.searchDisplayController.searchResultsDataSource = self;
     
+    self.navigationController.navigationBar.opaque = NO;
+    self.navigationController.navigationBar.layer.opaque = NO;
+    
     // PullToAdd
     
-    [self.tableView addPullToRefreshWithActionHandler:^(void) {
-        [self addButtonDidTap:nil];
-    }];
+//    [self.tableView addPullToRefreshWithActionHandler:^(void) {
+//        [self addButtonDidTap:nil];
+//    }];
+    
+//    UIImageView *iv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navbarbg.png"]];
+//    iv.frame = CGRectMake(100, 200, iv.frame.size.width, iv.frame.size.height);
+//    [self.view addSubview:iv];
     
 }
 
@@ -159,28 +159,25 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"ShelvesCell";
+    static NSString *CellIdentifier = @"ShelvesCell_";
     static NSString *BadgedCellIdentifier = @"BadgedCell";
     static NSString *EditableCellIdentifier = @"EditableCell";
 
-    if (NO) {
-        // 編集モードの場合は全てをEditableなCellに
-        SFEditableCell *ecell = (SFEditableCell*)[tableView dequeueReusableCellWithIdentifier:EditableCellIdentifier];
-        if (!ecell) {
-            SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:indexPath];
-            ecell = [[SFEditableCell alloc] initWithText:shelf.title indexPath:indexPath reuseIdentifier:EditableCellIdentifier];
-        }
-        [self configureCell:ecell atIndexPath:indexPath];
-        return ecell;
-    }else{
-//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        TDBadgedCell *cell = [tableView dequeueReusableCellWithIdentifier:BadgedCellIdentifier];
-        if (!cell) {
-            cell = [[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BadgedCellIdentifier];
-        }
-        [self configureCell:cell atIndexPath:indexPath];
-         return cell;
+    
+    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    TDBadgedCell *cell = [tableView dequeueReusableCellWithIdentifier:BadgedCellIdentifier];
+    if (!cell) {
+        cell = [[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BadgedCellIdentifier];
+        //cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+    
+    [self configureCell:cell atIndexPath:indexPath];
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    cell.textLabel.backgroundColor = [UIColor clearColor];
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
@@ -195,9 +192,9 @@
     }else{
         TDBadgedCell *bcell = (TDBadgedCell*)cell;
         bcell.textLabel.text = shelf.title;
-        bcell.badgeString = [NSString stringWithFormat:@" %i ",shelf.books.count];
-//        bcell.badgeColor = [UIColor darkGrayColor];
-        bcell.badge.radius = 10.0f;
+        bcell.badgeString = [NSString stringWithFormat:@"%i",shelf.books.count];
+        bcell.badgeColor = [UIColor darkGrayColor];
+//        bcell.badge.radius = 7.5f;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 //        bcell.detailTextLabel.text = [NSString stringWithFormat:@"%i",shelf.books.count];
 //        bcell.detailTextLabel.textColor = [UIColor whiteColor];

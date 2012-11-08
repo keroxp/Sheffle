@@ -17,11 +17,6 @@
 ,UITextFieldDelegate
 ,UISearchDisplayDelegate
 ,UIAlertViewDelegate>
-{
-    BOOL _isEdittingTitle;
-    NSIndexPath *_selectedPath;
-    UIAlertView *_alertView;
-}
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 

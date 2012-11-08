@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+//#import "SFBook+Alpha.h"
 
 /*
 
@@ -63,5 +64,11 @@ typedef enum {
 @property (nonatomic, retain) NSDate *salesDate;
 @property (nonatomic, retain) NSString *bookSize;
 
+// セクション用プロパティ
+@property (readonly, nonatomic) NSString *titleInitial;
+@property (readonly, nonatomic) NSString *authorInitial;
+@property (readonly, nonatomic) NSString *publisherNameInitial;
+
+- (void)setDataWithJSON:(NSDictionary*)JSON;
 
 @end

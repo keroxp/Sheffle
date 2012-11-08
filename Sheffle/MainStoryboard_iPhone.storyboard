@@ -1,17 +1,82 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="bhE-lq-Ujz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="MWI-Ws-kxl">
     <dependencies>
-        <deployment version="1296" defaultVersion="1536" identifier="iOS"/>
+        <deployment version="1536" identifier="iOS"/>
         <development version="4500" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
+        <!--Table Shelf View Controller-->
+        <scene sceneID="7Bl-6e-sr5">
+            <objects>
+                <tableViewController storyboardIdentifier="TableShlefView" id="aJQ-a7-IXK" customClass="SFTableShelfViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8ta-hh-awW">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="GEd-8A-Giz">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="aJQ-a7-IXK" id="wMn-mi-cvK"/>
+                            </connections>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="q1a-vV-7jO">
+                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="aJQ-a7-IXK" id="7Tj-V6-o9O"/>
+                            <outlet property="delegate" destination="aJQ-a7-IXK" id="cDA-b5-GZR"/>
+                        </connections>
+                    </tableView>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="nnQ-0v-uzr" id="uMS-SO-0Bk"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6kb-aW-fZD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="nnQ-0v-uzr">
+                    <connections>
+                        <outlet property="delegate" destination="aJQ-a7-IXK" id="m1V-tC-EEU"/>
+                        <outlet property="searchBar" destination="GEd-8A-Giz" id="Ukc-C3-RMb"/>
+                        <outlet property="searchContentsController" destination="aJQ-a7-IXK" id="TZA-iK-jhQ"/>
+                        <outlet property="searchResultsDataSource" destination="aJQ-a7-IXK" id="PjD-3X-JDj"/>
+                        <outlet property="searchResultsDelegate" destination="aJQ-a7-IXK" id="Cto-eJ-g2D"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="284" y="-663"/>
+        </scene>
+        <!--Grid Shelf View Controller-->
+        <scene sceneID="qNH-5w-nc9">
+            <objects>
+                <viewController storyboardIdentifier="GridShelfView" id="sgi-3l-xcA" customClass="SFGridShelfViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ing-c7-xhV">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h03-89-vag" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="750" y="-663"/>
+        </scene>
         <!--Shelves View Controller-->
         <scene sceneID="c3e-Ej-GbQ">
             <objects>
                 <tableViewController id="EqQ-gZ-jNy" customClass="SFShelvesViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="0z0-eE-Bhh">
-                        <rect key="frame" x="0.0" y="64" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="B9e-tI-dUU">
@@ -23,28 +88,12 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ShelvesCell" textLabel="qnz-J6-i4n" detailTextLabel="DW0-yz-que" style="IBUITableViewCellStyleValue1" id="iPI-QJ-2Iw">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ShelvesCell" id="iPI-QJ-2Iw">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qnz-J6-i4n">
-                                            <rect key="frame" x="10" y="11" width="35" height="21"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </label>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DW0-yz-que">
-                                            <rect key="frame" x="246" y="11" width="44" height="21"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.2196078431372549" green="0.32941176470588235" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </label>
-                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </tableViewCell>
@@ -52,7 +101,7 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Jzr-Ef-uQJ"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="CH9-ER-CCn" id="wsl-nq-JMn"/>
                         <segue destination="fXz-FU-MVf" kind="push" identifier="showShelf" id="RwX-vZ-NbZ"/>
@@ -69,7 +118,26 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="442" y="-528"/>
+            <point key="canvasLocation" x="310" y="32"/>
+        </scene>
+        <!--Tab Bar View Controller-->
+        <scene sceneID="v1p-5b-Qwg">
+            <objects>
+                <tabBarController definesPresentationContext="YES" id="MWI-Ws-kxl" customClass="SFTabBarViewController" sceneMemberID="viewController">
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="9vY-tU-GDn">
+                        <rect key="frame" x="129" y="330" width="163" height="49"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="D1T-Th-Tae" kind="relationship" relationship="viewControllers" id="V9K-Cs-SK4"/>
+                        <segue destination="DkO-vd-NqL" kind="relationship" relationship="viewControllers" id="OoJ-u2-HvU"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="j6g-2t-T8X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-711" y="685"/>
         </scene>
         <!--Table View Controller - Root View Controller-->
         <scene sceneID="O1R-uL-3xp">
@@ -111,7 +179,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dDn-yg-F0y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1912" y="-837"/>
+            <point key="canvasLocation" x="2028" y="-357"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xo5-Pi-y5S">
@@ -126,11 +194,35 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cDO-ZG-dhJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1434" y="-837"/>
+            <point key="canvasLocation" x="1380" y="293"/>
         </scene>
         <!--Shelf View Controller-->
         <scene sceneID="v9f-aO-wjr">
             <objects>
+                <viewController id="fXz-FU-MVf" customClass="SFShelfViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0Nw-J2-rDF">
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="cDV-lN-8bz">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="zyn-Ho-aYI">
+                            <rect key="frame" x="96" y="7" width="128" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="First"/>
+                                <segment title="Second"/>
+                            </segments>
+                        </segmentedControl>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="FUa-M4-BAn" id="EQD-Tp-hn8"/>
+                        <segue destination="jYO-vu-AXV" kind="push" identifier="showBook" id="yeA-Ua-hvz"/>
+                        <segue destination="cXp-GR-ZA3" kind="modal" identifier="showShelfList" id="rNQ-V3-7T9"/>
+                    </connections>
+                </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Waq-WR-FFQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <searchDisplayController id="FUa-M4-BAn">
                     <connections>
@@ -140,30 +232,15 @@
                         <outlet property="searchResultsDelegate" destination="fXz-FU-MVf" id="4Gt-Uv-CyE"/>
                     </connections>
                 </searchDisplayController>
-                <viewController id="fXz-FU-MVf" customClass="SFShelfViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="0Nw-J2-rDF">
-                        <rect key="frame" x="0.0" y="64" width="320" height="460"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="cDV-lN-8bz"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="searchDisplayController" destination="FUa-M4-BAn" id="EQD-Tp-hn8"/>
-                        <segue destination="jYO-vu-AXV" kind="push" identifier="showBook" id="yeA-Ua-hvz"/>
-                        <segue destination="cXp-GR-ZA3" kind="modal" identifier="showShelfList" id="rNQ-V3-7T9"/>
-                    </connections>
-                </viewController>
             </objects>
-            <point key="canvasLocation" x="894" y="-528"/>
+            <point key="canvasLocation" x="832" y="326"/>
         </scene>
         <!--Book View Controller-->
         <scene sceneID="nid-qq-5Gd">
             <objects>
                 <tableViewController id="jYO-vu-AXV" customClass="SFBookViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="R7R-lr-Xcj">
-                        <rect key="frame" x="0.0" y="64" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -202,31 +279,168 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oOf-As-k01" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1434" y="-184"/>
+            <point key="canvasLocation" x="1380" y="1030"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="1fj-et-YaO">
+        <!--Books View Controller-->
+        <scene sceneID="9uL-ex-lD8">
             <objects>
-                <navigationController definesPresentationContext="YES" toolbarHidden="NO" id="bhE-lq-Ujz" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="UgJ-Mo-sGm">
+                <tableViewController id="HHS-4Q-5j0" customClass="SFBooksViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="66" sectionHeaderHeight="22" sectionFooterHeight="22" id="HSb-kx-beh">
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="1v3-vm-r23">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <scopeButtonTitles>
+                                <string>Title</string>
+                                <string>Author</string>
+                                <string>Publisher</string>
+                            </scopeButtonTitles>
+                            <connections>
+                                <outlet property="delegate" destination="HHS-4Q-5j0" id="HC6-2B-0YB"/>
+                            </connections>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BooksCell" textLabel="jUK-dG-0XJ" detailTextLabel="5C1-VT-hbs" style="IBUITableViewCellStyleSubtitle" id="crJ-kL-RKf">
+                                <rect key="frame" x="0.0" y="66" width="320" height="66"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="65"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jUK-dG-0XJ">
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5C1-VT-hbs">
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <connections>
+                                    <segue destination="jYO-vu-AXV" kind="push" identifier="showBook" id="0Jq-0t-98A"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="top-nl-mx8">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="B6g-l2-BMT">
+                            <rect key="frame" x="55" y="6" width="209" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Title"/>
+                                <segment title="Author"/>
+                                <segment title="Publisher"/>
+                            </segments>
+                            <connections>
+                                <action selector="sortControlDidChange:" destination="HHS-4Q-5j0" eventType="valueChanged" id="pqY-yV-wGZ"/>
+                            </connections>
+                        </segmentedControl>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="JeT-8Q-Gae">
+                            <connections>
+                                <action selector="addButtonDidTap:" destination="HHS-4Q-5j0" id="ReV-mG-BQa"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="addButton" destination="JeT-8Q-Gae" id="1hX-l0-WNF"/>
+                        <outlet property="searchDisplayController" destination="bTB-Ik-zIm" id="CWt-Qo-Ib0"/>
+                        <outlet property="sortControl" destination="B6g-l2-BMT" id="642-cq-59I"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s7M-Tg-XvV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="bTB-Ik-zIm">
+                    <connections>
+                        <outlet property="delegate" destination="HHS-4Q-5j0" id="4Yz-Bv-dYy"/>
+                        <outlet property="searchBar" destination="1v3-vm-r23" id="8Cs-CH-dWA"/>
+                        <outlet property="searchContentsController" destination="HHS-4Q-5j0" id="dSN-gP-HYB"/>
+                        <outlet property="searchResultsDataSource" destination="HHS-4Q-5j0" id="65m-Ax-p5e"/>
+                        <outlet property="searchResultsDelegate" destination="HHS-4Q-5j0" id="bRM-nl-9C8"/>
+                    </connections>
+                </searchDisplayController>
+            </objects>
+            <point key="canvasLocation" x="310" y="690"/>
+        </scene>
+        <!--Navigation Controller - Books-->
+        <scene sceneID="iS4-48-zZH">
+            <objects>
+                <navigationController title="Books" definesPresentationContext="YES" id="DkO-vd-NqL" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Books" id="ITb-87-5Hi"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6Lh-VW-lKx">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ZzF-o9-yQe">
-                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="CKp-6j-c9i">
+                        <rect key="frame" x="0.0" y="416" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
-                        <segue destination="EqQ-gZ-jNy" kind="relationship" relationship="rootViewController" id="yBz-vo-odg"/>
+                        <segue destination="HHS-4Q-5j0" kind="relationship" relationship="rootViewController" id="kkl-1Y-zsE"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qu1-ww-cXm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oZ9-IY-vZm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-12" y="-528"/>
+            <point key="canvasLocation" x="-156" y="684"/>
+        </scene>
+        <!--Navigation Controller - Shelves-->
+        <scene sceneID="110-hI-bPT">
+            <objects>
+                <navigationController title="Shelves" id="D1T-Th-Tae" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Shelves" id="W0b-l0-L6s"/>
+                    <toolbarItems/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PSH-tm-mNw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="EqQ-gZ-jNy" kind="relationship" relationship="rootViewController" id="Yx4-26-SsH"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Oyc-xn-Gjr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-156" y="46"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="SFBookViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFBookViewController.h"/>
+        </class>
+        <class className="SFBooksViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFBooksViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addButtonDidTap:"/>
+                <relationship kind="action" name="sortControlDidChange:" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="addButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="sortControl" candidateClass="UISegmentedControl"/>
+            </relationships>
+        </class>
+        <class className="SFGridShelfViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFGridShelfViewController.h"/>
+        </class>
+        <class className="SFShelfViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFShelfViewController.h"/>
+        </class>
+        <class className="SFShelvesViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFShelvesViewController.h"/>
+        </class>
+        <class className="SFTableShelfViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFTableShelfViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="0Jq-0t-98A"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -26,5 +26,9 @@
 
 - (void)saveContext;
 - (NSURL*)applicationDocumentsDirectory;
+- (NSFetchedResultsController*)fetchedResultsControllerWithEntityName:(NSString*)entityName
+                                                      sortDescriptors:(NSArray*)sortDesctiptors
+                                                   sectionNameKeyPath:(NSString*)sectionNameKeyPath
+                                                            cacheName:(NSString*)cacheName;
 
 @end

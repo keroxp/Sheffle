@@ -7,8 +7,6 @@
 //
 
 #import "SFAppDelegate.h"
-#define kBarTintColor [UIColor colorWithRed:214.0f/255.0f green:168.0f/255.0f blue:91.0f/255.0f alpha:1.0f]
-
 
 @implementation SFAppDelegate
 
@@ -19,12 +17,17 @@
     // Override point for customization after application launch.
     
     
-    [[UIBarButtonItem appearance] setTintColor:kBarTintColor];
+//    [[UIBarButtonItem appearance] setTintColor:kBarTintColor];
     [[UISegmentedControl appearance] setTintColor:kBarTintColor];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:kBarTintColor];
+//    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"barbg.png"]];
+//    [[UITabBar appearance] setShadowImage:[UIImage imageNamed:@"toolbarshadow.png"]];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forBarMetrics:UIBarMetricsDefault];
-    
+    [[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"navbarshadow.png"]];
     [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
-
+    [[UIToolbar appearance] setShadowImage:[UIImage imageNamed:@"toolbarshadow.png"] forToolbarPosition:UIToolbarPositionBottom];
+    
+        
     return YES;
 }
 							

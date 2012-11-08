@@ -10,8 +10,12 @@
 #import "SFShelfViewController.h"
 #define kBarTintColor [UIColor colorWithRed:214.0f/255.0f green:168.0f/255.0f blue:91.0f/255.0f alpha:1.0f]
 
-
-@interface SFTableShelfViewController (Private)
+@interface SFTableShelfViewController ()
+{
+    NSManagedObjectContext *__managedObjectContext;
+    NSIndexPath *_selectedPath;
+    UISearchDisplayController *__searchDisplayController;
+}
 
 @end
 
@@ -23,6 +27,7 @@
 {
     self = [super initWithStyle:style];
     if (self){
+
    }
     return self;
 }
@@ -31,19 +36,13 @@
 {
     
     [self.tableView clearsContextBeforeDrawing];
-    [[self editButtonItem] setTintColor:kBarTintColor];
-//    [self.tableView setFrame:self.view.superview.frame];
     
     __managedObjectContext = [[SFCoreDataManager sharedManager] managedObjectContext];
-    
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0f)];
-    [searchBar setDelegate:self];
 
-    __searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
-    [__searchDisplayController setSearchResultsDelegate:self];
-    [__searchDisplayController setSearchResultsDataSource:self];
+    self.searchDisplayController.delegate = self;
+    self.searchDisplayController.searchBar.delegate = self;
+    self.searchDisplayController.searchResultsDataSource = self;
     
-    [[self tableView] setTableHeaderView:searchBar];
     [[self tableView] setAllowsMultipleSelectionDuringEditing:YES];        
 }
 
@@ -87,9 +86,9 @@
     SFBook *book = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [cell.textLabel setText:book.title];
     [cell.detailTextLabel setText:book.author];
+    [cell.imageView setImage:[UIImage imageWithData:book.image]];
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
 }
-
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -120,7 +119,8 @@
     _selectedPath = indexPath;
     if (!tableView.editing) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        [self.parentViewController performSegueWithIdentifier:@"showBook" sender:self];
+        SFBook *book = [self.fetchedResultsController objectAtIndexPath:_selectedPath];
+        [self.parentViewController performSegueWithIdentifier:@"showBook" sender:book];
     }else{
         NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
         int nob = selectedRows.count;

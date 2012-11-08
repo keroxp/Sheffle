@@ -49,3 +49,4 @@ typedef enum{
 - (NSFetchedResultsController*)fetchedResultsControllerWithEntityName:(NSString*)entityName;
 
 @end
+
