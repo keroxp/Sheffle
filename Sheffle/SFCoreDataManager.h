@@ -10,8 +10,10 @@
 #import <CoreData/CoreData.h>
 
 #import "SFBook.h"
+#import "SFBook+Alpha.h"
 #import "SFShelf.h"
-#import "SFShelf+SortedBooks.h"
+#import "SFShelf+Alpha.h"
+#import "SFBookAuthor.h"
 
 @interface SFCoreDataManager : NSObject
 
@@ -21,6 +23,9 @@
 
 - (SFShelf*)insertNewShelf;
 - (SFBook*)insertNewBook;
+- (SFBookAuthor*)insertNewBookAuthor;
+
+- (BOOL)checkDuplicationOfEntityName:(NSString*)entityName withIDKey:(NSString*)IDkey forIDValue:(NSString*)IDValue;
 
 - (NSArray*)shelves;
 

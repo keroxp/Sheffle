@@ -40,8 +40,8 @@ static SFCoreDataManager *_sharedInstance;
 {
     SFShelf *shelf = [NSEntityDescription insertNewObjectForEntityForName:@"Shelf" inManagedObjectContext:[self managedObjectContext]];
     [shelf setIdentifier:[self insertNewIdentifier]];
-    shelf.created = [NSDate date];
-    shelf.updated = [NSDate date];
+    [shelf setCreated:[NSDate date]];
+    [shelf setUpdated:[NSDate date]];
     
     //TODO:indexを設置
     
@@ -55,10 +55,46 @@ static SFCoreDataManager *_sharedInstance;
     [book setIdentifier:[self insertNewIdentifier]];
     [book setCreated:[NSDate date]];
     [book setUpdated:[NSDate date]];
+    [book setFavorite:@(NO)];
     
     //TODO:indexを設置する
     
     return book;
+}
+
+- (SFBookAuthor *)insertNewBookAuthor
+{
+    SFBookAuthor *author = (SFBookAuthor*)[NSEntityDescription insertNewObjectForEntityForName:@"BookAuthor" inManagedObjectContext:[self managedObjectContext]];
+    [author setIdentifier:[self insertNewIdentifier]];
+    [author setCreated:[NSDate date]];
+    [author setUpdated:[NSDate date]];
+    
+    return author;
+}
+
+#pragma mark - Check if Duplicated
+
+- (BOOL)checkDuplicationOfEntityName:(NSString *)entityName withIDKey:(NSString *)IDkey forIDValue:(NSString *)IDValue
+{
+    // CoreData リクエスト命令組み立て
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName: entityName inManagedObjectContext: [self managedObjectContext]];
+    [request setEntity: entity];
+    NSString *predicateCommand = [NSString stringWithFormat: @"%@ = '",IDkey];
+    predicateCommand = [predicateCommand stringByAppendingString: IDValue];
+    predicateCommand = [predicateCommand stringByAppendingString: @"'"];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: predicateCommand];
+    [request setPredicate: predicate];
+    
+    // CoreDataフェッチ(取り出し)
+    NSArray *fetchedObjects = [[self managedObjectContext] executeFetchRequest:request error: nil];
+
+    if (!fetchedObjects || fetchedObjects.count == 0) {
+        return YES;
+    }else{
+        return NO;
+    }
 }
 
 - (NSArray *)shelves

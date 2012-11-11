@@ -5,6 +5,7 @@
         <attribute name="authorKana" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="bookSize" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="favorite" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="image2x" optional="YES" attributeType="Binary" syncable="YES"/>
@@ -19,7 +20,16 @@
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="titleKana" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updated" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="bookAuthor" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="BookAuthor" inverseName="books" inverseEntity="BookAuthor" syncable="YES"/>
         <relationship name="shelf" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Shelf" inverseName="books" inverseEntity="Shelf" syncable="YES"/>
+    </entity>
+    <entity name="BookAuthor" representedClassName="SFBookAuthor" syncable="YES">
+        <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nameKana" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updated" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="bookAuthor" inverseEntity="Book" syncable="YES"/>
     </entity>
     <entity name="Shelf" representedClassName="SFShelf" syncable="YES">
         <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
@@ -30,7 +40,8 @@
         <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="shelf" inverseEntity="Book" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Book" positionX="0" positionY="0" width="128" height="330"/>
+        <element name="Book" positionX="0" positionY="0" width="128" height="360"/>
         <element name="Shelf" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="BookAuthor" positionX="160" positionY="192" width="128" height="135"/>
     </elements>
 </model>

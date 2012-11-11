@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A628D2B5164BAF03003D03DD /* navbarshadow.png in Resources */ = {isa = PBXBuildFile; fileRef = A628D2B1164BAF03003D03DD /* navbarshadow.png */; };
+		A628D2B6164BAF03003D03DD /* navbarshadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A628D2B2164BAF03003D03DD /* navbarshadow@2x.png */; };
+		A628D2B7164BAF03003D03DD /* toolbarshadow.png in Resources */ = {isa = PBXBuildFile; fileRef = A628D2B3164BAF03003D03DD /* toolbarshadow.png */; };
+		A628D2B8164BAF03003D03DD /* toolbarshadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A628D2B4164BAF03003D03DD /* toolbarshadow@2x.png */; };
+		A628D2BA164BBEA6003D03DD /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A628D2B9164BBEA6003D03DD /* Default-568h@2x.png */; };
+		A628D2C5164BEFF4003D03DD /* SFBooksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A628D2C4164BEFF3003D03DD /* SFBooksViewController.m */; };
 		A62A41ED15C0611500959355 /* SFCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A62A41EC15C0611500959355 /* SFCoreDataManager.m */; };
 		A6408C6615BDCDDD001AF716 /* SFTableShelfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6408C6515BDCDDD001AF716 /* SFTableShelfViewController.m */; };
 		A64E732E15C3ABD7003464FE /* SFShelf.m in Sources */ = {isa = PBXBuildFile; fileRef = A64E732D15C3ABD7003464FE /* SFShelf.m */; };
@@ -44,7 +50,6 @@
 		A680D393162A956F0088FEB6 /* GSBookViewContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D38D162A956E0088FEB6 /* GSBookViewContainerView.m */; };
 		A680D394162A956F0088FEB6 /* GSCellContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D38F162A956F0088FEB6 /* GSCellContainerView.m */; };
 		A680D395162A956F0088FEB6 /* NSMutableArray+Rearrange.m in Sources */ = {isa = PBXBuildFile; fileRef = A680D391162A956F0088FEB6 /* NSMutableArray+Rearrange.m */; };
-		A680D3AE162AA19E0088FEB6 /* libSBJson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A680D378162A94F80088FEB6 /* libSBJson.a */; };
 		A680D3AF162AA7810088FEB6 /* libSBJson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A680D378162A94F80088FEB6 /* libSBJson.a */; };
 		A685A2BC15BC370C000A1AD5 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A685A2B915BC36E3000A1AD5 /* libiconv.dylib */; };
 		A6A4A9AB15CEBBC9007EFB0E /* SFEditableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A6A4A9AA15CEBBC9007EFB0E /* SFEditableCell.m */; };
@@ -68,9 +73,13 @@
 		A6B998F315B9957500D0919C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B998F215B9957500D0919C /* CoreVideo.framework */; };
 		A6B998F715B9958800D0919C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B998F615B9958800D0919C /* QuartzCore.framework */; };
 		A6B998F915B995A500D0919C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B998F815B995A500D0919C /* CoreMedia.framework */; };
-		A6D0916A15C5A07400B128C8 /* SFBook.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D0916915C5A07400B128C8 /* SFBook.m */; };
+		A6BDB533164F4AE200988ED5 /* libSBJson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A680D378162A94F80088FEB6 /* libSBJson.a */; };
+		A6BDB545164F5F6E00988ED5 /* SFBookAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB544164F5F6E00988ED5 /* SFBookAuthor.m */; };
+		A6BDB54B164F608200988ED5 /* SFBook.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB54A164F608200988ED5 /* SFBook.m */; };
+		A6BDB54E164F60E000988ED5 /* SFShelf+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB54D164F60DF00988ED5 /* SFShelf+Alpha.m */; };
+		A6BDB55D164F68BF00988ED5 /* libKXP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BDB558164F687D00988ED5 /* libKXP.a */; };
+		A6BDB563164F6DD900988ED5 /* SFBook+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB562164F6DD900988ED5 /* SFBook+Alpha.m */; };
 		A6D0917315C5B0A400B128C8 /* SFBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D0917115C5B0A400B128C8 /* SFBookViewController.m */; };
-		A6F5CD4B15CE613F00AEC20C /* SFShelf+SortedBooks.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F5CD4A15CE613E00AEC20C /* SFShelf+SortedBooks.m */; };
 		A6F5CD4E15CE62BB00AEC20C /* SFShelvesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F5CD4D15CE62BB00AEC20C /* SFShelvesViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -96,9 +105,37 @@
 			remoteGlobalIDString = A6B9987E15B98D1100D0919C;
 			remoteInfo = Sheffle;
 		};
+		A6BDB557164F687D00988ED5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A6BDB54F164F687C00988ED5 /* KXP.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A6055CE3164C9B80002CB369;
+			remoteInfo = KXP;
+		};
+		A6BDB559164F687D00988ED5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A6BDB54F164F687C00988ED5 /* KXP.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A6055CF4164C9B80002CB369;
+			remoteInfo = KXPTests;
+		};
+		A6BDB55B164F68B800988ED5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A6BDB54F164F687C00988ED5 /* KXP.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A6055CE2164C9B80002CB369;
+			remoteInfo = KXP;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A628D2B1164BAF03003D03DD /* navbarshadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navbarshadow.png; sourceTree = "<group>"; };
+		A628D2B2164BAF03003D03DD /* navbarshadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navbarshadow@2x.png"; sourceTree = "<group>"; };
+		A628D2B3164BAF03003D03DD /* toolbarshadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbarshadow.png; sourceTree = "<group>"; };
+		A628D2B4164BAF03003D03DD /* toolbarshadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbarshadow@2x.png"; sourceTree = "<group>"; };
+		A628D2B9164BBEA6003D03DD /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		A628D2C3164BEFF3003D03DD /* SFBooksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBooksViewController.h; sourceTree = "<group>"; };
+		A628D2C4164BEFF3003D03DD /* SFBooksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBooksViewController.m; sourceTree = "<group>"; };
 		A62A41EB15C0611400959355 /* SFCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFCoreDataManager.h; path = Sheffle/SFCoreDataManager.h; sourceTree = "<group>"; };
 		A62A41EC15C0611500959355 /* SFCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFCoreDataManager.m; path = Sheffle/SFCoreDataManager.m; sourceTree = "<group>"; };
 		A6408C6415BDCDDD001AF716 /* SFTableShelfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFTableShelfViewController.h; sourceTree = "<group>"; };
@@ -204,12 +241,17 @@
 		A6B998F215B9957500D0919C /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		A6B998F615B9958800D0919C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A6B998F815B995A500D0919C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		A6D0916815C5A07400B128C8 /* SFBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFBook.h; path = Sheffle/SFBook.h; sourceTree = "<group>"; };
-		A6D0916915C5A07400B128C8 /* SFBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFBook.m; path = Sheffle/SFBook.m; sourceTree = "<group>"; };
+		A6BDB543164F5F6E00988ED5 /* SFBookAuthor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFBookAuthor.h; path = Sheffle/SFBookAuthor.h; sourceTree = "<group>"; };
+		A6BDB544164F5F6E00988ED5 /* SFBookAuthor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFBookAuthor.m; path = Sheffle/SFBookAuthor.m; sourceTree = "<group>"; };
+		A6BDB549164F608200988ED5 /* SFBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFBook.h; path = Sheffle/SFBook.h; sourceTree = "<group>"; };
+		A6BDB54A164F608200988ED5 /* SFBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFBook.m; path = Sheffle/SFBook.m; sourceTree = "<group>"; };
+		A6BDB54C164F60DF00988ED5 /* SFShelf+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SFShelf+Alpha.h"; path = "Sheffle/SFShelf+Alpha.h"; sourceTree = "<group>"; };
+		A6BDB54D164F60DF00988ED5 /* SFShelf+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SFShelf+Alpha.m"; path = "Sheffle/SFShelf+Alpha.m"; sourceTree = "<group>"; };
+		A6BDB54F164F687C00988ED5 /* KXP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KXP.xcodeproj; path = Dependencies/KXP/KXP.xcodeproj; sourceTree = "<group>"; };
+		A6BDB561164F6DD900988ED5 /* SFBook+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SFBook+Alpha.h"; path = "Sheffle/SFBook+Alpha.h"; sourceTree = "<group>"; };
+		A6BDB562164F6DD900988ED5 /* SFBook+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SFBook+Alpha.m"; path = "Sheffle/SFBook+Alpha.m"; sourceTree = "<group>"; };
 		A6D0917015C5B0A400B128C8 /* SFBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBookViewController.h; sourceTree = "<group>"; };
 		A6D0917115C5B0A400B128C8 /* SFBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBookViewController.m; sourceTree = "<group>"; };
-		A6F5CD4915CE613E00AEC20C /* SFShelf+SortedBooks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SFShelf+SortedBooks.h"; path = "Sheffle/SFShelf+SortedBooks.h"; sourceTree = "<group>"; };
-		A6F5CD4A15CE613E00AEC20C /* SFShelf+SortedBooks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SFShelf+SortedBooks.m"; path = "Sheffle/SFShelf+SortedBooks.m"; sourceTree = "<group>"; };
 		A6F5CD4C15CE62BB00AEC20C /* SFShelvesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFShelvesViewController.h; sourceTree = "<group>"; };
 		A6F5CD4D15CE62BB00AEC20C /* SFShelvesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFShelvesViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -219,6 +261,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6BDB55D164F68BF00988ED5 /* libKXP.a in Frameworks */,
+				A6BDB533164F4AE200988ED5 /* libSBJson.a in Frameworks */,
 				A685A2BC15BC370C000A1AD5 /* libiconv.dylib in Frameworks */,
 				A6B998C815B993BC00D0919C /* CoreData.framework in Frameworks */,
 				A6B998F915B995A500D0919C /* CoreMedia.framework in Frameworks */,
@@ -229,7 +273,6 @@
 				A6B9988615B98D1200D0919C /* Foundation.framework in Frameworks */,
 				A6B9988815B98D1200D0919C /* CoreGraphics.framework in Frameworks */,
 				A680D2E1162A8B2B0088FEB6 /* libzbar.a in Frameworks */,
-				A680D3AE162AA19E0088FEB6 /* libSBJson.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +290,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A628D2D0164BFCEA003D03DD /* BooksView */ = {
+			isa = PBXGroup;
+			children = (
+				A628D2C3164BEFF3003D03DD /* SFBooksViewController.h */,
+				A628D2C4164BEFF3003D03DD /* SFBooksViewController.m */,
+			);
+			name = BooksView;
+			sourceTree = "<group>";
+		};
 		A64E749815C3C0CC003464FE /* ShelfView */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +326,7 @@
 		A680D246162A89C60088FEB6 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				A6BDB54F164F687C00988ED5 /* KXP.xcodeproj */,
 				A680D370162A94F70088FEB6 /* SBJson.xcodeproj */,
 			);
 			name = Dependencies;
@@ -387,9 +440,9 @@
 			isa = PBXGroup;
 			children = (
 				A680D388162A956E0088FEB6 /* GSBookShelfCell.h */,
+				A680D38B162A956E0088FEB6 /* GSBookView.h */,
 				A680D389162A956E0088FEB6 /* GSBookShelfView.h */,
 				A680D38A162A956E0088FEB6 /* GSBookShelfView.m */,
-				A680D38B162A956E0088FEB6 /* GSBookView.h */,
 				A680D38C162A956E0088FEB6 /* GSBookViewContainerView.h */,
 				A680D38D162A956E0088FEB6 /* GSBookViewContainerView.m */,
 				A680D38E162A956E0088FEB6 /* GSCellContainerView.h */,
@@ -432,6 +485,11 @@
 		A6A9CB1715BC25FE00C02AD5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A628D2B1164BAF03003D03DD /* navbarshadow.png */,
+				A628D2B2164BAF03003D03DD /* navbarshadow@2x.png */,
+				A628D2B3164BAF03003D03DD /* toolbarshadow.png */,
+				A628D2B4164BAF03003D03DD /* toolbarshadow@2x.png */,
+				A628D2B9164BBEA6003D03DD /* Default-568h@2x.png */,
 				A64E74BE15C4151B003464FE /* Default@2x.png */,
 				A64E74BC15C41519003464FE /* Default.png */,
 				A64E74BA15C41354003464FE /* icon57x57x@2x.png */,
@@ -471,11 +529,12 @@
 		A6A9CB1915BC261900C02AD5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				A6F5CD4F15CE641700AEC20C /* ShelvesView */,
-				A64E749815C3C0CC003464FE /* ShelfView */,
-				A64E74B315C3D7FD003464FE /* BookView */,
 				A6B9989215B98D1200D0919C /* SFAppDelegate.h */,
 				A6B9989315B98D1200D0919C /* SFAppDelegate.m */,
+				A6F5CD4F15CE641700AEC20C /* ShelvesView */,
+				A628D2D0164BFCEA003D03DD /* BooksView */,
+				A64E749815C3C0CC003464FE /* ShelfView */,
+				A64E74B315C3D7FD003464FE /* BookView */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -485,13 +544,17 @@
 			children = (
 				A64E732C15C3ABD7003464FE /* SFShelf.h */,
 				A64E732D15C3ABD7003464FE /* SFShelf.m */,
-				A6F5CD4915CE613E00AEC20C /* SFShelf+SortedBooks.h */,
-				A6F5CD4A15CE613E00AEC20C /* SFShelf+SortedBooks.m */,
-				A6A9CB2C15BC31EE00C02AD5 /* Sheffle.xcdatamodeld */,
-				A6D0916815C5A07400B128C8 /* SFBook.h */,
-				A6D0916915C5A07400B128C8 /* SFBook.m */,
+				A6BDB54C164F60DF00988ED5 /* SFShelf+Alpha.h */,
+				A6BDB54D164F60DF00988ED5 /* SFShelf+Alpha.m */,
+				A6BDB549164F608200988ED5 /* SFBook.h */,
+				A6BDB54A164F608200988ED5 /* SFBook.m */,
+				A6BDB561164F6DD900988ED5 /* SFBook+Alpha.h */,
+				A6BDB562164F6DD900988ED5 /* SFBook+Alpha.m */,
 				A62A41EB15C0611400959355 /* SFCoreDataManager.h */,
 				A62A41EC15C0611500959355 /* SFCoreDataManager.m */,
+				A6A9CB2C15BC31EE00C02AD5 /* Sheffle.xcdatamodeld */,
+				A6BDB543164F5F6E00988ED5 /* SFBookAuthor.h */,
+				A6BDB544164F5F6E00988ED5 /* SFBookAuthor.m */,
 			);
 			name = Models;
 			path = ..;
@@ -578,6 +641,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A6BDB550164F687C00988ED5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A6BDB558164F687D00988ED5 /* libKXP.a */,
+				A6BDB55A164F687D00988ED5 /* KXPTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		A6F5CD4F15CE641700AEC20C /* ShelvesView */ = {
 			isa = PBXGroup;
 			children = (
@@ -601,6 +673,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A6BDB55C164F68B800988ED5 /* PBXTargetDependency */,
 				A680D3AD162AA0F20088FEB6 /* PBXTargetDependency */,
 			);
 			name = Sheffle;
@@ -650,6 +723,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = A6BDB550164F687C00988ED5 /* Products */;
+					ProjectRef = A6BDB54F164F687C00988ED5 /* KXP.xcodeproj */;
+				},
+				{
 					ProductGroup = A680D371162A94F70088FEB6 /* Products */;
 					ProjectRef = A680D370162A94F70088FEB6 /* SBJson.xcodeproj */;
 				},
@@ -668,6 +745,20 @@
 			fileType = archive.ar;
 			path = libSBJson.a;
 			remoteRef = A680D377162A94F80088FEB6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A6BDB558164F687D00988ED5 /* libKXP.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libKXP.a;
+			remoteRef = A6BDB557164F687D00988ED5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A6BDB55A164F687D00988ED5 /* KXPTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = KXPTests.octest;
+			remoteRef = A6BDB559164F687D00988ED5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -700,6 +791,11 @@
 				A680D2E4162A8B2B0088FEB6 /* zbar-helpicons.png in Resources */,
 				A680D2E5162A8B2B0088FEB6 /* zbar-samples.png in Resources */,
 				A680D386162A955A0088FEB6 /* SVProgressHUD.bundle in Resources */,
+				A628D2B5164BAF03003D03DD /* navbarshadow.png in Resources */,
+				A628D2B6164BAF03003D03DD /* navbarshadow@2x.png in Resources */,
+				A628D2B7164BAF03003D03DD /* toolbarshadow.png in Resources */,
+				A628D2B8164BAF03003D03DD /* toolbarshadow@2x.png in Resources */,
+				A628D2BA164BBEA6003D03DD /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -744,9 +840,7 @@
 				A64E733E15C3B922003464FE /* SFGridShelfViewController.m in Sources */,
 				A64E749B15C3C1E5003464FE /* SFShelfBookView.m in Sources */,
 				A64E749E15C3C1FE003464FE /* SFShelfRowView.m in Sources */,
-				A6D0916A15C5A07400B128C8 /* SFBook.m in Sources */,
 				A6D0917315C5B0A400B128C8 /* SFBookViewController.m in Sources */,
-				A6F5CD4B15CE613F00AEC20C /* SFShelf+SortedBooks.m in Sources */,
 				A6F5CD4E15CE62BB00AEC20C /* SFShelvesViewController.m in Sources */,
 				A6A4A9AB15CEBBC9007EFB0E /* SFEditableCell.m in Sources */,
 				A6A4A9B615CECC51007EFB0E /* SFTextFieldInTableView.m in Sources */,
@@ -759,6 +853,11 @@
 				A680D393162A956F0088FEB6 /* GSBookViewContainerView.m in Sources */,
 				A680D394162A956F0088FEB6 /* GSCellContainerView.m in Sources */,
 				A680D395162A956F0088FEB6 /* NSMutableArray+Rearrange.m in Sources */,
+				A628D2C5164BEFF4003D03DD /* SFBooksViewController.m in Sources */,
+				A6BDB545164F5F6E00988ED5 /* SFBookAuthor.m in Sources */,
+				A6BDB54B164F608200988ED5 /* SFBook.m in Sources */,
+				A6BDB54E164F60E000988ED5 /* SFShelf+Alpha.m in Sources */,
+				A6BDB563164F6DD900988ED5 /* SFBook+Alpha.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -782,6 +881,11 @@
 			isa = PBXTargetDependency;
 			target = A6B9987E15B98D1100D0919C /* Sheffle */;
 			targetProxy = A6B998B015B98D1200D0919C /* PBXContainerItemProxy */;
+		};
+		A6BDB55C164F68B800988ED5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KXP;
+			targetProxy = A6BDB55B164F68B800988ED5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -826,7 +930,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/Libraries/**",
 					"$(BUILT_PRODUCTS_DIR)/**",
@@ -851,7 +955,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "$(BUILT_PRODUCTS_DIR)/**";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/Libraries/**",
 					"$(BUILT_PRODUCTS_DIR)/**",
