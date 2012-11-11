@@ -9,7 +9,6 @@
 #import "SFShelfViewController.h"
 #import "SFAppDelegate.h"
 
-#define kRakutenAPPID @"1058212220451425377"
 #define kDefaultShelfViewFrame CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
 #define kDefaultReaderViewFrame CGRectMake(0, 0, self.view.frame.size.width, 0)
 #define kScanModeShelfViewFrame CGRectMake(0, 100.0f, self.view.frame.size.width, self.view.frame.size.height - 100.0f)
@@ -35,10 +34,8 @@
 @property (strong,nonatomic) NSArray *normalToolbarItems;
 @property (strong,nonatomic) NSArray *editToolbarItems;
 
-// Action Handlers
-- (void)shelvesButtonDidTap:(id)sender;
+/* Action Handlers */
 - (void)editButtonDidTap:(id)sender;
-//- (void)scanButtonDidTap:(id)sender;
 - (void)doneButtonDidTap:(id)sender;
 - (void)addButtonDidTap:(id)sender;
 - (void)sortControlDidChange:(UISegmentedControl*)sender;
@@ -65,21 +62,12 @@
 {
     [super viewDidLoad];
     
-    // インスタンス変数の初期化
-    
-    _shelvesButton = [[UIBarButtonItem alloc] initWithTitle:@"Shelves"
-                                                      style:UIBarButtonItemStyleBordered
-                                                     target:self
-                                                     action:@selector(shelvesButtonDidTap:)];
-    
-    // 完了
-    _donebutton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                                                target:self
-                                                                action:@selector(doneButtonDidTap:)];
+    [self initButtons];
     
     // NavigationBarを初期化
     
     self.title =  self.shelf.title;
+    self.navigationItem.titleView = _displayControl;
     self.navigationItem.rightBarButtonItems = self.rightBarItems;
 
     // Toolbarを初期化
@@ -97,13 +85,12 @@
     [self.view addSubview:_readerView];
     
     // Shelf Viewの初期化
-    
-    self.shelfView = [[UIView alloc] initWithFrame:kDefaultShelfViewFrame];
+    CGFloat nh = self.navigationController.navigationBar.frame.size.height;
+    CGFloat th = self.tabBarController.tabBar.frame.size.height;
+    self.shelfView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - nh - th)];
     [self.view addSubview:self.shelfView];
     
     // ２種類のShelfViewControllerを構築
-//    self.tableShelfViewController = [[SFTableShelfViewController alloc] initWithStyle:UITableViewStylePlain];
-//    self.gridShelfViewController = [[SFGridShelfViewController alloc] init];
 
     self.tableShelfViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TableShlefView"];
     self.gridShelfViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"GridShelfView"];
@@ -111,8 +98,8 @@
     self.tableShelfViewController.fetchedResultsController = self.fetchedresultsController;
     self.gridShelfViewController.fetchedResultsController = self.fetchedresultsController;
     
-    self.tableShelfViewController.view.frame = kDefaultShelfViewFrame;
-    self.gridShelfViewController.view.frame = kDefaultShelfViewFrame;
+    self.tableShelfViewController.view.frame = self.shelfView.frame;
+    self.gridShelfViewController.view.frame = self.shelfView.frame;
     
     [self addChildViewController:_tableShelfViewController];
     [self addChildViewController:_gridShelfViewController];
@@ -123,6 +110,7 @@
     [self.shelfView addSubview:self.gridShelfViewController.view];
 
     _shelfViewMode = SFShelfViewModeGrid;
+//    _shelfViewMode = SFShelfViewModeTable;
     
     // PullToRefreshの追加
 
@@ -134,7 +122,6 @@
     [self setShelfView:nil];
     _readerView = nil;
     _editButton = nil;
-//    _scanButton = nil;
     _donebutton = nil;
     _sortControl = nil;
     _sortControlItem = nil;
@@ -330,11 +317,6 @@
 }
 
 #pragma mark - Action Handlers
-
-- (void)shelvesButtonDidTap:(id)sender
-{
-    [self performSegueWithIdentifier:@"showShelves" sender:self];
-}
 
 - (void)setEditing:(BOOL)editing
 {
@@ -587,20 +569,50 @@
 
 #pragma mark - Toolbar Items
 
+- (void)initButtons
+{
+    // 編集
+    _editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonDidTap:)];
+    _editButton.tintColor = kBarTintColor;
+    
+    // 追加
+    _addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
+    
+    // 完了
+    _donebutton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonDidTap:)];
+    
+    // 消去
+    _trashButton = [[UIBarButtonItem alloc] initWithTitle:@"Delete" style:UIBarButtonItemStyleBordered target:self action:@selector(trashButtonDidTap:)];
+    _trashButton.tintColor = [UIColor redColor];
+    
+    // 移動
+    _moveButton = [[UIBarButtonItem alloc] initWithTitle:@"Move" style:UIBarButtonItemStyleBordered target:self action:@selector(moveButtonDidTap:)];
+    _moveButton.tintColor = [UIColor blueColor];
+    
+    // ふぁぼ
+    _staredButton = [[UIBarButtonItem alloc] initWithTitle:@"Favorite" style:UIBarButtonItemStyleBordered target:self action:@selector(staredButtonDidTap:)];
+    CGFloat w = 96;
+    _trashButton.width = _moveButton.width = _staredButton.width = w;
+    
+    // 切り替え
+    _displayControl = [[UISegmentedControl alloc] initWithItems:@[@"Grid",@"Table"]];
+    _displayControl.selectedSegmentIndex = 0;
+    _displayControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    [_displayControl addTarget:self action:@selector(displayControlDidChange:) forControlEvents:UIControlEventValueChanged];
+    _displayControlItem = [[UIBarButtonItem alloc] initWithCustomView:_displayControl];
+    
+    // ソート
+    _sortControl = [[UISegmentedControl alloc] initWithItems:@[@"Title",@"Author",@"Date"]];
+    _sortControl.selectedSegmentIndex = 0;
+    _sortControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    [_sortControl addTarget:self action:@selector(sortControlDidChange:) forControlEvents:UIControlEventValueChanged];
+    _sortControlItem = [[UIBarButtonItem alloc] initWithCustomView:_sortControl];
+    _sortControlItem.width = 200;
+}
+
 - (NSArray *)rightBarItems
 {
     if (!_rightBarItems) {
-        if(!_editButton) {
-            // 編集
-            _editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonDidTap:)];
-            _editButton.tintColor = kBarTintColor;
-        }
-        if (!_addButton) {
-            // 追加ボタン
-            _addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                                       target:self
-                                                                       action:@selector(addButtonDidTap:)];
-        }
         _rightBarItems = @[_addButton,_editButton];
     }
     return _rightBarItems;
@@ -609,33 +621,6 @@
 - (NSArray *)editToolbarItems
 {
     if (!_editToolbarItems) {
-        
-        CGFloat w = 96;
-        // 消去ボタン
-        if(!_trashButton) {
-            _trashButton = [[UIBarButtonItem alloc] initWithTitle:@"Delete"
-                                                            style:UIBarButtonItemStyleBordered
-                                                           target:self
-                                                           action:@selector(trashButtonDidTap:)];
-            _trashButton.tintColor = [UIColor redColor];
-        }
-        // 移動ボタン
-        if (!_moveButton) {
-            _moveButton = [[UIBarButtonItem alloc] initWithTitle:@"Move"
-                                                           style:UIBarButtonItemStyleBordered
-                                                          target:self
-                                                          action:@selector(moveButtonDidTap:)];
-            _moveButton.tintColor = [UIColor blueColor];
-        }
-        // ふぁぼボタン
-        if(!_staredButton) {
-            _staredButton = [[UIBarButtonItem alloc] initWithTitle:@"Favorite"
-                                                         style:UIBarButtonItemStyleBordered
-                                                        target:self
-                                                        action:@selector(staredButtonDidTap:)];
-//            _staredButton.tintColor = [UIColor yellowColor];
-        }
-        _trashButton.width = _moveButton.width = _staredButton.width = w;
         UIBarButtonItem *sp1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
         _editToolbarItems = @[_trashButton,sp1, _moveButton,sp1, _staredButton];
     }
@@ -646,27 +631,7 @@
 {
     if (!_normalToolbarItems) {
         UIBarButtonItem *spacor = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        
-        if (!_displayControl) {
-            // 切り替え
-            _displayControl = [[UISegmentedControl alloc] initWithItems:@[@"Grid",@"Table"]];
-            _displayControl.selectedSegmentIndex = 0;
-            _displayControl.segmentedControlStyle = UISegmentedControlStyleBar;
-            [_displayControl addTarget:self action:@selector(displayControlDidChange:) forControlEvents:UIControlEventValueChanged];
-            _displayControlItem = [[UIBarButtonItem alloc] initWithCustomView:_displayControl];
-        }
-        
-        if (!_sortControlItem) {
-            // ソート
-            _sortControl = [[UISegmentedControl alloc] initWithItems:@[@"Title",@"Author",@"Date"]];
-            _sortControl.selectedSegmentIndex = 0;
-            _sortControl.segmentedControlStyle = UISegmentedControlStyleBar;
-            [_sortControl addTarget:self action:@selector(sortControlDidChange:) forControlEvents:UIControlEventValueChanged];
-            _sortControlItem = [[UIBarButtonItem alloc] initWithCustomView:_sortControl];
-            _sortControlItem.width = 200;
-        }
         _normalToolbarItems = @[_sortControlItem,spacor,_displayControlItem];
-//        _normalToolbarItems = @[_editButton,spacor,_sortControlItem,spacor,_scanButton];
     }
     return _normalToolbarItems;
 }

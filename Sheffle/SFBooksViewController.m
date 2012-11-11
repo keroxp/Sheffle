@@ -56,7 +56,7 @@
 {
     [super viewWillAppear:animated];
     NSError *e = nil;
-    [self.fetchedResultsController performFetch:&e];
+//    [self.fetchedResultsController performFetch:&e];
 }
 
 - (void)didReceiveMemoryWarning

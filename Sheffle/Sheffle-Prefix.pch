@@ -12,7 +12,10 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
     #import <SBJson/SBJson.h>
+    #import "KXP.h"
 #endif
+
+#define kRakutenAPPID @"1058212220451425377"
 
 #ifdef DEBUG
 #define $(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);

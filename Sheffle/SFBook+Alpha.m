@@ -22,7 +22,7 @@
     [self setSeriesNameKana:[book objectForKey:@"seriesNameKana"]];
     [self setIsbn:[book objectForKey:@"isbn"]];
     [self setItemCaption:[book objectForKey:@"itemCaption"]];
-    NSInteger p = [[book objectForKey:@"itemPrice"] integerValue]];
+    NSInteger p = [[book objectForKey:@"itemPrice"] integerValue];
     [self setItemPrice:@(p)];
     [self setItemUrl:[book objectForKey:@"itemUrl"]];
     [self setPublisherName:[book objectForKey:@"publisherName"]];

@@ -12,6 +12,7 @@
 #define ROW_HEIGHT 140.0f
 #define kNavigationBarHeight self.parentViewController.navigationController.navigationBar.frame.size.height
 #define kToolbarHeight self.parentViewController.navigationController.toolbar.frame.size.height
+#define kTabBarHeight self.parentViewController.tabBarController.tabBar.frame.size.height
 
 @interface SFGridShelfViewController ()
 {    
@@ -49,12 +50,11 @@
         
     [self.bookShelfView setContentOffset:CGPointMake(0, 120)];
     
-    CGRect f = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - kNavigationBarHeight - kToolbarHeight);
+    CGRect f = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - kNavigationBarHeight - kTabBarHeight);// kToolbarHeight);
     self.bookShelfView = [[GSBookShelfView alloc] initWithFrame:f];
     self.bookShelfView.dataSource = self;
     
     [self.view addSubview:self.bookShelfView];
-    
 //    self.navigationController.toolbarHidden = YES;
 //    [self performSelector:@selector(testScrollToRow) withObject:self afterDelay:3];
     
