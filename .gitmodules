@@ -1,3 +1,15 @@
 [submodule "Dependencies/KXP"]
 	path = Dependencies/KXP
 	url = git@github.com:keroxp/KXP.git
+[submodule "Modules/SVProgressHUD"]
+    path = Modules/SVProgressHUD
+    url = git@github.com:samvermette/SVProgressHUD.git
+[submodule "Modules/GSBookShelf"]
+    path = Modules/GSBookShelf
+    url = git@github.com:ultragtx/GSBookShelf.git
+[submodule "Modules/SVPullToRefresh"]
+    path = Modules/SVPullToRefresh
+    url = git@github.com:samvermette/SVPullToRefresh.git
+[submodule "Modules/R9HTTPRequest"]
+    path = Modules/R9HTTPRequest
+    url = git@github.com:glassonion1/R9HTTPRequest.git
