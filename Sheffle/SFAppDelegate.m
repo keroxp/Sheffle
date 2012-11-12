@@ -24,9 +24,8 @@
 //    [[UITabBar appearance] setShadowImage:[UIImage imageNamed:@"toolbarshadow.png"]];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"navbarshadow.png"]];
-    [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
-    [[UIToolbar appearance] setShadowImage:[UIImage imageNamed:@"toolbarshadow.png"] forToolbarPosition:UIToolbarPositionBottom];
-    
+//    [[UIToolbar appearance ] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+//    [[UIToolbar appearance] setShadowImage:[UIImage imageNamed:@"toolbarshadow.png"] forToolbarPosition:UIToolbarPositionBottom];
         
     return YES;
 }

@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KXPPickerViewController.h"
 
 @interface SFBookSearchViewController : UITableViewController
-<UISearchBarDelegate,UISearchDisplayDelegate>
+<UISearchBarDelegate,UISearchDisplayDelegate,UIPickerViewDelegate,UIPickerViewDataSource,KXPPickerViewControllerDelegate>
+
+@property (nonatomic,strong) NSArray *shelves;
 
 - (IBAction)cancelButtonDidTap:(UIBarButtonItem *)sender;
+- (IBAction)doneButtonDidTap:(id)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
 
 @end
