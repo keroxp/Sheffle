@@ -605,9 +605,9 @@
 				A6A9CB2515BC2A2200C02AD5 /* Models */,
 				A6A9CB1915BC261900C02AD5 /* Controllers */,
 				A6A9CB1815BC260A00C02AD5 /* Views */,
+				A6BDB56C165006F300988ED5 /* Network */,
 				A6A9CB1715BC25FE00C02AD5 /* Resources */,
 				A6B9988A15B98D1200D0919C /* Supporting Files */,
-				A6BDB56C165006F300988ED5 /* Network */,
 			);
 			path = Sheffle;
 			sourceTree = "<group>";

@@ -189,12 +189,12 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="qN4-W1-IGb">
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="44O-gH-YL7">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
-                                <outlet property="delegate" destination="4ML-7d-hsE" id="w9F-qb-N8V"/>
+                                <outlet property="delegate" destination="4ML-7d-hsE" id="C7E-Iu-Qs1"/>
                             </connections>
                         </searchBar>
                         <prototypes>
@@ -236,17 +236,17 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="searchDisplayController" destination="ANb-DH-hLA" id="peG-Fq-MHT"/>
+                        <outlet property="searchDisplayController" destination="s7T-h1-LPh" id="A77-b1-M2h"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BxR-gL-6rN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="ANb-DH-hLA">
+                <searchDisplayController id="s7T-h1-LPh">
                     <connections>
-                        <outlet property="delegate" destination="4ML-7d-hsE" id="1Kc-Dv-Emw"/>
-                        <outlet property="searchBar" destination="qN4-W1-IGb" id="aoG-OY-H4Z"/>
-                        <outlet property="searchContentsController" destination="4ML-7d-hsE" id="MSZ-ab-IPE"/>
-                        <outlet property="searchResultsDataSource" destination="4ML-7d-hsE" id="LlZ-jZ-udi"/>
-                        <outlet property="searchResultsDelegate" destination="4ML-7d-hsE" id="pCf-Li-Mx8"/>
+                        <outlet property="delegate" destination="4ML-7d-hsE" id="fK5-4D-b9p"/>
+                        <outlet property="searchBar" destination="44O-gH-YL7" id="607-bl-8cx"/>
+                        <outlet property="searchContentsController" destination="4ML-7d-hsE" id="dYF-Uv-xZd"/>
+                        <outlet property="searchResultsDataSource" destination="4ML-7d-hsE" id="UDe-Ky-iYH"/>
+                        <outlet property="searchResultsDelegate" destination="4ML-7d-hsE" id="XJM-xT-cQa"/>
                     </connections>
                 </searchDisplayController>
             </objects>
@@ -557,41 +557,6 @@
             <point key="canvasLocation" x="1380" y="-380"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="SFBookSearchViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFBookSearchViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancelButtonDidTap:" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="SFBookViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFBookViewController.h"/>
-        </class>
-        <class className="SFBooksViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFBooksViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addButtonDidTap:"/>
-                <relationship kind="action" name="sortControlDidChange:" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="addButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="sortControl" candidateClass="UISegmentedControl"/>
-            </relationships>
-        </class>
-        <class className="SFGridShelfViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFGridShelfViewController.h"/>
-        </class>
-        <class className="SFShelfListViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFShelfListViewController.h"/>
-        </class>
-        <class className="SFShelfViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFShelfViewController.h"/>
-        </class>
-        <class className="SFShelvesViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFShelvesViewController.h"/>
-        </class>
-        <class className="SFTableShelfViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFTableShelfViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

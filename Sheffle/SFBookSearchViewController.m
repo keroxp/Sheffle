@@ -10,6 +10,7 @@
 #import "R9HTTPRequest.h"
 #import "SFAPIConnection.h"
 #import "KXP.h"
+//#import "UITableViewController+LazyImageDownload.h"
 
 @interface SFBookSearchViewController ()
 {
@@ -43,6 +44,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     self.searchDisplayController.delegate = self;
     self.searchDisplayController.searchResultsDataSource = self;
+    self.searchDisplayController.searchResultsDelegate = self;
     self.searchDisplayController.searchBar.delegate = self;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
@@ -50,7 +52,9 @@
 
 - (void)reload
 {
-    [[self tableViewToBeAssigned] reloadData];
+//    [[self tableViewToBeAssigned] reloadData];
+    $(@"%@",self.thumbnails);
+    [self.tableViewToBeAssigned reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,6 +89,11 @@
     }
 }
 
+- (NSString *)pathForPlaceholderImage
+{
+    return [[NSBundle mainBundle] pathForResource:@"Placeholder" ofType:@"png"];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -99,11 +108,6 @@
     return (_results.count == 0) ? 1 : _results.count;
 }
 
-- (NSString *)pathForPlaceholderImage
-{
-    return [[NSBundle mainBundle] pathForResource:@"Placeholder" ofType:@"png"];
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"BookSearchCell";
@@ -112,7 +116,7 @@
     
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
-    if (_results.count == 0 && indexPath.section == 0 && indexPath.row == 0) {
+    if (_results.count == 0 && indexPath.row == 0) {
         if (!_currentConnection) {
             KXPNotFoundCell *ncell = [tableView dequeueReusableCellWithIdentifier:NotFound];
             if (!ncell) {
@@ -128,12 +132,17 @@
         }
     }
     
-    if (_results.count > 0) {
-        NSDictionary *book = [_results objectAtIndex:indexPath.row];
-        cell.textLabel.text = [book objectForKey:@"title"];
-        cell.detailTextLabel.text = [book objectForKey:@"author"];
-        cell.imageView.image = [self imageForIndexPath:indexPath];
+    if (tableView == self.tableView) {
+        $(@"called for normal");
+    }else{
+        if (_results.count > 0) {
+            NSDictionary *book = [_results objectAtIndex:indexPath.row];
+            cell.textLabel.text = [book objectForKey:@"title"];
+            cell.detailTextLabel.text = [book objectForKey:@"author"];
+            cell.imageView.image = [self imageForIndexPath:indexPath];
+        }
     }
+    
     return cell;
 }
 
@@ -144,28 +153,32 @@
     // 遅延実行予約を消す
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     
+    //サムネイルを消す
+    [self.thumbnails removeAllObjects];
+    
     // 検索開始
     UISearchBar *searchBar = self.searchDisplayController.searchBar;
     if (searchBar.text.length > 0) {
+        
         if (_currentConnection) {
             [_currentConnection cancelAPIConnection];
             _currentConnection = nil;
         }
         
         SFAPIConnection *c = [SFAPIConnection connectionWithRequestType:SFAPIRequestTypeBooksBookSearch patameters:params];
-        
         [c setCompletionHandler:^(NSHTTPURLResponse *r, NSDictionary *JSON){            
             $(@"Reponse is : %i",r.statusCode);
-            $(@"%@",JSON);
-//$(@"body is %@",responseString);
+//            $(@"%@",JSON);
             if ([JSON objectForKey:@"Body"] != nil && [JSON objectForKey:@"Body"] != [NSNull null]) {
                 // 成功時
-                _results = [[[[JSON objectForKey:@"Body"] objectForKey:@"BooksBookSearch"] objectForKey:@"Items"] objectForKey:@"Item"];                
-                [self.searchDisplayController.searchResultsTableView reloadData];
+                _results = [[[[JSON objectForKey:@"Body"] objectForKey:@"BooksBookSearch"] objectForKey:@"Items"] objectForKey:@"Item"];
+                _currentConnection = nil;
+                [self.tableViewToBeAssigned reloadData];
             }else{
                 // 失敗時
                 $(@"data might not be found");
-                [self.searchDisplayController.searchResultsTableView reloadData];
+                _currentConnection = nil;
+                [self.tableViewToBeAssigned reloadData];
             }
             
         }];
@@ -176,9 +189,9 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    // 遅延実行予約を消す
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
     if (searchText.length > 0) {
+        // 遅延実行予約を消す
+        [NSObject cancelPreviousPerformRequestsWithTarget:self];
         // 遅延予約
         [self performSelector:@selector(startSearchWithParameters:) withObject:@{@"title" : searchText} afterDelay:1.5f];
     }
@@ -188,10 +201,8 @@
 {
     // searchDisplayController setActive:NOをすると困るので似たような処理を手動でやる
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self.tableViewToBeAssigned reloadData];
     [self startSearchWithParameters:@{@"title" : searchBar.text}];
 }
-
 
 #pragma mark - Action
 

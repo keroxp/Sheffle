@@ -53,7 +53,7 @@
     
     // YouTubeへのアクセスは普通のコネクションで
     NSURL *URL = [NSURL URLWithString:[_urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSURLRequest *r = [NSURLRequest requestWithURL:URL cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:120];
+    NSURLRequest *r = [NSURLRequest requestWithURL:URL]; //] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:120];
     _connection = [NSURLConnection connectionWithRequest:r delegate:self];
     
     if (_connection != nil) {
@@ -139,12 +139,6 @@
     }
 }
 
-- (NSURLRequest*)request
-{    
-    
-    return [NSURLRequest requestWithURL:[NSURL URLWithString:_urlString] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:120];
-}
-
 #pragma mark - NSURLConnectionDownload
 
 
@@ -197,8 +191,8 @@
         }
     }else{
         //    if (self.request.requestType != FANAPIRequestTypeYouTubeSearch) $(@"%@",JSON);
-        __weak NSDictionary *_JSON = JSON;
-        __weak NSHTTPURLResponse *responseHeader = _responseHeader;
+        __block NSDictionary *_JSON = JSON;
+        __block NSHTTPURLResponse *responseHeader = _responseHeader;
         [self setCompletionBlock:^{
             // Run on main thread.
             NSOperationQueue *queue = [NSOperationQueue mainQueue];
