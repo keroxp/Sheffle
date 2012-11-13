@@ -7,6 +7,8 @@
 //
 
 #import "SFBook+Alpha.h"
+#import "SFRakutenBook.h"
+#import "SFCoreDataManager.h"
 
 @implementation SFBook (Alpha)
 
@@ -31,6 +33,35 @@
     [dfm setDateFormat:@"yyyy年MM月"];
     [self setSalesDate:[dfm dateFromString:[book objectForKey:@"salesDate"]]];
     [self setBookSize:[book objectForKey:@"size"]];
+}
+
+- (void)setDataWithRakutenBook:(SFRakutenBook *)book
+{
+    [self setAuthor:book.author];
+    [self setAuthorKana:book.authorKana];
+    [self setTitle:book.title];
+    [self setTitleKana:book.titleKana];
+    [self setSeriesName:book.seriesName];
+    [self setSeriesNameKana:book.seriesNameKana];
+    [self setIsbn:book.isbn];
+    [self setItemCaption:book.itemCaption];
+    [self setItemPrice:book.itemPrice];
+    [self setItemUrl:book.itemUrl];
+    [self setPublisherName:book.publisherName];
+    
+    [self setSalesDate:book.salesDate];
+    [self setBookSize:book.bookSize];
+}
+
++ (NSSet *)bookSetWithRakutenBooks:(NSArray *)books
+{
+    NSMutableSet *set = [NSMutableSet setWithCapacity:books.count];
+    for (SFRakutenBook *book in books) {
+        SFBook *new = [[SFCoreDataManager sharedManager] insertNewBook];
+        [new setDataWithRakutenBook:book];
+        [set addObject:new];
+    }
+    return set;
 }
 
 - (NSString *)titleInitial

@@ -21,8 +21,8 @@
     NSMutableArray *_booksToBeRegisted;
     NSMutableArray *_selectionStates;
     SFAPIConnection *_currentConnection;
-//    SFShelf *_currentShelf;
-    NSString *_currentShelf;
+    SFShelf *_currentShelf;
+//    NSString *_currentShelf;
     NSInteger _selectedPickerIndex;
     KXPPickerViewController *_pickerViewController;
 }
@@ -50,13 +50,17 @@
     _selectionStates = [NSMutableArray array];
     _thumbnails = [NSMutableDictionary dictionary];
     _thumbnails2 = [NSMutableDictionary dictionary];
+
+    // 本棚を読み込み
+    if (!_shelves) {
+        _shelves = [[SFCoreDataManager sharedManager] shelves];
+    }
+    // 何もなければ一番上を選択
+    _currentShelf = (self.shelves.count > 0) ? [_shelves objectAtIndex:0] : nil;
+
     
-    _shelves = @[@"hoge",@"fuga",@"bar"];
-    
-//    _shelfPickerView = [[UIPickerView alloc] init];
-//    _shelfPickerView.delegate = self;
-//    _shelfPickerView.dataSource = self;
     KXPPickerViewController *pvc = [[KXPPickerViewController alloc] init];
+    pvc.delegate = self;
     pvc.pickerView.delegate = self;
     pvc.pickerView.dataSource = self;
     _pickerViewController = pvc;
@@ -68,8 +72,19 @@
     self.searchDisplayController.searchResultsDelegate = self;
     self.searchDisplayController.searchBar.delegate = self;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
+//    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    [self.navigationItem setRightBarButtonItems:@[self.doneButton,self.editButtonItem]];
+    
+}
+
+- (void)configureDoneButton
+{
+    if (_booksToBeRegisted.count > 0) {
+        [_doneButton setEnabled:YES];
+    }else{
+        [_doneButton setEnabled:NO];
+    }
 }
 
 - (void)reload
@@ -82,6 +97,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self.searchDisplayController.searchBar becomeFirstResponder];
 }
 
 #pragma mark - UIPickerView
@@ -99,15 +120,15 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+    $();
     _selectedPickerIndex = row;
 }
 
 // 表示する内容を返す例
--(NSString*)pickerView:(UIPickerView*)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    
+-(NSString*)pickerView:(UIPickerView*)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{    
     // 行インデックス番号を返す
-    return [_shelves objectAtIndex:row];
-    
+    return [[_shelves objectAtIndex:row] title];
 }
 
 - (void)pickerViewController:(KXPPickerViewController *)controller didTapCancelButton:(UIBarButtonItem *)cancelButton
@@ -118,9 +139,9 @@
 
 - (void)pickerViewController:(KXPPickerViewController *)controller didTapDoneButton:(UIBarButtonItem *)doneButton
 {
-    NSIndexPath *i = [NSIndexPath indexPathForRow:0 inSection:0];
+    $();
     _currentShelf = [_shelves objectAtIndex:_selectedPickerIndex];
-    [self.tableView reloadRowsAtIndexPaths:@[i] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
     [controller dismissWithAnimated:NO];
 }
 
@@ -133,7 +154,6 @@
 
 - (NSString *)imageURLForIndexPath:(NSIndexPath *)indexPath
 {
-//    return [[_results objectAtIndex:indexPath.row] objectForKey:@"mediumImageUrl"];
     SFRakutenBook *book = (self.searchDisplayController.isActive) ? [_results objectAtIndex:indexPath.row] : [_booksToBeRegisted objectAtIndex:indexPath.row];
     return book.mediumImageUrl;
 }
@@ -216,10 +236,11 @@
     UITableViewCell *cell = nil;
 
     if (tableView == self.tableView) {
+        [self configureDoneButton];
         switch (indexPath.section) {
             case 0:
                 cell = [tableView dequeueReusableCellWithIdentifier:Shelf];
-                cell.textLabel.text = _currentShelf;// _currentShelf.title;
+                cell.textLabel.text = _currentShelf.title;
                 break;
             case 1: {
                 cell = [tableView dequeueReusableCellWithIdentifier:Book];
@@ -398,16 +419,15 @@
     [self dismissViewControllerAnimated:YES completion:NULL];    
 }
 
-#pragma mark - Segue
-
-//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-//{
-//    if ([segue.identifier isEqualToString:@"showSearchDetail"]) {
-//        UIViewController *vc = segue.destinationViewController;
-//        vc.title = [[_results objectAtIndex:self.searchDisplayController.searchResultsTableView.indexPathForSelectedRow.row] objectForKey:@"title"];
-//    }
-//}
-
 - (IBAction)doneButtonDidTap:(id)sender {
+    // 登録処理
+    [_currentShelf addBooks:[SFBook bookSetWithRakutenBooks:_booksToBeRegisted]];
+    [[SFCoreDataManager sharedManager] saveContext];
+    [self dismissViewControllerAnimated:YES completion:NULL];
+//    if ([self.delegate respondsToSelector:@selector(bookSearchViewController:didCommitRegisteringForShelf:books:)]){
+//        [self.delegate bookSearchViewController:self didCommitRegisteringForShelf:_currentShelf books:_booksToBeRegisted];
+//        [self dismissViewControllerAnimated:YES completion:NULL];
+//    }
 }
+
 @end

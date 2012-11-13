@@ -10,15 +10,19 @@
 #import "SFBookViewController.h"
 #import "SFCoreDataManager.h"
 #import "SFBook.h"
+#import "SFRakutenBook.h"
+#import "UIViewController+AddBook.h"
 
 @interface SFBooksViewController ()
 {
     NSArray *_sectionIndexes;
     NSMutableDictionary *_sectionIndexTitles;
     NSInteger _currentSortIndex;
+    UIBarButtonItem *_doneButton;
 }
 
 - (NSArray*)sectionIndexTitles;
+- (void)doneButtonDidTap:(UIBarButtonItem*)sender;
 
 @end
 
@@ -49,6 +53,8 @@
     self.searchDisplayController.searchResultsDataSource = self;
     
     self.searchDisplayController.searchBar.showsScopeBar = NO;
+    
+    _doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonDidTap:)];
     
 }
 
@@ -257,7 +263,48 @@
     }
 }
 
-- (IBAction)addButtonDidTap:(id)sender {
+- (IBAction)addButtonDidTap:(id)sender
+{
+    [self startAddBookMode];
+}
+
+- (void)doneButtonDidTap:(UIBarButtonItem *)sender
+{
+    [self finishAddBookMode];
+}
+
+#pragma mark - Add Book Delegate
+
+- (void)addBookViewController:(UIViewController *)controller willBeginReading:(ZBarReaderView *)readerView
+{
+    [self.navigationItem setRightBarButtonItem:_doneButton];
+}
+
+- (void)addBookViewController:(UIViewController *)controller didFinishLoadBook:(SFRakutenBook *)book
+{
+    $(@"%@",book.title);
+}
+
+- (void)addBookViewController:(UIViewController *)controller willEndReading:(ZBarReaderView *)readerView
+{
+    [self.navigationItem setRightBarButtonItem:self.addButton];
+}
+
+- (void)addBookViewController:(UIViewController *)controller didLoadSynmols:(ZBarSymbolSet *)symbols
+{
+    $();
+}
+
+- (void)addBookViewController:(UIViewController *)controller didCommitRegisteringForShelf:(SFShelf *)shelf books:(NSArray *)books
+{
+    
+}
+
+#pragma mark - Add Book Data Source
+
+- (UIView *)viewToBeResized
+{
+    return self.tableView;
 }
 
 #pragma mark - Search Display

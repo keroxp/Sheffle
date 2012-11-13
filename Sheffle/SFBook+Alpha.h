@@ -8,6 +8,7 @@
 
 #import "SFBook.h"
 
+@class SFRakutenBook;
 @interface SFBook (Alpha)
 
 // セクション用プロパティ
@@ -16,5 +17,7 @@
 @property (readonly, nonatomic) NSString *publisherNameInitial;
 
 - (void)setDataWithJSON:(NSDictionary*)JSON;
+- (void)setDataWithRakutenBook:(SFRakutenBook*)book;
++ (NSSet*)bookSetWithRakutenBooks:(NSArray*)books;
 
 @end
