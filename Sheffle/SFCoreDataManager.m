@@ -101,11 +101,10 @@ static SFCoreDataManager *_sharedInstance;
 {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Shelf" inManagedObjectContext:[self managedObjectContext]];
-    NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
-    NSSortDescriptor *index = [[NSSortDescriptor alloc] initWithKey:@"index" ascending:NO];
+    NSSortDescriptor *index = [[NSSortDescriptor alloc] initWithKey:@"index" ascending:YES];
     
     [request setEntity:entity];
-    [request setSortDescriptors:@[title,index]];
+    [request setSortDescriptors:@[index]];
     
     NSError *error = nil;
     NSArray *results = [[self managedObjectContext] executeFetchRequest:request error:&error];
