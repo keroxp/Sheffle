@@ -25,7 +25,7 @@
 - (SFBook*)insertNewBook;
 - (SFBookAuthor*)insertNewBookAuthor;
 
-- (BOOL)checkDuplicationOfEntityName:(NSString*)entityName withIDKey:(NSString*)IDkey forIDValue:(NSString*)IDValue;
+- (BOOL)hasDataOfEntityName:(NSString*)entityName withIDKey:(NSString*)IDkey forIDValue:(NSString*)IDValue;
 
 - (NSArray*)shelves;
 

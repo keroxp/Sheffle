@@ -74,7 +74,7 @@ static SFCoreDataManager *_sharedInstance;
 
 #pragma mark - Check if Duplicated
 
-- (BOOL)checkDuplicationOfEntityName:(NSString *)entityName withIDKey:(NSString *)IDkey forIDValue:(NSString *)IDValue
+- (BOOL)hasDataOfEntityName:(NSString *)entityName withIDKey:(NSString *)IDkey forIDValue:(NSString *)IDValue
 {
     // CoreData リクエスト命令組み立て
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -91,9 +91,9 @@ static SFCoreDataManager *_sharedInstance;
     NSArray *fetchedObjects = [[self managedObjectContext] executeFetchRequest:request error: nil];
 
     if (!fetchedObjects || fetchedObjects.count == 0) {
-        return YES;
-    }else{
         return NO;
+    }else{
+        return YES;
     }
 }
 

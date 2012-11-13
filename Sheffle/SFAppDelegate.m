@@ -7,6 +7,10 @@
 //
 
 #import "SFAppDelegate.h"
+#import "SFCoreDataManager.h"
+
+#define kDefaultShelfIdentifier @"DEFAULT_SHELF"
+#define kFavoriteShelfIdentifier @"FAVORITE_SHELF"
 
 @implementation SFAppDelegate
 
@@ -16,16 +20,26 @@
 {
     // Override point for customization after application launch.
     
-    
-//    [[UIBarButtonItem appearance] setTintColor:kBarTintColor];
     [[UISegmentedControl appearance] setTintColor:kBarTintColor];
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:kBarTintColor];
-//    [[UITabBar appearance] setBackgroundImage:[UIImage imageNamed:@"barbg.png"]];
-//    [[UITabBar appearance] setShadowImage:[UIImage imageNamed:@"toolbarshadow.png"]];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"navbarshadow.png"]];
-//    [[UIToolbar appearance ] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
-//    [[UIToolbar appearance] setShadowImage:[UIImage imageNamed:@"toolbarshadow.png"] forToolbarPosition:UIToolbarPositionBottom];
+
+    // 未登録の本棚
+    if (![[SFCoreDataManager sharedManager] hasDataOfEntityName:@"Shelf" withIDKey:@"identifier" forIDValue:kDefaultShelfIdentifier]){
+        SFShelf *shelf = [[SFCoreDataManager sharedManager] insertNewShelf];
+        [shelf setIdentifier:kDefaultShelfIdentifier];
+        [shelf setTitle:@"未登録の本棚"];
+        [[SFCoreDataManager sharedManager] saveContext];
+    }
+    
+    // お気に入りの本棚
+    if (![[SFCoreDataManager sharedManager] hasDataOfEntityName:@"Shelf" withIDKey:@"identifier" forIDValue:kFavoriteShelfIdentifier]){
+        SFShelf *shelf = [[SFCoreDataManager sharedManager] insertNewShelf];
+        [shelf setIdentifier:kFavoriteShelfIdentifier];
+        [shelf setTitle:@"お気に入り"];
+        [[SFCoreDataManager sharedManager] saveContext];
+    }
         
     return YES;
 }
