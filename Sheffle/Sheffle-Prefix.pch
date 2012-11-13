@@ -17,6 +17,11 @@
 
 #define kRakutenAPPID @"1058212220451425377"
 
+#define kDefaultShelfIdentifier @"DEFAULT_SHELF"
+#define kDefaultShelfIndex 0
+#define kFavoriteShelfIdentifier @"FAVORITE_SHELF"
+#define kFavoriteShelfIndex 1
+
 #ifdef DEBUG
 #define $(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #else

@@ -15,7 +15,7 @@
     NSIndexPath *_selectedPath;
     UIAlertView *_alertView;
 }
-- (void)configureCell:(UITableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath;
+
 - (void)cancelButtonDidTap:(id)sender;
 - (void)addButtonDidTap:(id)sender;
 
@@ -95,6 +95,7 @@
     if (!_alertView) {
         _alertView = [[UIAlertView alloc] initWithTitle:@"New Shelf" message:nil delegate:self cancelButtonTitle:@"Cencel" otherButtonTitles:@"Save", nil];
         _alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+        _alertView.tag = 100;
         UITextField *tf = [_alertView textFieldAtIndex:0];
         tf.placeholder = @"Shelf Title";
     }
@@ -105,25 +106,74 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (buttonIndex) {
-        case 0:
-            [alertView dismissWithClickedButtonIndex:0 animated:YES];
-            break;
-        case 1: {
-            // 本棚の保存
-            UITextField *tf = [alertView textFieldAtIndex:0];
-            SFShelf *newShelf = [[SFCoreDataManager sharedManager] insertNewShelf];
-            if ([tf.text isEqualToString:@""]) {
-                newShelf.title = @"Undefined Shelf";
-            }else{
-                newShelf.title = tf.text;
+    if (alertView.tag == 100) {
+        // 追加
+        switch (buttonIndex) {
+            case 0:
+                [alertView dismissWithClickedButtonIndex:0 animated:YES];
+                break;
+            case 1: {
+                // 本棚の保存
+                UITextField *tf = [alertView textFieldAtIndex:0];
+                SFShelf *newShelf = [[SFCoreDataManager sharedManager] insertNewShelf];
+                if ([tf.text isEqualToString:@""]) {
+                    newShelf.title = @"Undefined Shelf";
+                }else{
+                    newShelf.title = tf.text;
+                }
+                [newShelf setIndex:@(self.fetchedResultsController.fetchedObjects.count)];
+                [[SFCoreDataManager sharedManager] saveContext];
             }
-            [newShelf setIndex:@(self.fetchedResultsController.fetchedObjects.count)];
-            [[SFCoreDataManager sharedManager] saveContext];
+                break;
+            default:
+                break;
         }
-            break;
-        default:
-            break;
+    }else if (alertView.tag == 200){
+        NSManagedObjectContext *moc = [[SFCoreDataManager sharedManager] managedObjectContext];
+        SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:_selectedPath];
+        switch (buttonIndex) {
+            case 0: {
+                [self setEditing:NO animated:YES];
+                break;
+            }
+            case 1: {
+                //本棚のみ
+                SFShelf *defaultShelf = [self.fetchedResultsController.fetchedObjects objectAtIndex:kDefaultShelfIndex];
+                [defaultShelf addBooks:shelf.books];
+                [moc deleteObject:shelf];
+                [[SFCoreDataManager sharedManager] saveContext];
+                [self setEditing:NO animated:YES];
+                break;
+            }
+            case 2: {
+                // 本ごと
+                NSString *t = @"この操作は取り消せません";
+                NSString *m = [NSString stringWithFormat:@"本当に\"%@\"とその本を削除しますか？",shelf.title];
+                UIAlertView *av = [[UIAlertView alloc] initWithTitle:t message:m delegate:self cancelButtonTitle:@"やめる" otherButtonTitles:@"削除", nil];
+                av.tag = 300;
+//                  [alertView dismissWithClickedButtonIndex:alertView.cancelButtonIndex animated:NO];
+                [av show];
+                break;
+            }
+            default:
+                break;
+        }
+    }else if (alertView.tag == 300){
+        NSManagedObjectContext *moc = [[SFCoreDataManager sharedManager] managedObjectContext];
+        SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:_selectedPath];
+        switch (buttonIndex) {
+            case 1: {
+                for (SFBook*book in shelf.books) {
+                    [moc deleteObject:book];
+                }
+                [moc deleteObject:shelf];
+                [[SFCoreDataManager sharedManager] saveContext];
+                [self setEditing:NO animated:YES];
+                break;
+            }
+            default:
+                break;
+        }
     }
 }
 
@@ -151,35 +201,20 @@
     //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     TDBadgedCell *cell = [tableView dequeueReusableCellWithIdentifier:BadgedCellIdentifier];
     if (!cell) {
-        cell = [[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BadgedCellIdentifier];
+        cell = [[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:BadgedCellIdentifier];
         //cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    [self configureCell:cell atIndexPath:indexPath];
+    SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = shelf.title;
+    cell.badgeString = [NSString stringWithFormat:@"%i",shelf.books.count];
+    cell.badgeColor = [UIColor darkGrayColor];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%i",[shelf.index integerValue]];
+    //        bcell.badge.radius = 7.5f;
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
     return cell;
 }
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    cell.textLabel.backgroundColor = [UIColor clearColor];
-}
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    $(@"configure cell");
-    SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-        TDBadgedCell *bcell = (TDBadgedCell*)cell;
-        bcell.textLabel.text = shelf.title;
-        bcell.badgeString = [NSString stringWithFormat:@"%i",shelf.books.count];
-        bcell.badgeColor = [UIColor darkGrayColor];
-//        bcell.badge.radius = 7.5f;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        bcell.detailTextLabel.text = [NSString stringWithFormat:@"%i",shelf.books.count];
-//        bcell.detailTextLabel.textColor = [UIColor whiteColor];
-    
-}
-
 
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -198,16 +233,15 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        
-        NSError *error = nil;
-        if (![context save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            $(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
+        _selectedPath = indexPath;
+        SFShelf *s = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        NSString *title = [NSString stringWithFormat:@"\"%@\"を削除",s.title];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:title
+                                                     message:@"削除の方法を選んでください"
+                                                    delegate:self cancelButtonTitle:@"やめる"
+                                           otherButtonTitles:@"本棚のみ削除",@"本も削除", nil];
+        av.tag = 200;
+        [av show];
     }
 }
 
@@ -230,6 +264,7 @@
     
     // 保存
     [[SFCoreDataManager sharedManager] saveContext];
+    [self.tableView reloadData];
 }
 
 // Override to support conditional rearranging of the table view.
@@ -277,26 +312,27 @@
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
-    $(@"did change content");
+//    $(@"did change content");
     UITableView *tableView = self.tableView;
     
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
-            
-        case NSFetchedResultsChangeDelete:
+        case NSFetchedResultsChangeDelete: {
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
             break;
-            
+        }
         case NSFetchedResultsChangeUpdate: {
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
             break;
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:@[newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+        case NSFetchedResultsChangeMove: {
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            [tableView insertRowsAtIndexPaths:@[newIndexPath]withRowAnimation:UITableViewRowAnimationNone];
             break;
+        }
     }
 }
 

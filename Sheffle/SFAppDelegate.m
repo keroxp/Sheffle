@@ -9,11 +9,6 @@
 #import "SFAppDelegate.h"
 #import "SFCoreDataManager.h"
 
-#define kDefaultShelfIdentifier @"DEFAULT_SHELF"
-#define kDefaultShelfIndex 0
-#define kFavoriteShelfIdentifier @"FAVORITE_SHELF"
-#define kFavoriteShelfIndex 1
-
 @implementation SFAppDelegate
 
 @synthesize window = _window;
@@ -28,9 +23,9 @@
     [[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"navbarshadow.png"]];
 
     // 未登録の本棚
-    if (![[SFCoreDataManager sharedManager] hasDataOfEntityName:@"Shelf" withIDKey:@"identifier" forIDValue:kDefaultShelfIdentifier]){
+    if (![[SFCoreDataManager sharedManager] hasDataOfEntityName:@"Shelf" withIDKey:@"identifier" forIDValue:kDefaultShelfIdentifier]){        
         SFShelf *shelf = [[SFCoreDataManager sharedManager] insertNewShelf];
-        [shelf setIdentifier:kDefaultShelfIdentifier];
+        [shelf setIdentifier:kDefaultShelfIdentifier];        
         [shelf setTitle:@"未登録の本棚"];
         [shelf setIndex:@(kDefaultShelfIndex)];
         [[SFCoreDataManager sharedManager] saveContext];
