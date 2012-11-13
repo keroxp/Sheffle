@@ -73,7 +73,7 @@
     self.searchDisplayController.searchBar.delegate = self;
     
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-//    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
     [self.navigationItem setRightBarButtonItems:@[self.doneButton,self.editButtonItem]];
     
 }
@@ -191,12 +191,11 @@
     if (tableView == self.tableView) {
         switch (section) {
             case 0:
+                // 本棚
                 return 1;
                 break;
-//            case 1:
-//                return 1;
-//                break;
             case 1:
+                // 追加予定の本
                 return (_booksToBeRegisted.count == 0) ? 1 : _booksToBeRegisted.count;
                 break;
             default:
@@ -348,7 +347,11 @@
         if (editingStyle == UITableViewCellEditingStyleDelete) {
             // Delete the row from the data source
             [_booksToBeRegisted removeObjectAtIndex:indexPath.row];
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            if (_booksToBeRegisted.count == 0) {
+                [tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+            }else{
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            }
         }else if (editingStyle == UITableViewCellEditingStyleInsert) {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
@@ -420,26 +423,39 @@
 }
 
 - (IBAction)doneButtonDidTap:(id)sender {
-    // 登録処理
-    NSSet *set = [SFBook bookSetWithRakutenBooks:_booksToBeRegisted];
-    [_currentShelf addBooks:set];
-    [[SFCoreDataManager sharedManager] saveContext];
-    for (SFBook*book in set) {
-        KXPDownload *d = [[KXPDownload alloc] initWithContentsOfURL:[NSURL URLWithString:book.largeImageUrl] withOptions:nil];
-        d.completionHandler = ^(NSData*data,NSDictionary *opts){
-            if (data) {
-                [book setImage:data];
+    NSString *t = [NSString stringWithFormat:@"\"%@\"へ登録",_currentShelf.title];
+    NSString *m = [NSString stringWithFormat:@"%i冊の本を登録します。\nよろしいですか？", _booksToBeRegisted.count];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:t message:m delegate:self cancelButtonTitle:@"やめる" otherButtonTitles:@"登録", nil];
+    av.tag = 100;
+    [av show];
+}
+     
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 100) {
+        switch (buttonIndex) {
+            case 1: {
+                // 登録処理
+                NSSet *set = [SFBook bookSetWithRakutenBooks:_booksToBeRegisted];
+                [_currentShelf addBooks:set];
                 [[SFCoreDataManager sharedManager] saveContext];
+                for (SFBook*book in set) {
+                    KXPDownload *d = [[KXPDownload alloc] initWithContentsOfURL:[NSURL URLWithString:book.largeImageUrl] withOptions:nil];
+                    d.completionHandler = ^(NSData*data,NSDictionary *opts){
+                        if (data) {
+                            [book setImage:data];
+                            [[SFCoreDataManager sharedManager] saveContext];
+                        }
+                    };
+                    [d startDownload];
+                }                
+                [self dismissViewControllerAnimated:YES completion:NULL];
+                break;
             }
-        };
-        [d startDownload];
-    }
-    
-    [self dismissViewControllerAnimated:YES completion:NULL];
-//    if ([self.delegate respondsToSelector:@selector(bookSearchViewController:didCommitRegisteringForShelf:books:)]){
-//        [self.delegate bookSearchViewController:self didCommitRegisteringForShelf:_currentShelf books:_booksToBeRegisted];
-//        [self dismissViewControllerAnimated:YES completion:NULL];
-//    }
+            default:
+                break;
+        }
+    }    
 }
 
 @end

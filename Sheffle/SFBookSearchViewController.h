@@ -13,7 +13,7 @@
 @protocol SFBookSearchViewDelegate;
 
 @interface SFBookSearchViewController : UITableViewController
-<UISearchBarDelegate,UISearchDisplayDelegate,UIPickerViewDelegate,UIPickerViewDataSource,KXPPickerViewControllerDelegate>
+<UISearchBarDelegate,UISearchDisplayDelegate,UIPickerViewDelegate,UIPickerViewDataSource,KXPPickerViewControllerDelegate,UIAlertViewDelegate>
 
 @property (nonatomic,strong) NSArray *shelves;
 @property (weak,nonatomic) id<SFBookSearchViewDelegate> delegate;
