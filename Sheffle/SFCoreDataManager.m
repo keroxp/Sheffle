@@ -36,14 +36,14 @@ static SFCoreDataManager *_sharedInstance;
     return _sharedInstance;
 }
 
+#pragma mark - Insertion
+
 - (SFShelf *)insertNewShelf
 {
     SFShelf *shelf = [NSEntityDescription insertNewObjectForEntityForName:@"Shelf" inManagedObjectContext:[self managedObjectContext]];
     [shelf setIdentifier:[self insertNewIdentifier]];
     [shelf setCreated:[NSDate date]];
     [shelf setUpdated:[NSDate date]];
-    
-    //TODO:indexを設置
     
     return shelf;
 }
@@ -56,8 +56,6 @@ static SFCoreDataManager *_sharedInstance;
     [book setCreated:[NSDate date]];
     [book setUpdated:[NSDate date]];
     [book setFavorite:@(NO)];
-    
-    //TODO:indexを設置する
     
     return book;
 }
@@ -72,7 +70,28 @@ static SFCoreDataManager *_sharedInstance;
     return author;
 }
 
-#pragma mark - Check if Duplicated
+#pragma mark - Public
+
+- (NSFetchedResultsController *)fetchedResultsControllerWithEntityName:(NSString *)entityName sortDescriptors:(NSArray *)sortDesctiptors sectionNameKeyPath:(NSString *)sectionNameKeyPath cacheName:(NSString *)cacheName predicate:(NSPredicate *)predicate
+{
+    
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
+    [request setEntity:entity];
+    [request setSortDescriptors:sortDesctiptors];
+    [request setPredicate:predicate];
+    
+    NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:sectionNameKeyPath cacheName:cacheName];
+    
+    NSError *error = nil;
+    if (![frc performFetch:&error]) {
+        $(@"unsolvable error : %@", [error userInfo]);
+        abort();
+    }
+    
+    return frc;
+}
 
 - (BOOL)hasDataOfEntityName:(NSString *)entityName withIDKey:(NSString *)IDkey forIDValue:(NSString *)IDValue
 {
@@ -116,6 +135,8 @@ static SFCoreDataManager *_sharedInstance;
     
     return results;
 }
+
+#pragma mark - Private
 
 - (NSString *)insertNewIdentifier
 {
@@ -226,28 +247,5 @@ static SFCoreDataManager *_sharedInstance;
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-#pragma mark - Fetched Results Controller Getter
-
-- (NSFetchedResultsController *)fetchedResultsControllerWithEntityName:(NSString *)entityName sortDescriptors:(NSArray *)sortDesctiptors sectionNameKeyPath:(NSString *)sectionNameKeyPath cacheName:(NSString *)cacheName
-{
-    
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
-    request.entity = entity;
-    request.sortDescriptors = sortDesctiptors;
-    
-    NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:sectionNameKeyPath cacheName:cacheName];
-    
-//    [NSFetchedResultsController deleteCacheWithName:cacheName];
-    
-    
-    NSError *error = nil;
-    if (![frc performFetch:&error]) {
-        $(@"unsolvable error : %@", [error userInfo]);
-        abort();
-    }
-    return frc;
-}
 
 @end

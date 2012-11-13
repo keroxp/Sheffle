@@ -76,7 +76,7 @@
             <objects>
                 <tableViewController id="EqQ-gZ-jNy" customClass="SFShelvesViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="0z0-eE-Bhh">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="B9e-tI-dUU">
@@ -101,7 +101,6 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Jzr-Ef-uQJ"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="CH9-ER-CCn" id="wsl-nq-JMn"/>
                         <segue destination="fXz-FU-MVf" kind="push" identifier="showShelf" id="RwX-vZ-NbZ"/>
@@ -275,7 +274,7 @@
             <objects>
                 <viewController id="fXz-FU-MVf" customClass="SFShelfViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0Nw-J2-rDF">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -307,7 +306,7 @@
             <objects>
                 <tableViewController id="jYO-vu-AXV" customClass="SFBookViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="R7R-lr-Xcj">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -492,7 +491,7 @@
         <!--Navigation Controller - Shelves-->
         <scene sceneID="110-hI-bPT">
             <objects>
-                <navigationController title="Shelves" id="D1T-Th-Tae" sceneMemberID="viewController">
+                <navigationController title="Shelves" toolbarHidden="NO" id="D1T-Th-Tae" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Shelves" id="W0b-l0-L6s"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -574,8 +573,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ZBy-Xj-rNa"/>
-        <segue reference="2es-1r-9TK"/>
+        <segue reference="RwX-vZ-NbZ"/>
         <segue reference="yeA-Ua-hvz"/>
+        <segue reference="eOt-8q-vyY"/>
     </inferredMetricsTieBreakers>
 </document>

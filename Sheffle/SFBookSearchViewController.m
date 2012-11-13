@@ -422,9 +422,10 @@
     [self dismissViewControllerAnimated:YES completion:NULL];    
 }
 
-- (IBAction)doneButtonDidTap:(id)sender {
+- (IBAction)doneButtonDidTap:(id)sender
+{
     NSString *t = [NSString stringWithFormat:@"\"%@\"へ登録",_currentShelf.title];
-    NSString *m = [NSString stringWithFormat:@"%i冊の本を登録します。\nよろしいですか？", _booksToBeRegisted.count];
+    NSString *m = [NSString stringWithFormat:@"%i冊の本を登録します。\nよろしいですか？",[_booksToBeRegisted count]];
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:t message:m delegate:self cancelButtonTitle:@"やめる" otherButtonTitles:@"登録", nil];
     av.tag = 100;
     [av show];

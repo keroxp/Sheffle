@@ -270,7 +270,8 @@
         __fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book"
                                                                                                sortDescriptors:@[title]
                                                                                             sectionNameKeyPath:@"titleInitial"
-                                                                                                     cacheName:@"BookWithTitle"];
+                                                                                                     cacheName:@"BookWithTitle"
+                                                                                                     predicate:nil];
         __fetchedResultsController.delegate = self;
     }
     return __fetchedResultsController;
@@ -293,17 +294,17 @@
         
         switch (sender.selectedSegmentIndex) {
             case 0: {
-                __fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[title,author,publisher] sectionNameKeyPath:@"titleInitial" cacheName:@"BookWithTitle"];
+                __fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[title,author,publisher] sectionNameKeyPath:@"titleInitial" cacheName:@"BookWithTitle" predicate:nil];
                 self.sortType = SFBookSortTypeTitle;
             }
                 break;
             case 1: {
-                __fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[author,title,publisher] sectionNameKeyPath:@"author" cacheName:@"BookWithAuthor"];
+                __fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[author,title,publisher] sectionNameKeyPath:@"author" cacheName:@"BookWithAuthor" predicate:nil];
                 self.sortType = SFBookSortTypeAuthor;
             }
                 break;
             case 2: {
-                __fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[publisher,title,author] sectionNameKeyPath:@"publisherName" cacheName:@"BookWithPublisher"];
+                __fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[publisher,title,author] sectionNameKeyPath:@"publisherName" cacheName:@"BookWithPublisher" predicate:nil];
                 self.sortType = SFBookSortTypePublisher;
             }
                 break;

@@ -26,14 +26,13 @@
 - (SFBookAuthor*)insertNewBookAuthor;
 
 - (BOOL)hasDataOfEntityName:(NSString*)entityName withIDKey:(NSString*)IDkey forIDValue:(NSString*)IDValue;
-
 - (NSArray*)shelves;
-
-- (void)saveContext;
 - (NSURL*)applicationDocumentsDirectory;
 - (NSFetchedResultsController*)fetchedResultsControllerWithEntityName:(NSString*)entityName
                                                       sortDescriptors:(NSArray*)sortDesctiptors
                                                    sectionNameKeyPath:(NSString*)sectionNameKeyPath
-                                                            cacheName:(NSString*)cacheName;
+                                                            cacheName:(NSString*)cacheName
+                                                            predicate:(NSPredicate*)predicate;
+- (void)saveContext;
 
 @end

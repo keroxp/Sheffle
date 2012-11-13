@@ -416,31 +416,6 @@
     [self.tableShelfViewController.tableView reloadData];
 }
 
-- (NSFetchedResultsController *)fetchedResultsControllerWithEntityName:(NSString *)entityName;
-{
-    NSManagedObjectContext *context = [[SFCoreDataManager sharedManager] managedObjectContext];
-    NSFetchRequest *req = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:context];
-    NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:entityName ascending:YES];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shelf == %@",self.shelf];
-    
-    req.sortDescriptors = @[ title ];
-    req.entity = entity;            
-    req.predicate = predicate;
-    
-    [NSFetchedResultsController deleteCacheWithName:@"Book"];
-    NSFetchedResultsController *fc = [[NSFetchedResultsController alloc] initWithFetchRequest:req
-                                                                         managedObjectContext:context
-                                                                           sectionNameKeyPath:entityName
-                                                                                    cacheName:@"Book"];
-    NSError *e = nil;
-    if (![fc performFetch:&e]) {
-        $(@"error : %@",e);
-    }
-    
-    return fc;
-}
-
 - (void)displayControlDidChange:(UISegmentedControl *)sender
 {
     $(@"display change");
@@ -663,7 +638,7 @@
     
     request.sortDescriptors = @[ title, author, created, size ];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shelf.identifier == %@",self.shelf.identifier];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shelf == %@",self.shelf];
     
     request.predicate = predicate;
     
