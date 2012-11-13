@@ -149,7 +149,7 @@
 
 - (NSInteger)numberOfContents
 {
-    return _results.count;
+    return (self.searchDisplayController.isActive) ? _results.count : _booksToBeRegisted.count;
 }
 
 - (NSString *)imageURLForIndexPath:(NSIndexPath *)indexPath
@@ -336,7 +336,7 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableView == self.tableView && indexPath.section == 1) {
+    if (tableView == self.tableView && indexPath.section == 1 && _booksToBeRegisted.count > 0) {
         return YES;
     }
     return NO;
