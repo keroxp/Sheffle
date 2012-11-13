@@ -8,15 +8,17 @@
         <attribute name="favorite" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="image2x" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="isbn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemCaption" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="itemPrice" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="itemUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="largeImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediumImageUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="publisherName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="salesDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="seriesName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="seriesNameKana" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="smallImageUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="titleKana" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updated" optional="YES" attributeType="Date" syncable="YES"/>
@@ -40,8 +42,8 @@
         <relationship name="books" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Book" inverseName="shelf" inverseEntity="Book" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Book" positionX="0" positionY="0" width="128" height="360"/>
-        <element name="Shelf" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="Book" positionX="0" positionY="0" width="128" height="390"/>
         <element name="BookAuthor" positionX="160" positionY="192" width="128" height="135"/>
+        <element name="Shelf" positionX="0" positionY="0" width="128" height="135"/>
     </elements>
 </model>

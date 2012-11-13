@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "SFCoreDataManager.h"
-#import "SFEditableCell.h"
-#import "SFTextFieldInTableView.h"
 #import "TDBadgedCell.h"
 
 @interface SFShelvesViewController : UITableViewController

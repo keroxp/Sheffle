@@ -132,7 +132,7 @@
                 }
                     break;
                 case 4: {
-                    UIImage *image = [UIImage imageWithData:[_book image2x]];
+                    UIImage *image = [UIImage imageWithData:[_book image]];
                     [[cell imageView] setImage:image];
                 }
                     break;

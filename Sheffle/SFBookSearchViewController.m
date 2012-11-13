@@ -421,8 +421,20 @@
 
 - (IBAction)doneButtonDidTap:(id)sender {
     // 登録処理
-    [_currentShelf addBooks:[SFBook bookSetWithRakutenBooks:_booksToBeRegisted]];
+    NSSet *set = [SFBook bookSetWithRakutenBooks:_booksToBeRegisted];
+    [_currentShelf addBooks:set];
     [[SFCoreDataManager sharedManager] saveContext];
+    for (SFBook*book in set) {
+        KXPDownload *d = [[KXPDownload alloc] initWithContentsOfURL:[NSURL URLWithString:book.largeImageUrl] withOptions:nil];
+        d.completionHandler = ^(NSData*data,NSDictionary *opts){
+            if (data) {
+                [book setImage:data];
+                [[SFCoreDataManager sharedManager] saveContext];
+            }
+        };
+        [d startDownload];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:NULL];
 //    if ([self.delegate respondsToSelector:@selector(bookSearchViewController:didCommitRegisteringForShelf:books:)]){
 //        [self.delegate bookSearchViewController:self didCommitRegisteringForShelf:_currentShelf books:_booksToBeRegisted];

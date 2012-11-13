@@ -2,7 +2,7 @@
 //  SFBook.m
 //  Sheffle
 //
-//  Created by 桜井雄介 on 2012/11/11.
+//  Created by 桜井 雄介 on 2012/11/13.
 //  Copyright (c) 2012年 Kaeru Lab. All rights reserved.
 //
 
@@ -17,9 +17,9 @@
 @dynamic authorKana;
 @dynamic bookSize;
 @dynamic created;
+@dynamic favorite;
 @dynamic identifier;
 @dynamic image;
-@dynamic image2x;
 @dynamic isbn;
 @dynamic itemCaption;
 @dynamic itemPrice;
@@ -31,8 +31,10 @@
 @dynamic title;
 @dynamic titleKana;
 @dynamic updated;
-@dynamic favorite;
-@dynamic shelf;
+@dynamic mediumImageUrl;
+@dynamic largeImageUrl;
+@dynamic smallImageUrl;
 @dynamic bookAuthor;
+@dynamic shelf;
 
 @end

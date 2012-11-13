@@ -44,7 +44,7 @@
     
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
     
-    self.title = [NSString stringWithFormat:@"Shelves (%d)",self.fetchedResultsController.fetchedObjects.count];
+    self.title = @"Shelves";
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.navigationItem.rightBarButtonItem = addButton;
     
@@ -110,6 +110,7 @@
             [alertView dismissWithClickedButtonIndex:0 animated:YES];
             break;
         case 1: {
+            // 本棚の保存
             UITextField *tf = [alertView textFieldAtIndex:0];
             SFShelf *newShelf = [[SFCoreDataManager sharedManager] insertNewShelf];
             if ([tf.text isEqualToString:@""]) {
@@ -117,6 +118,7 @@
             }else{
                 newShelf.title = tf.text;
             }
+            [newShelf setIndex:@(self.fetchedResultsController.fetchedObjects.count)];
             [[SFCoreDataManager sharedManager] saveContext];
         }
             break;
@@ -124,24 +126,6 @@
             break;
     }
 }
-
-#pragma mark - Text Field Delegate
-
-//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-//{
-//    if ([string isEqualToString:@""]) {
-//        _alertView.
-//    }
-//}
-
-//- (void)textFieldDidEndEditing:(UITextField *)textField
-//{
-//    SFTextFieldInTableView *_textfField = (SFTextFieldInTableView*)textField;
-//    SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:_textfField.indexPath];
-//    shelf.title = textField.text;
-//    shelf.updated = [NSDate date];
-//    [[SFCoreDataManager sharedManager] saveContext];
-//}
 
 #pragma mark - Table view data source
 
@@ -152,7 +136,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // 編集中は追加ボタンを出す    
+    // 編集中は追加ボタンを出す
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
     return [sectionInfo numberOfObjects];
 }
@@ -184,12 +168,7 @@
 {
     $(@"configure cell");
     SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if (NO) {
-        SFEditableCell *ecell = (SFEditableCell*)cell;
-        ecell.textField.text = shelf.title;
-        ecell.autoresizesSubviews = YES;
-        ecell.textField.delegate = self;
-    }else{
+    
         TDBadgedCell *bcell = (TDBadgedCell*)cell;
         bcell.textLabel.text = shelf.title;
         bcell.badgeString = [NSString stringWithFormat:@"%i",shelf.books.count];
@@ -198,7 +177,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 //        bcell.detailTextLabel.text = [NSString stringWithFormat:@"%i",shelf.books.count];
 //        bcell.detailTextLabel.textColor = [UIColor whiteColor];
-    }
+    
 }
 
 
@@ -206,6 +185,11 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the specified item to be editable.
+    if (indexPath.section == 0){
+        if(indexPath.row == 0 || indexPath.row == 1){
+                return NO;
+        }
+    }
     return YES;
 }
 
@@ -231,13 +215,32 @@
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
+    //並べ替え
+    NSMutableArray *newOrder = [self.fetchedResultsController.fetchedObjects mutableCopy];
+    SFShelf *move = [self.fetchedResultsController objectAtIndexPath:fromIndexPath];
+    [newOrder removeObjectAtIndex:fromIndexPath.row];
+    [newOrder insertObject:move atIndex:toIndexPath.row];
+
+    // indexの再設定
+    int i = 0;
+    for (SFShelf *shelf in newOrder) {
+        [shelf setIndex:@(i)];
+        i++;
+    }
+    
+    // 保存
+    [[SFCoreDataManager sharedManager] saveContext];
 }
 
 // Override to support conditional rearranging of the table view.
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the item to be re-orderable.
-    // shelfのindexの処理はここでやる
+    if (indexPath.section == 0){
+        if (indexPath.row == 0 || indexPath.row == 1) {
+            return NO;
+        }
+    }
     return YES;
 }
 
@@ -330,15 +333,14 @@
     NSManagedObjectContext *context = [[SFCoreDataManager sharedManager] managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Shelf" inManagedObjectContext:context];
-    NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:@"title" ascending:NO];
-    NSSortDescriptor *index = [[NSSortDescriptor alloc] initWithKey:@"index" ascending:NO];
+    NSSortDescriptor *index = [[NSSortDescriptor alloc] initWithKey:@"index" ascending:YES];
     request.entity = entity;
-    request.sortDescriptors = @[title,index];
+    request.sortDescriptors = @[index];
     
-    NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:@"title" cacheName:@"Shelves"];
+    NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:@"Shelves"];
     frc.delegate = self;
     
-    [NSFetchedResultsController deleteCacheWithName:@"Shelves"];
+//    [NSFetchedResultsController deleteCacheWithName:@"Shelves"];
     
     _fetchedResultsController = frc;
     

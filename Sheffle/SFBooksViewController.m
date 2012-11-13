@@ -156,7 +156,7 @@
     cell.textLabel.text = book.title;
     cell.detailTextLabel.text = book.author;
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    cell.imageView.image = [UIImage imageWithData:book.image2x];
+    cell.imageView.image = [UIImage imageWithData:book.image];
         
     return cell;
 }

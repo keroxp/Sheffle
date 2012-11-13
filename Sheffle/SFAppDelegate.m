@@ -10,7 +10,9 @@
 #import "SFCoreDataManager.h"
 
 #define kDefaultShelfIdentifier @"DEFAULT_SHELF"
+#define kDefaultShelfIndex 0
 #define kFavoriteShelfIdentifier @"FAVORITE_SHELF"
+#define kFavoriteShelfIndex 1
 
 @implementation SFAppDelegate
 
@@ -30,6 +32,7 @@
         SFShelf *shelf = [[SFCoreDataManager sharedManager] insertNewShelf];
         [shelf setIdentifier:kDefaultShelfIdentifier];
         [shelf setTitle:@"未登録の本棚"];
+        [shelf setIndex:@(kDefaultShelfIndex)];
         [[SFCoreDataManager sharedManager] saveContext];
     }
     
@@ -38,6 +41,7 @@
         SFShelf *shelf = [[SFCoreDataManager sharedManager] insertNewShelf];
         [shelf setIdentifier:kFavoriteShelfIdentifier];
         [shelf setTitle:@"お気に入り"];
+        [shelf setIndex:@(kFavoriteShelfIndex)];
         [[SFCoreDataManager sharedManager] saveContext];
     }
         

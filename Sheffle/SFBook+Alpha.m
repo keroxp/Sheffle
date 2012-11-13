@@ -28,6 +28,9 @@
     [self setItemPrice:@(p)];
     [self setItemUrl:[book objectForKey:@"itemUrl"]];
     [self setPublisherName:[book objectForKey:@"publisherName"]];
+    [self setMediumImageUrl:[book objectForKey:@"mediumImageUrl"]];
+    [self setSmallImageUrl:[book objectForKey:@"smallImageUrl"]];
+    [self setLargeImageUrl:[book objectForKey:@"largeImageUrl"]];
     
     NSDateFormatter *dfm = [[NSDateFormatter alloc] init];
     [dfm setDateFormat:@"yyyy年MM月"];
@@ -51,6 +54,10 @@
     
     [self setSalesDate:book.salesDate];
     [self setBookSize:book.bookSize];
+    
+    [self setSmallImageUrl:book.smallImageUrl];
+    [self setMediumImageUrl:book.mediumImageUrl];
+    [self setLargeImageUrl:book.largeImageUrl];
 }
 
 + (NSSet *)bookSetWithRakutenBooks:(NSArray *)books

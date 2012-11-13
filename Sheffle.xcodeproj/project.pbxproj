@@ -15,7 +15,6 @@
 		A628D2C5164BEFF4003D03DD /* SFBooksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A628D2C4164BEFF3003D03DD /* SFBooksViewController.m */; };
 		A62A41ED15C0611500959355 /* SFCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A62A41EC15C0611500959355 /* SFCoreDataManager.m */; };
 		A6408C6615BDCDDD001AF716 /* SFTableShelfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6408C6515BDCDDD001AF716 /* SFTableShelfViewController.m */; };
-		A64E732E15C3ABD7003464FE /* SFShelf.m in Sources */ = {isa = PBXBuildFile; fileRef = A64E732D15C3ABD7003464FE /* SFShelf.m */; };
 		A64E733E15C3B922003464FE /* SFGridShelfViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A64E733D15C3B922003464FE /* SFGridShelfViewController.m */; };
 		A64E749B15C3C1E5003464FE /* SFShelfBookView.m in Sources */ = {isa = PBXBuildFile; fileRef = A64E749A15C3C1E5003464FE /* SFShelfBookView.m */; };
 		A64E749E15C3C1FE003464FE /* SFShelfRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = A64E749D15C3C1FE003464FE /* SFShelfRowView.m */; };
@@ -75,7 +74,6 @@
 		A6B998F915B995A500D0919C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6B998F815B995A500D0919C /* CoreMedia.framework */; };
 		A6BDB533164F4AE200988ED5 /* libSBJson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A680D378162A94F80088FEB6 /* libSBJson.a */; };
 		A6BDB545164F5F6E00988ED5 /* SFBookAuthor.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB544164F5F6E00988ED5 /* SFBookAuthor.m */; };
-		A6BDB54B164F608200988ED5 /* SFBook.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB54A164F608200988ED5 /* SFBook.m */; };
 		A6BDB54E164F60E000988ED5 /* SFShelf+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB54D164F60DF00988ED5 /* SFShelf+Alpha.m */; };
 		A6BDB55D164F68BF00988ED5 /* libKXP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A6BDB558164F687D00988ED5 /* libKXP.a */; };
 		A6BDB563164F6DD900988ED5 /* SFBook+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB562164F6DD900988ED5 /* SFBook+Alpha.m */; };
@@ -84,6 +82,8 @@
 		A6BDB56B164FBD5500988ED5 /* Placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = A6BDB56A164FBD5500988ED5 /* Placeholder.png */; };
 		A6D0917315C5B0A400B128C8 /* SFBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D0917115C5B0A400B128C8 /* SFBookViewController.m */; };
 		A6F5CD4E15CE62BB00AEC20C /* SFShelvesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F5CD4D15CE62BB00AEC20C /* SFShelvesViewController.m */; };
+		A6FDDE2A16522AB600FF7E6F /* SFBook.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FDDE2916522AB500FF7E6F /* SFBook.m */; };
+		A6FDDE2D1652352000FF7E6F /* SFShelf.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FDDE2C1652352000FF7E6F /* SFShelf.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,8 +143,6 @@
 		A62A41EC15C0611500959355 /* SFCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFCoreDataManager.m; path = Sheffle/SFCoreDataManager.m; sourceTree = "<group>"; };
 		A6408C6415BDCDDD001AF716 /* SFTableShelfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFTableShelfViewController.h; sourceTree = "<group>"; };
 		A6408C6515BDCDDD001AF716 /* SFTableShelfViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFTableShelfViewController.m; sourceTree = "<group>"; };
-		A64E732C15C3ABD7003464FE /* SFShelf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFShelf.h; path = Sheffle/SFShelf.h; sourceTree = "<group>"; };
-		A64E732D15C3ABD7003464FE /* SFShelf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFShelf.m; path = Sheffle/SFShelf.m; sourceTree = "<group>"; };
 		A64E733C15C3B922003464FE /* SFGridShelfViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFGridShelfViewController.h; sourceTree = "<group>"; };
 		A64E733D15C3B922003464FE /* SFGridShelfViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFGridShelfViewController.m; sourceTree = "<group>"; };
 		A64E749915C3C1E5003464FE /* SFShelfBookView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFShelfBookView.h; sourceTree = "<group>"; };
@@ -246,8 +244,6 @@
 		A6B998F815B995A500D0919C /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		A6BDB543164F5F6E00988ED5 /* SFBookAuthor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFBookAuthor.h; path = Sheffle/SFBookAuthor.h; sourceTree = "<group>"; };
 		A6BDB544164F5F6E00988ED5 /* SFBookAuthor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFBookAuthor.m; path = Sheffle/SFBookAuthor.m; sourceTree = "<group>"; };
-		A6BDB549164F608200988ED5 /* SFBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFBook.h; path = Sheffle/SFBook.h; sourceTree = "<group>"; };
-		A6BDB54A164F608200988ED5 /* SFBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFBook.m; path = Sheffle/SFBook.m; sourceTree = "<group>"; };
 		A6BDB54C164F60DF00988ED5 /* SFShelf+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SFShelf+Alpha.h"; path = "Sheffle/SFShelf+Alpha.h"; sourceTree = "<group>"; };
 		A6BDB54D164F60DF00988ED5 /* SFShelf+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "SFShelf+Alpha.m"; path = "Sheffle/SFShelf+Alpha.m"; sourceTree = "<group>"; };
 		A6BDB54F164F687C00988ED5 /* KXP.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KXP.xcodeproj; path = Dependencies/KXP/KXP.xcodeproj; sourceTree = "<group>"; };
@@ -262,6 +258,10 @@
 		A6D0917115C5B0A400B128C8 /* SFBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBookViewController.m; sourceTree = "<group>"; };
 		A6F5CD4C15CE62BB00AEC20C /* SFShelvesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFShelvesViewController.h; sourceTree = "<group>"; };
 		A6F5CD4D15CE62BB00AEC20C /* SFShelvesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFShelvesViewController.m; sourceTree = "<group>"; };
+		A6FDDE2816522AB500FF7E6F /* SFBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFBook.h; path = Sheffle/SFBook.h; sourceTree = "<group>"; };
+		A6FDDE2916522AB500FF7E6F /* SFBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFBook.m; path = Sheffle/SFBook.m; sourceTree = "<group>"; };
+		A6FDDE2B1652352000FF7E6F /* SFShelf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFShelf.h; path = Sheffle/SFShelf.h; sourceTree = "<group>"; };
+		A6FDDE2C1652352000FF7E6F /* SFShelf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFShelf.m; path = Sheffle/SFShelf.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -550,17 +550,17 @@
 		A6A9CB2515BC2A2200C02AD5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A64E732C15C3ABD7003464FE /* SFShelf.h */,
-				A64E732D15C3ABD7003464FE /* SFShelf.m */,
 				A6BDB54C164F60DF00988ED5 /* SFShelf+Alpha.h */,
 				A6BDB54D164F60DF00988ED5 /* SFShelf+Alpha.m */,
-				A6BDB549164F608200988ED5 /* SFBook.h */,
-				A6BDB54A164F608200988ED5 /* SFBook.m */,
+				A6FDDE2816522AB500FF7E6F /* SFBook.h */,
+				A6FDDE2916522AB500FF7E6F /* SFBook.m */,
 				A6BDB561164F6DD900988ED5 /* SFBook+Alpha.h */,
 				A6BDB562164F6DD900988ED5 /* SFBook+Alpha.m */,
 				A62A41EB15C0611400959355 /* SFCoreDataManager.h */,
 				A62A41EC15C0611500959355 /* SFCoreDataManager.m */,
 				A6A9CB2C15BC31EE00C02AD5 /* Sheffle.xcdatamodeld */,
+				A6FDDE2B1652352000FF7E6F /* SFShelf.h */,
+				A6FDDE2C1652352000FF7E6F /* SFShelf.m */,
 				A6BDB543164F5F6E00988ED5 /* SFBookAuthor.h */,
 				A6BDB544164F5F6E00988ED5 /* SFBookAuthor.m */,
 			);
@@ -866,7 +866,6 @@
 				A6A9CB3215BC31EE00C02AD5 /* Sheffle.xcdatamodeld in Sources */,
 				A6408C6615BDCDDD001AF716 /* SFTableShelfViewController.m in Sources */,
 				A62A41ED15C0611500959355 /* SFCoreDataManager.m in Sources */,
-				A64E732E15C3ABD7003464FE /* SFShelf.m in Sources */,
 				A64E733E15C3B922003464FE /* SFGridShelfViewController.m in Sources */,
 				A64E749B15C3C1E5003464FE /* SFShelfBookView.m in Sources */,
 				A64E749E15C3C1FE003464FE /* SFShelfRowView.m in Sources */,
@@ -883,13 +882,14 @@
 				A680D395162A956F0088FEB6 /* NSMutableArray+Rearrange.m in Sources */,
 				A628D2C5164BEFF4003D03DD /* SFBooksViewController.m in Sources */,
 				A6BDB545164F5F6E00988ED5 /* SFBookAuthor.m in Sources */,
-				A6BDB54B164F608200988ED5 /* SFBook.m in Sources */,
 				A6BDB54E164F60E000988ED5 /* SFShelf+Alpha.m in Sources */,
 				A6BDB563164F6DD900988ED5 /* SFBook+Alpha.m in Sources */,
 				A6BDB566164F9C7C00988ED5 /* SFBookSearchViewController.m in Sources */,
 				A6BDB569164FABBA00988ED5 /* SFAPIConnection.m in Sources */,
 				A676B6451651466F000CF545 /* SFRakutenBook.m in Sources */,
 				A69BD4A3165206ED0084BC84 /* UIViewController+AddBook.m in Sources */,
+				A6FDDE2A16522AB600FF7E6F /* SFBook.m in Sources */,
+				A6FDDE2D1652352000FF7E6F /* SFShelf.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

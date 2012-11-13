@@ -19,7 +19,6 @@
     UIBarButtonItem *_shelvesButton;
     UIBarButtonItem *_editButton;
     UIBarButtonItem *_donebutton;
-//    UIBarButtonItem *_scanButton;
     UIBarButtonItem *_addButton;
     UISegmentedControl *_displayControl;
     UIBarButtonItem *_displayControlItem;
@@ -159,13 +158,20 @@
     
     if ([newBook identifier]) {
         // 内部情報をセット
-        [newBook setImage2x:UIImagePNGRepresentation(image)];
-        [newBook setImage:UIImagePNGRepresentation([self resizeImage:image])];
+//        [newBook setImage2x:UIImagePNGRepresentation(image)];
+//    [newBook setImage:UIImagePNGRepresentation([self resizeImage:image])];
         
         // 楽天の情報をセット
         [newBook setDataWithJSON:book];
-        
-        [self.shelf addBooks:[NSSet setWithObject:newBook]];
+        KXPDownload *d = [[KXPDownload alloc] initWithContentsOfURL:[NSURL URLWithString:newBook.largeImageUrl] withOptions:nil];
+        d.completionHandler = ^(NSData*d,id opts){
+            if (d) {
+                [newBook setImage:d];
+                [[SFCoreDataManager sharedManager] saveContext];
+            }
+        };
+        [d startDownload];
+        [self.shelf addBooks:[NSSet setWithObject:newBook]];        
     }    
     [[SFCoreDataManager sharedManager] saveContext];
 }
