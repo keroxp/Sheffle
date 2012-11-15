@@ -13,3 +13,6 @@
 [submodule "Modules/R9HTTPRequest"]
     path = Modules/R9HTTPRequest
     url = git@github.com:glassonion1/R9HTTPRequest.git
+[submodule "Modules/TSPopover"]
+	path = Modules/TSPopover
+	url = git@github.com:takashisite/TSPopover.git

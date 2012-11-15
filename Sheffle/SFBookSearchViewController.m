@@ -73,8 +73,7 @@
     self.searchDisplayController.searchBar.delegate = self;
     
 //    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload)];
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    [self.navigationItem setRightBarButtonItems:@[self.doneButton,self.editButtonItem]];
+    self.navigationItem.rightBarButtonItem = self.doneButton;
     
 }
 
@@ -139,9 +138,8 @@
 
 - (void)pickerViewController:(KXPPickerViewController *)controller didTapDoneButton:(UIBarButtonItem *)doneButton
 {
-    $();
     _currentShelf = [_shelves objectAtIndex:_selectedPickerIndex];
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 1)] withRowAnimation:UITableViewRowAnimationAutomatic];
     [controller dismissWithAnimated:NO];
 }
 
@@ -348,7 +346,7 @@
             // Delete the row from the data source
             [_booksToBeRegisted removeObjectAtIndex:indexPath.row];
             if (_booksToBeRegisted.count == 0) {
-                [tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                [tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 1)] withRowAnimation:UITableViewRowAnimationFade];
             }else{
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             }
