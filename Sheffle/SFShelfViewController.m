@@ -8,6 +8,8 @@
 
 #import "SFShelfViewController.h"
 #import "SFAppDelegate.h"
+#import "UIViewController+AddBook.h"
+#import "SFPopoverViewController.h"
 
 #define kDefaultShelfViewFrame CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
 #define kDefaultReaderViewFrame CGRectMake(0, 0, self.view.frame.size.width, 0)
@@ -27,6 +29,9 @@
     SFShelf *_currentShelf;
     ZBarReaderView *_readerView;
     NSString *_previousBarcode;
+    NSInteger _currentSortIndex;
+    SFPopoverViewController *_popoverController;
+    BOOL _popoverIsVisible;
 }
 
 @property (strong,nonatomic) NSArray *rightBarItems;
@@ -34,6 +39,7 @@
 @property (strong,nonatomic) NSArray *editToolbarItems;
 
 /* Action Handlers */
+- (void)shelvesButtonDidTap:(id)sender;
 - (void)editButtonDidTap:(id)sender;
 - (void)doneButtonDidTap:(id)sender;
 - (void)addButtonDidTap:(id)sender;
@@ -46,8 +52,6 @@
 - (void)insertNewObject:(NSDictionary*)book image:(UIImage*)image;
 - (NSSet*)booksToBeHandled;
 - (UIImage*)resizeImage:(UIImage*)image;
-- (void)beforeTransitionFromViewController:(UIViewController*)from toViewController:(UIViewController*)to;
-- (void)afterTransitionFromViewController:(UIViewController*)from toViewController:(UIViewController*)to;
 // Method for DEBUG
 - (NSDictionary*)getFixture;
 
@@ -55,22 +59,21 @@
 
 @implementation SFShelfViewController
 
-@synthesize shelfViewMode = _shelfViewMode;
+@synthesize shelfViewMode = _shelfViewMode, fetchedResultsController = _fetchedResultsController;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    // ボタンを初期化
     [self initButtons];
     
     // NavigationBarを初期化
-    
-    self.title =  self.shelf.title;
     self.navigationItem.titleView = _displayControl;
+    self.navigationItem.leftBarButtonItem = _shelvesButton;
     self.navigationItem.rightBarButtonItems = self.rightBarItems;
 
-    // Toolbarを初期化
-    
+    // Toolbarを初期化    
     self.toolbarItems = self.normalToolbarItems;
     
     // Viewの初期化
@@ -94,11 +97,15 @@
     self.tableShelfViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"TableShlefView"];
     self.gridShelfViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"GridShelfView"];
     
-    self.tableShelfViewController.fetchedResultsController = self.fetchedresultsController;
-    self.gridShelfViewController.fetchedResultsController = self.fetchedresultsController;
+    self.tableShelfViewController.fetchedResultsController = self.fetchedResultsController;
+    self.gridShelfViewController.fetchedResultsController = self.fetchedResultsController;   
     
-    self.tableShelfViewController.view.frame = self.shelfView.frame;
-    self.gridShelfViewController.view.frame = self.shelfView.frame;
+    CGRect f;
+    f.origin = CGPointMake(0, 0);
+    f.size.width = CGRectGetWidth(self.view.bounds);
+    f.size.height = CGRectGetHeight(self.view.bounds) - CGRectGetHeight(self.navigationController.toolbar.bounds) - CGRectGetHeight(self.navigationController.navigationBar.bounds);
+    self.tableShelfViewController.view.frame = f;
+    self.gridShelfViewController.view.frame = f;
     
     [self addChildViewController:_tableShelfViewController];
     [self addChildViewController:_gridShelfViewController];
@@ -135,19 +142,28 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+
+- (void)setEditing:(BOOL)editing
+{
+    [super setEditing:editing];
+    if (!editing) {
+        // done
+        [self.navigationItem setRightBarButtonItems:[self rightBarItems] animated:YES];
+        [self setToolbarItems:[self normalToolbarItems] animated:YES];
+        [self.tableShelfViewController setEditing:editing animated:YES];
+        [self.gridShelfViewController switchToNormalMode];
+    }else{
+        // edit
+        [self.navigationItem setRightBarButtonItem:_donebutton animated:YES];
+        [self setToolbarItems:[self editToolbarItems] animated:YES];
+        [self.tableShelfViewController setEditing:editing animated:YES];
+        [self.gridShelfViewController switchToEditMode];
+    }
 }
 
 #pragma mark - Private
@@ -156,11 +172,7 @@
 {
     SFBook *newBook = [[SFCoreDataManager sharedManager] insertNewBook];
     
-    if ([newBook identifier]) {
-        // 内部情報をセット
-//        [newBook setImage2x:UIImagePNGRepresentation(image)];
-//    [newBook setImage:UIImagePNGRepresentation([self resizeImage:image])];
-        
+    if ([newBook identifier]) {   
         // 楽天の情報をセット
         [newBook setDataWithJSON:book];
         KXPDownload *d = [[KXPDownload alloc] initWithContentsOfURL:[NSURL URLWithString:newBook.largeImageUrl] withOptions:nil];
@@ -188,16 +200,6 @@
     return resizedImage;
 }
 
-- (void)beforeTransitionFromViewController:(UIViewController *)from toViewController:(UIViewController *)to
-{
-    
-}
-
-- (void)afterTransitionFromViewController:(UIViewController *)from toViewController:(UIViewController *)to
-{
-    
-}
-
 #pragma mark - Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -212,31 +214,32 @@
             book = (SFBook*)sender;
         }
         bvc.book = book;
-    }else if ([segue.identifier isEqualToString:segueIDForList]) {
-        SFShelfListViewController *slvc = (SFShelfListViewController*)segue.destinationViewController;
-        slvc.shelves = [[SFCoreDataManager sharedManager] shelves];
-        slvc.currentShelf = self.shelf;
-        NSSet *booksToBeMoved;
-        switch (self.shelfViewMode) {
-            case SFShelfViewModeGrid: {
-                NSIndexSet *is = self.gridShelfViewController.booksIndexsToBeRemoved;
-                booksToBeMoved = [NSSet setWithArray:[self.fetchedresultsController.fetchedObjects objectsAtIndexes:is]];
-
-            }
-                break;
-            case SFShelfViewModeTable:{
-                NSArray *ips = [self.tableShelfViewController.tableView indexPathsForSelectedRows];
-                NSMutableArray *ma = [NSMutableArray arrayWithCapacity:ips.count];
-                for (int i = 0; i < ips.count; i++) {
-                    [ma addObject:[self.fetchedresultsController.fetchedObjects objectAtIndex:[ips objectAtIndex:i]]];
-                }
-            }
-                break;
-            default:
-                break;
-        }
-        slvc.booksToBeMoved = booksToBeMoved;
     }
+//    else if ([segue.identifier isEqualToString:segueIDForList]) {
+//        SFShelfListViewController *slvc = (SFShelfListViewController*)segue.destinationViewController;
+//        slvc.shelves = [[SFCoreDataManager sharedManager] shelves];
+//        slvc.currentShelf = self.shelf;
+//        NSSet *booksToBeMoved;
+//        switch (self.shelfViewMode) {
+//            case SFShelfViewModeGrid: {
+//                NSIndexSet *is = self.gridShelfViewController.booksIndexsToBeRemoved;
+//                booksToBeMoved = [NSSet setWithArray:[self.fetchedResultsController.fetchedObjects objectsAtIndexes:is]];
+//
+//            }
+//                break;
+//            case SFShelfViewModeTable:{
+//                NSArray *ips = [self.tableShelfViewController.tableView indexPathsForSelectedRows];
+//                NSMutableArray *ma = [NSMutableArray arrayWithCapacity:ips.count];
+//                for (int i = 0; i < ips.count; i++) {
+//                    [ma addObject:[self.fetchedResultsController.fetchedObjects objectAtIndex:[ips objectAtIndex:i]]];
+//                }
+//            }
+//                break;
+//            default:
+//                break;
+//        }
+//        slvc.booksToBeMoved = booksToBeMoved;
+//    }
 }
 
 
@@ -322,23 +325,35 @@
     }
 }
 
+#pragma mark - Shelves View Delegate
+
+- (void)shelvesViewController:(SFShelvesViewController *)controller didSelectShelf:(SFShelf *)shelf
+{
+    if (shelf) {
+        self.shelf = shelf;
+        NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:@"titleKana" ascending:YES];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shelf == %@",self.shelf];        
+        self.fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[title] sectionNameKeyPath:@"titleInitial" cacheName:[NSString stringWithFormat:@"BooksOf%@",shelf.title] predicate:predicate];
+        [_popoverController dismisWithAnimated:YES];
+        _popoverIsVisible = NO;
+    }
+}
+
 #pragma mark - Action Handlers
 
-- (void)setEditing:(BOOL)editing
+- (void)shelvesButtonDidTap:(id)sender
 {
-    [super setEditing:editing];
-    if (!editing) {
-        // done
-        [self.navigationItem setRightBarButtonItems:[self rightBarItems] animated:YES];
-        [self setToolbarItems:[self normalToolbarItems] animated:YES];
-        [self.tableShelfViewController setEditing:editing animated:YES];
-        [self.gridShelfViewController switchToNormalMode];
+    if (_popoverIsVisible) {
+        [_popoverController dismisWithAnimated:YES];
+        _popoverIsVisible = NO;
     }else{
-        // edit
-        [self.navigationItem setRightBarButtonItem:_donebutton animated:YES];
-        [self setToolbarItems:[self editToolbarItems] animated:YES];
-        [self.tableShelfViewController setEditing:editing animated:YES];
-        [self.gridShelfViewController switchToEditMode];
+        if (!_popoverController) {
+            SFShelvesViewController *sv = [self.storyboard instantiateViewControllerWithIdentifier:@"ShelvesView"];
+            sv.delegate = self;
+            _popoverController = [[SFPopoverViewController alloc] initWithViewContentViewController:sv];
+        }
+        [_popoverController showInView:self.view animated:YES];
+        _popoverIsVisible = YES;
     }
 }
 
@@ -366,54 +381,58 @@
 
 - (void)addButtonDidTap:(id)sender {
     $(@"add button did tap");
-    [_readerView start];
-    switch (_shelfViewMode) {
-        case SFShelfViewModeTable:
-            [[_tableShelfViewController tableView] setContentOffset:CGPointZero];
-            break;
-        case SFShelfViewModeGrid:
-            [[_gridShelfViewController bookShelfView] setContentOffset:CGPointZero];
-        default:
-            break;
-    }
-    [UIView animateWithDuration:0.25f delay:0.0 options:(UIViewAnimationCurveEaseIn <<  16) animations:^(void){
-        _readerView.frame = kScanModeReaderViewFrame;
-        _shelfView.frame = kScanModeShelfViewFrame;
-    }completion:^(BOOL finished){
-        [self.navigationItem setRightBarButtonItem:_donebutton];
-        [self setTitle:@"Scan Barcode"];
-    }];
+    [self startAddBookMode];
+//    [_readerView start];
+//    switch (_shelfViewMode) {
+//        case SFShelfViewModeTable:
+//            [[_tableShelfViewController tableView] setContentOffset:CGPointZero];
+//            break;
+//        case SFShelfViewModeGrid:
+//            [[_gridShelfViewController bookShelfView] setContentOffset:CGPointZero];
+//        default:
+//            break;
+//    }
+//    [UIView animateWithDuration:0.25f delay:0.0 options:(UIViewAnimationCurveEaseIn <<  16) animations:^(void){
+//        _readerView.frame = kScanModeReaderViewFrame;
+//        _shelfView.frame = kScanModeShelfViewFrame;
+//    }completion:^(BOOL finished){
+//        [self.navigationItem setRightBarButtonItem:_donebutton];
+//        [self setTitle:@"Scan Barcode"];
+//    }];
 }
 
 - (void)sortControlDidChange:(UISegmentedControl *)sender
 {
     $(@"%i",[_sortControl selectedSegmentIndex]);
-    switch (sender.selectedSegmentIndex) {
-        case 0: {
-            // タイトル
-            self.fetchedresultsController = [self fetchedResultsControllerWithEntityName:@"titleKana"];
+    if (sender.selectedSegmentIndex != _currentSortIndex) {
+        
+        NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:@"titleKana" ascending:YES];
+        NSSortDescriptor *author = [[NSSortDescriptor alloc] initWithKey:@"author" ascending:YES];
+        NSSortDescriptor *publisher = [[NSSortDescriptor alloc] initWithKey:@"publisherName" ascending:YES];
+        
+        switch (sender.selectedSegmentIndex) {
+            case 0: {
+                _fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[title,author,publisher] sectionNameKeyPath:@"titleInitial" cacheName:@"BookWithTitle" predicate:nil];
+                self.sortType = SFBookSortTypeTitle;
+            }
+                break;
+            case 1: {
+                _fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[author,title,publisher] sectionNameKeyPath:@"author" cacheName:@"BookWithAuthor" predicate:nil];
+                self.sortType = SFBookSortTypeAuthor;
+            }
+                break;
+            case 2: {
+                _fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[publisher,title,author] sectionNameKeyPath:@"publisherName" cacheName:@"BookWithPublisher" predicate:nil];
+                self.sortType = SFBookSortTypePublisher;
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case 1: {
-            // 作者
-            self.fetchedresultsController = [self fetchedResultsControllerWithEntityName:@"authorKana"];
-        }
-            break;
-        case 2: {
-            // 日付
-            self.fetchedresultsController = [self fetchedResultsControllerWithEntityName:@"created"];
-        }
-            break;
-        case 3: {
-            // 種類
-            self.fetchedresultsController = [self fetchedResultsControllerWithEntityName:@"size"];
-        }
-            break;
-        default:
-            break;
+        [self.gridShelfViewController.bookShelfView reloadData];
+        [self.tableShelfViewController.tableView reloadData];
+        _currentSortIndex = sender.selectedSegmentIndex;
     }
-    [self.gridShelfViewController.bookShelfView reloadData];
-    [self.tableShelfViewController.tableView reloadData];
 }
 
 - (void)displayControlDidChange:(UISegmentedControl *)sender
@@ -422,18 +441,14 @@
     switch (sender.selectedSegmentIndex) {
         case 0: {
             // Gridへ
-            [self beforeTransitionFromViewController:self.tableShelfViewController toViewController:self.gridShelfViewController];
             [self transitionFromViewController:self.tableShelfViewController toViewController:self.gridShelfViewController duration:0.0 options:UIViewAnimationOptionTransitionNone animations:nil completion:nil];
-            [self afterTransitionFromViewController:self.tableShelfViewController toViewController:self.gridShelfViewController];
             _shelfViewMode = SFShelfViewModeGrid;
             [self.gridShelfViewController.bookShelfView reloadData];
         }
             break;
         case 1: {
             // Tableへ
-            [self beforeTransitionFromViewController:self.gridShelfViewController toViewController:self.tableShelfViewController];
             [self transitionFromViewController:self.gridShelfViewController toViewController:self.tableShelfViewController duration:0.0 options:UIViewAnimationOptionTransitionNone animations:nil completion:nil];
-            [self afterTransitionFromViewController:self.gridShelfViewController toViewController:self.tableShelfViewController];
             _shelfViewMode = SFShelfViewModeTable;
             [self.tableShelfViewController.tableView reloadData];
         }
@@ -452,7 +467,7 @@
         switch (self.shelfViewMode) {
             case SFShelfViewModeGrid: {
                 NSIndexSet *is = self.gridShelfViewController.booksIndexsToBeRemoved;
-                NSArray *books = [self.fetchedresultsController.fetchedObjects objectsAtIndexes:is];
+                NSArray *books = [self.fetchedResultsController.fetchedObjects objectsAtIndexes:is];
                 NSSet *set = [NSSet setWithArray:books];
                 return set;
             }
@@ -461,7 +476,7 @@
                 NSArray *selected = [self.tableShelfViewController.tableView indexPathsForSelectedRows];
                 NSMutableArray *toBeHandled = [NSMutableArray array];
                 for (NSIndexPath *ip in selected) {
-                    [toBeHandled addObject:[self.fetchedresultsController objectAtIndexPath:ip]];
+                    [toBeHandled addObject:[self.fetchedResultsController objectAtIndexPath:ip]];
                 }
                 NSSet *set = [NSSet setWithArray:toBeHandled];
                 return set;
@@ -483,7 +498,7 @@
             case SFShelfViewModeGrid: {
                 NSIndexSet *is = self.gridShelfViewController.booksIndexsToBeRemoved;
                 [self.gridShelfViewController.bookStatus removeObjectsAtIndexes:is];
-                NSArray *books = [self.fetchedresultsController.fetchedObjects objectsAtIndexes:is];
+                NSArray *books = [self.fetchedResultsController.fetchedObjects objectsAtIndexes:is];
                 NSSet *set = [NSSet setWithArray:books];
                 [self.shelf removeBooks:set];
                 [[SFCoreDataManager sharedManager] saveContext];
@@ -493,7 +508,7 @@
                 NSArray *selected = [self.tableShelfViewController.tableView indexPathsForSelectedRows];
                 NSMutableArray *toBeDeleted = [NSMutableArray array];
                 for (NSIndexPath *ip in selected) {
-                    [toBeDeleted addObject:[self.fetchedresultsController objectAtIndexPath:ip]];
+                    [toBeDeleted addObject:[self.fetchedResultsController objectAtIndexPath:ip]];
                 }
                 NSSet *set = [NSSet setWithArray:toBeDeleted];
                 [self.shelf removeBooks:set];
@@ -517,7 +532,7 @@
             case SFShelfViewModeGrid: {
                 NSIndexSet *is = self.gridShelfViewController.booksIndexsToBeRemoved;
                 [self.gridShelfViewController.bookStatus removeObjectsAtIndexes:is];
-                NSArray *books = [self.fetchedresultsController.fetchedObjects objectsAtIndexes:is];
+                NSArray *books = [self.fetchedResultsController.fetchedObjects objectsAtIndexes:is];
                 NSSet *set = [NSSet setWithArray:books];
                 [self.shelf removeBooks:set];
                 [[SFCoreDataManager sharedManager] saveContext];
@@ -527,7 +542,7 @@
                 NSArray *selected = [self.tableShelfViewController.tableView indexPathsForSelectedRows];
                 NSMutableArray *toBeDeleted = [NSMutableArray array];
                 for (NSIndexPath *ip in selected) {
-                    [toBeDeleted addObject:[self.fetchedresultsController objectAtIndexPath:ip]];
+                    [toBeDeleted addObject:[self.fetchedResultsController objectAtIndexPath:ip]];
                 }
                 NSSet *set = [NSSet setWithArray:toBeDeleted];
                 [self.shelf removeBooks:set];
@@ -552,12 +567,17 @@
 
 - (void)initButtons
 {
+    // 本棚
+    _shelvesButton = [[UIBarButtonItem alloc] initWithTitle:@"Shelves" style:UIBarButtonItemStyleBordered target:self action:@selector(shelvesButtonDidTap:)];
+    
     // 編集
     _editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonDidTap:)];
     _editButton.tintColor = kBarTintColor;
     
     // 追加
     _addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
+    _addButton.style = UIBarButtonItemStyleBordered;
+    _addButton.tintColor = kBarTintColor;
     
     // 完了
     _donebutton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonDidTap:)];
@@ -568,17 +588,24 @@
     
     // 移動
     _moveButton = [[UIBarButtonItem alloc] initWithTitle:@"Move" style:UIBarButtonItemStyleBordered target:self action:@selector(moveButtonDidTap:)];
-    _moveButton.tintColor = [UIColor blueColor];
+    _moveButton.tintColor = kBarTintColor;
     
     // ふぁぼ
     _staredButton = [[UIBarButtonItem alloc] initWithTitle:@"Favorite" style:UIBarButtonItemStyleBordered target:self action:@selector(staredButtonDidTap:)];
+    _staredButton.tintColor = kBarTintColor;
+    
     CGFloat w = 96;
+    
     _trashButton.width = _moveButton.width = _staredButton.width = w;
+    
     
     // 切り替え
     _displayControl = [[UISegmentedControl alloc] initWithItems:@[@"Grid",@"Table"]];
     _displayControl.selectedSegmentIndex = 0;
     _displayControl.segmentedControlStyle = UISegmentedControlStyleBar;
+    CGRect f = _displayControl.frame;
+    f.size.width = 150;
+    _displayControl.frame = f;
     [_displayControl addTarget:self action:@selector(displayControlDidChange:) forControlEvents:UIControlEventValueChanged];
     _displayControlItem = [[UIBarButtonItem alloc] initWithCustomView:_displayControl];
     
@@ -588,13 +615,14 @@
     _sortControl.segmentedControlStyle = UISegmentedControlStyleBar;
     [_sortControl addTarget:self action:@selector(sortControlDidChange:) forControlEvents:UIControlEventValueChanged];
     _sortControlItem = [[UIBarButtonItem alloc] initWithCustomView:_sortControl];
-    _sortControlItem.width = 200;
+    _sortControlItem.width = 265;
 }
 
 - (NSArray *)rightBarItems
 {
     if (!_rightBarItems) {
-        _rightBarItems = @[_addButton,_editButton];
+//        _rightBarItems = @[_addButton,_editButton];
+        _rightBarItems = @[_editButton];
     }
     return _rightBarItems;
 }
@@ -612,48 +640,34 @@
 {
     if (!_normalToolbarItems) {
         UIBarButtonItem *spacor = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        _normalToolbarItems = @[_sortControlItem,spacor,_displayControlItem];
+        _normalToolbarItems = @[_sortControlItem,spacor,_addButton];
     }
     return _normalToolbarItems;
 }
 
 #pragma mark - Fetched Results Controller Delegate
 
-- (NSFetchedResultsController *)fetchedresultsController
+- (void)setFetchedResultsController:(NSFetchedResultsController *)fetchedResultsController
 {
-    if (_fetchedresultsController) {
-        return _fetchedresultsController;
+    if (_fetchedResultsController != fetchedResultsController) {
+        _fetchedResultsController = fetchedResultsController;
+        self.gridShelfViewController.fetchedResultsController = fetchedResultsController;
+        self.tableShelfViewController.fetchedResultsController = fetchedResultsController;
+        [self.gridShelfViewController initBooks];
+        [self.gridShelfViewController.bookShelfView reloadData];
+        [self.tableShelfViewController.tableView reloadData];
     }
-    NSManagedObjectContext *context = [[SFCoreDataManager sharedManager] managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+}
 
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:context];
-    
-    request.entity = entity;
-    
-    NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:@"titleKana" ascending:NO];
-    NSSortDescriptor *author = [[NSSortDescriptor alloc] initWithKey:@"authorKana" ascending:NO];
-    NSSortDescriptor *created = [[NSSortDescriptor alloc] initWithKey:@"created" ascending:NO];
-    NSSortDescriptor *size = [[NSSortDescriptor alloc] initWithKey:@"bookSize" ascending:NO];
-    
-    request.sortDescriptors = @[ title, author, created, size ];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shelf == %@",self.shelf];
-    
-    request.predicate = predicate;
-    
-    NSFetchedResultsController *controller = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:@"Book"];
-    controller.delegate = self;
-    
-    [NSFetchedResultsController deleteCacheWithName:@"Book"];
-    
-    NSError *error = nil;
-    if (![controller performFetch:&error]) {
-        $(@"perform failed %@",error);
-        return nil;
+- (NSFetchedResultsController *)fetchedResultsController
+{
+    if (_fetchedResultsController) {
+        return _fetchedResultsController;
     }
-    _fetchedresultsController = controller;
-    return _fetchedresultsController;
+        
+    _fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedBooksController];
+    _fetchedResultsController.delegate = self;
+    return _fetchedResultsController;
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
@@ -685,10 +699,9 @@
             // Table Shelf View
             [self.tableShelfViewController.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             // Grid Shelf View
-            NSInteger i = [self.fetchedresultsController.fetchedObjects indexOfObject:anObject];            
+            NSInteger i = [self.fetchedResultsController.fetchedObjects indexOfObject:anObject];            
             NSIndexSet *is = [NSIndexSet indexSetWithIndex:i];
             [self.gridShelfViewController.bookShelfView insertBookViewsAtIndexs:is animate:YES];
-#warning 複数登録の処理が必要になったらここで初期化してはいけない
             [self.gridShelfViewController initBooks];
         }
             break;
@@ -702,7 +715,7 @@
         }
             break;
         case NSFetchedResultsChangeUpdate:
-            [self.tableShelfViewController configureCell:[self.tableShelfViewController.tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self.tableShelfViewController.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
         case NSFetchedResultsChangeMove:
             [self.tableShelfViewController.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];

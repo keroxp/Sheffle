@@ -23,7 +23,11 @@
 - (void)startAddBookMode
 {
     UIActionSheet *as = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"バーコードをスキャン",@"キーワードから検索", nil];
-    [as showFromTabBar:self.tabBarController.tabBar];
+    if (self.tabBarController) {
+        [as showFromTabBar:self.tabBarController.tabBar];
+    }else if(self.navigationController.toolbar){
+        [as showFromToolbar:self.navigationController.toolbar];
+    }
 }
 
 #pragma mark - Action Sheet

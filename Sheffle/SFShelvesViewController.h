@@ -10,29 +10,22 @@
 #import "SFCoreDataManager.h"
 #import "TDBadgedCell.h"
 
+@protocol SFShelvesViewDelegate;
+
 @interface SFShelvesViewController : UITableViewController
 <NSFetchedResultsControllerDelegate
 ,UITextFieldDelegate
 ,UISearchDisplayDelegate
 ,UIAlertViewDelegate
-,UIPopoverControllerDelegate>
+>
 
+@property (weak, nonatomic) id<SFShelvesViewDelegate> delegate;
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
+@protocol SFShelvesViewDelegate <NSObject>
 
-@interface UIPopoverController (EnableOniPhone)
-
-+ (BOOL)_popoversDisabled;
-
-@end
-
-@implementation UIPopoverController (EnableOniPhone)
-
-+ (BOOL)_popoversDisabled;
-{
-    return NO;
-}
+- (void)shelvesViewController:(SFShelvesViewController*)controller didSelectShelf:(SFShelf*)shelf;
 
 @end

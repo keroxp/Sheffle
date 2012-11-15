@@ -21,6 +21,4 @@
 // Core Data
 @property (weak, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-
 @end

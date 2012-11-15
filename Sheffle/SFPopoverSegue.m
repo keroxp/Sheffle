@@ -7,7 +7,14 @@
 //
 
 #import "SFPopoverSegue.h"
+#import "SFPopoverViewController.h"
 
 @implementation SFPopoverSegue
+
+- (void)perform
+{
+    SFPopoverViewController *pop = [[SFPopoverViewController alloc] initWithViewContentViewController:self.destinationViewController];
+    [pop showInView:self.sourceViewController animated:YES];
+}
 
 @end

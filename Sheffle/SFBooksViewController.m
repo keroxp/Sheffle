@@ -61,7 +61,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSError *e = nil;
 //    [self.fetchedResultsController performFetch:&e];
 }
 
@@ -348,10 +347,6 @@
     $();
 }
 
-- (void)addBookViewController:(UIViewController *)controller didCommitRegisteringForShelf:(SFShelf *)shelf books:(NSArray *)books
-{
-    
-}
 
 #pragma mark - Add Book Data Source
 

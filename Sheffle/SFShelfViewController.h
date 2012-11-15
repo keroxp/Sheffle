@@ -19,24 +19,35 @@
 #import "SFBookViewController.h"
 #import "SFTableShelfViewController.h"
 #import "SFGridShelfViewController.h"
-#import "SFShelfListViewController.h"
+#import "SFShelvesViewController.h"
 
 typedef enum{
     SFShelfViewModeGrid = 0,
     SFShelfViewModeTable
 }SFShelfViewMode;
 
+typedef enum{
+    SFBookSortTypeTitle = 0,
+    SFBookSortTypeAuthor,
+    SFBookSortTypePublisher
+}SFBookSortType;
+
+@class SFShelvesViewController, SFGridShelfViewController, SFTableShelfViewController;
+
 @interface SFShelfViewController : UIViewController 
 <ZBarReaderViewDelegate
+,SFShelvesViewDelegate
 ,NSFetchedResultsControllerDelegate>
 
 // View Controllers
+@property (strong, nonatomic) SFShelvesViewController *shelvesViewController;
 @property (strong, nonatomic) SFGridShelfViewController *gridShelfViewController;
 @property (strong, nonatomic) SFTableShelfViewController *tableShelfViewController;
 // View Mode
 @property (readonly) SFShelfViewMode shelfViewMode;
+@property (assign, nonatomic) SFBookSortType sortType;
 // Core Data
-@property (strong, nonatomic) NSFetchedResultsController *fetchedresultsController;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) SFShelf *shelf;
 // UI
 @property (strong, nonatomic) UIView *readerView;

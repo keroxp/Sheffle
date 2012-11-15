@@ -12,9 +12,9 @@
 
 @interface SFTableShelfViewController ()
 {
-    NSManagedObjectContext *__managedObjectContext;
     NSIndexPath *_selectedPath;
-    UISearchDisplayController *__searchDisplayController;
+    NSArray *_sectionIndexes;
+    NSMutableDictionary *_sectionIndexTitles;
 }
 
 @end
@@ -37,8 +37,6 @@
     
     [self.tableView clearsContextBeforeDrawing];
     
-    __managedObjectContext = [[SFCoreDataManager sharedManager] managedObjectContext];
-
     self.searchDisplayController.delegate = self;
     self.searchDisplayController.searchBar.delegate = self;
     self.searchDisplayController.searchResultsDataSource = self;
@@ -47,7 +45,6 @@
 }
 
 - (void)viewDidUnload {
-    [self setTableView:nil];
     [super viewDidUnload];
 }
 
@@ -64,60 +61,71 @@
     return [sectionInfo numberOfObjects];
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return [[self.fetchedResultsController.sections objectAtIndex:section] name];
+}
+
+- (NSArray *)sectionIndexTitles
+{
+    if (!_sectionIndexes) {
+        int sectionCount = self.fetchedResultsController.sections.count;
+        int max = (sectionCount < 25 ) ? sectionCount : 25;
+        NSMutableArray *ma = [NSMutableArray arrayWithCapacity:max];
+        for (int i = 0 ; i < max; i++) {
+            NSString *name = [[self.fetchedResultsController.sections objectAtIndex:i] name];
+            [ma addObject:name];
+        }
+        _sectionIndexes = ma;
+    }
+    return _sectionIndexes;
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    if (!_sectionIndexTitles) {
+        _sectionIndexTitles = [NSMutableDictionary dictionaryWithCapacity:3];
+    }
+    
+    if (![_sectionIndexTitles objectForKey:self.fetchedResultsController.sectionNameKeyPath]) {
+        int sectionCount = self.fetchedResultsController.sections.count;
+        int max = (sectionCount < 25 ) ? sectionCount : 25;
+        
+        NSMutableArray *ma = [NSMutableArray arrayWithCapacity:max];
+        for (int i = 0 ; i < max; i++) {
+            int index = self.fetchedResultsController.sections.count / max * i;
+            NSString *name = [[[self.fetchedResultsController.sections objectAtIndex:index] name] substringWithRange:NSMakeRange(0, 1)];
+            [ma addObject:name];
+        }
+        [_sectionIndexTitles setObject:ma forKey:[self.fetchedResultsController.sectionNameKeyPath copy]];
+    }
+    return [_sectionIndexTitles objectForKey:self.fetchedResultsController.sectionNameKeyPath];
+    
+}
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellID = @"TableShelfCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellID];
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-    }
-    
-    [self configureCell:cell atIndexPath:indexPath];
+        
+    SFBook *book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [cell.textLabel setText:book.title];
+    [cell.detailTextLabel setText:book.author];
+    [cell.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    [cell.imageView setImage:[UIImage imageWithData:book.image]];    
+    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     
     return cell;
 }
 
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    $(@"reload table");
-    SFBook *book = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [cell.textLabel setText:book.title];
-    [cell.detailTextLabel setText:book.author];
-    [cell.imageView setImage:[UIImage imageWithData:book.image]];
-    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];        
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        
-        NSError *error = nil;
-        if (![context save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            $(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }   
-}
 
 #pragma mark - Table View Delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     _selectedPath = indexPath;
-    if (!tableView.editing) {
+    if (!self.isEditing) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         SFBook *book = [self.fetchedResultsController objectAtIndexPath:_selectedPath];
         [self.parentViewController performSegueWithIdentifier:@"showBook" sender:book];
@@ -139,6 +147,29 @@
         svc.staredButton.title = staredButtonTitle;
     }
 }
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
+        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        
+        NSError *error = nil;
+        if (![context save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            $(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+}
+
 
 /*
  // Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 

@@ -191,22 +191,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;//self.fetchedResultsController.sections.count;
+    return self.fetchedResultsController.sections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // 編集中は追加ボタンを出す
-//    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
-//    return [sectionInfo numberOfObjects];
-    switch (section) {
-        case 0:
-            return 2;
-        case 1:
-            return self.fetchedResultsController.fetchedObjects.count;
-        default:
-            break;
-    }
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -217,40 +209,14 @@
     
     TDBadgedCell *cell = nil;
     
-    switch (indexPath.section) {
-        case 0:
-            switch (indexPath.row) {
-                case 0:
-                    // 全て
-                    cell = [tableView dequeueReusableCellWithIdentifier:All];
-                    cell.textLabel.text = @"すべての本";
-                    return cell;
-                    break;
-                case 1:
-                    // お気に入り
-                    cell = [tableView dequeueReusableCellWithIdentifier:Favorite];
-                    cell.textLabel.text = @"お気に入り";
-                    return cell;
-                    break;
-                default:
-                    break;
-            }
-            break;
-        case 1: {
-            cell = [tableView dequeueReusableCellWithIdentifier:Shelves];
-            SFShelf *shelf = [self.fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row];
-            cell.textLabel.text = shelf.title;
-            cell.badgeString = [NSString stringWithFormat:@"%i",shelf.books.count];
-            cell.badgeColor = [UIColor darkGrayColor];
-//            cell.detailTextLabel.text = [NSString stringWithFormat:@"%i",[shelf.index integerValue]];
-//        bcell.badge.radius = 7.5f;
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            
-            return cell;
-        }
-        default:
-            break;
-    }
+    cell = [tableView dequeueReusableCellWithIdentifier:Shelves];
+    SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = shelf.title;
+    cell.badgeString = [NSString stringWithFormat:@"%i",shelf.books.count];
+    cell.badgeColor = [UIColor darkGrayColor];
+    //            cell.detailTextLabel.text = [NSString stringWithFormat:@"%i",[shelf.index integerValue]];
+    
+    return cell;
 }
 
 // Override to support conditional editing of the table view.
@@ -322,21 +288,24 @@
     _selectedPath = indexPath;
     if (!self.isEditing) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        [self performSegueWithIdentifier:@"showShelf" sender:self];
+        if ([self.delegate respondsToSelector:@selector(shelvesViewController:didSelectShelf:)]) {            
+            SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:indexPath];
+            [self.delegate shelvesViewController:self didSelectShelf:shelf];
+        }
     }
 }
 
 #pragma mark - Segue
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"showShelf"]) {
-        SFShelfViewController *svc = [segue destinationViewController];
-        svc.shelf = [self.fetchedResultsController objectAtIndexPath:_selectedPath];
-//        svc.fetchedresultsController = self.fetchedResultsController;
-//        self.fetchedResultsController.delegate = svc;
-    }
-}
+//
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+//{
+//    if ([[segue identifier] isEqualToString:@"showShelf"]) {
+//        SFShelfViewController *svc = [segue destinationViewController];
+//        svc.shelf = [self.fetchedResultsController objectAtIndexPath:_selectedPath];
+////        svc.fetchedresultsController = self.fetchedResultsController;
+////        self.fetchedResultsController.delegate = svc;
+//    }
+//}
 
 #pragma mark - Fetched Results Controller
 
@@ -402,10 +371,7 @@
         return _fetchedResultsController;
     }
     
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Shelf" inManagedObjectContext:[[SFCoreDataManager sharedManager] managedObjectContext]];
-    NSSortDescriptor *index = [[NSSortDescriptor alloc] initWithKey:@"index" ascending:YES];
-
-    _fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Shelf" sortDescriptors:@[index] sectionNameKeyPath:nil cacheName:@"Shelf" predicate:nil];
+    _fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedShelvesController];
     _fetchedResultsController.delegate = self;
     
     return _fetchedResultsController;

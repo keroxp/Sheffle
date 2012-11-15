@@ -38,18 +38,15 @@
 
 - (id)initWithViewContentViewController:(UIViewController *)controller
 {
-    self = [super initWithNibName:@"SFPopoverViewController" bundle:nil];
+    self = [super initWithNibName:@"SFPopoverViewController" bundle:[NSBundle mainBundle]];
     
     if (self) {
         [[NSBundle mainBundle] loadNibNamed:@"SFPopoverViewController" owner:self options:nil];
-        if ([controller isKindOfClass:[UINavigationController class]]) {
-            UINavigationController *nc = (UINavigationController*)controller;
-            [nc.navigationBar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"popoverbarbg.png"]]];
-            [nc.toolbar setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"popoverbarbg.png"]]];
-        }
         [self addChildViewController:controller];
         [controller didMoveToParentViewController:self];
-        _contentViewController = controller;
+        [controller.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"popoverbarbg.png"] forBarMetrics:UIBarMetricsDefault];
+        [controller.navigationController.toolbar setBackgroundImage:[UIImage imageNamed:@"popoverbarbg.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+        _contentViewController = controller;        
         
         [self.contentViewController.view setFrame:self.contentView.frame];
         UIImageView *top = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"popovertop.png"]];

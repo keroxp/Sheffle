@@ -15,7 +15,8 @@
 #define kTabBarHeight self.parentViewController.tabBarController.tabBar.frame.size.height
 
 @interface SFGridShelfViewController ()
-{    
+{
+    UIToolbar *_headerBar;
 }
 
 @end
@@ -91,7 +92,6 @@
     }
 }
 
-
 - (void)switchToNormalMode {
     $(@"Switch to normal mode");
     _editMode = NO;
@@ -119,7 +119,7 @@
 #pragma mark GSBookShelfViewDataSource
 
 - (NSInteger)numberOfBooksInBookShelfView:(GSBookShelfView *)bookShelfView {
-    return [self.bookArray count];
+    return [self.fetchedResultsController.fetchedObjects count];
 }
 
 - (NSInteger)numberOFBooksInCellOfBookShelfView:(GSBookShelfView *)bookShelfView {
@@ -135,6 +135,7 @@
 - (UIView *)bookShelfView:(GSBookShelfView *)bookShelfView bookViewAtIndex:(NSInteger)index {
     static NSString *identifier = @"bookView";
     SFShelfBookView *bookView = (SFShelfBookView*)[bookShelfView dequeueReuseableBookViewWithIdentifier:identifier];
+
     SFBook *book = [self.bookArray objectAtIndex:index];
     
     if (bookView == nil) {
@@ -143,7 +144,6 @@
         [bookView addTarget:self action:@selector(bookViewClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     [bookView setIndex:index];
-#warning 空配列への参照でエラーが出る
     [bookView setSelected:[(NSNumber *)[self.bookStatus objectAtIndex:index] intValue]];
     [bookView setBackgroundImage:[UIImage imageWithData:book.image] forState:UIControlStateNormal];
     return bookView;
@@ -181,20 +181,23 @@
     
 //    SFShelfRowView *srv = [[SFShelfRowView alloc] initWithFrame:CGRectMake(0, 0, 320, 120)];
 //    return srv;
+    if (!_headerBar) {
+        _headerBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        _headerBar.barStyle = UIBarStyleDefault;
+    }
     
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
     if (UIDeviceOrientationIsLandscape(orientation)) {
-//        [_searchBar setFrame:CGRectMake(0, 0, 480, 44)];
+        return nil;
     }
     else {
-//        [_searchBar setFrame:CGRectMake(0, 0, 320, 44)];
+        return nil;
     }
     
     return nil;
 }
 
 - (CGFloat)cellHeightOfBookShelfView:(GSBookShelfView *)bookShelfView {
-//    return 125.0f;
     return 120.0f;
 }
 
@@ -218,35 +221,35 @@
     return 0.0f;
 }
 
-- (void)bookShelfView:(GSBookShelfView *)bookShelfView moveBookFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
-    
-    if ([(NSNumber *)[self.bookStatus objectAtIndex:fromIndex] intValue] == BOOK_SELECTED) {
-        [_booksIndexsToBeRemoved removeIndex:fromIndex];
-        [_booksIndexsToBeRemoved addIndex:toIndex];
-    }
-    //TODO: 入れ替えの処理を入れるならここでCoreDataをいじる
-//    [_bookArray moveObjectFromIndex:fromIndex toIndex:toIndex];
-    [self.bookStatus moveObjectFromIndex:fromIndex toIndex:toIndex];
-    
-    // the bookview is recognized by index in the demo, so change all the indexes of affected bookViews here
-    // This is just a example, not a good one.In your code, you'd better use a key to recognize the bookView.
-    // and you won't need to do the following
-
-    SFShelfBookView *bookView = (SFShelfBookView *)[_bookShelfView bookViewAtIndex:toIndex];
-    [bookView setIndex:toIndex];
-    if (fromIndex <= toIndex) {
-        for (int i = fromIndex; i < toIndex; i++) {
-            bookView = (SFShelfBookView*)[_bookShelfView bookViewAtIndex:i];
-            [bookView setIndex:bookView.index - 1];
-        }
-    }
-    else {
-        for (int i = toIndex + 1; i <= fromIndex; i++) {
-            bookView = (SFShelfBookView*)[_bookShelfView bookViewAtIndex:i];
-            [bookView setIndex:bookView.index + 1];
-        }
-    }
-}
+//- (void)bookShelfView:(GSBookShelfView *)bookShelfView moveBookFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
+//    
+//    if ([(NSNumber *)[self.bookStatus objectAtIndex:fromIndex] intValue] == BOOK_SELECTED) {
+//        [_booksIndexsToBeRemoved removeIndex:fromIndex];
+//        [_booksIndexsToBeRemoved addIndex:toIndex];
+//    }
+//    //TODO: 入れ替えの処理を入れるならここでCoreDataをいじる
+////    [_bookArray moveObjectFromIndex:fromIndex toIndex:toIndex];
+//    [self.bookStatus moveObjectFromIndex:fromIndex toIndex:toIndex];
+//    
+//    // the bookview is recognized by index in the demo, so change all the indexes of affected bookViews here
+//    // This is just a example, not a good one.In your code, you'd better use a key to recognize the bookView.
+//    // and you won't need to do the following
+//
+//    SFShelfBookView *bookView = (SFShelfBookView *)[_bookShelfView bookViewAtIndex:toIndex];
+//    [bookView setIndex:toIndex];
+//    if (fromIndex <= toIndex) {
+//        for (int i = fromIndex; i < toIndex; i++) {
+//            bookView = (SFShelfBookView*)[_bookShelfView bookViewAtIndex:i];
+//            [bookView setIndex:bookView.index - 1];
+//        }
+//    }
+//    else {
+//        for (int i = toIndex + 1; i <= fromIndex; i++) {
+//            bookView = (SFShelfBookView*)[_bookShelfView bookViewAtIndex:i];
+//            [bookView setIndex:bookView.index + 1];
+//        }
+//    }
+//}
 
 #pragma mark - BarButtonListener
 
@@ -334,12 +337,5 @@
 
 #pragma mark - Setter / Getter
 
-//-(void)setBookArray:(NSMutableArray *)bookArray
-//{
-//    if (bookArray != _bookArray) {
-//        _bookArray = bookArray;
-//    }    
-////    [self.bookShelfView reloadData];
-//}
 
 @end
