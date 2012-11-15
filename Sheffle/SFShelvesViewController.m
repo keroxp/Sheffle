@@ -8,12 +8,16 @@
 
 #import "SFShelvesViewController.h"
 #import "SFShelfViewController.h"
+#import "SFAppDelegate.h"
+#import "SFPopoverViewController.h"
 
 @interface SFShelvesViewController ()
 {
     BOOL _isEdittingTitle;
     NSIndexPath *_selectedPath;
     UIAlertView *_alertView;
+    BOOL _hidden;
+    SFPopoverViewController *_popoverController;
 }
 
 - (void)cancelButtonDidTap:(id)sender;
@@ -35,6 +39,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _hidden = YES;
 
     // Uncomment the following line to preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = NO;
@@ -43,29 +49,39 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
+    addButton.style = UIBarButtonItemStyleBordered;
+    addButton.tintColor = kBarTintColor;
     
     self.title = @"Shelves";
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    self.navigationItem.rightBarButtonItem = addButton;
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    UIBarButtonItem *sp = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [self setToolbarItems:@[sp,addButton]];
     
     // Viewの初期化
-    
     self.searchDisplayController.delegate = self;
     self.searchDisplayController.searchResultsDataSource = self;
     
-    self.navigationController.navigationBar.opaque = NO;
-    self.navigationController.navigationBar.layer.opaque = NO;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showPop:)];
+}
+
+- (void)showPop:(UIBarButtonItem*)sender
+{
+    if (_popoverController == nil) {
+        SFShelvesViewController *sv = [self.storyboard instantiateViewControllerWithIdentifier:@"BooksView"];
+        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:sv];
+        SFPopoverViewController *pvc = [[SFPopoverViewController alloc] initWithViewContentViewController:nc];
+        _popoverController = pvc;
+    }
     
-    // PullToAdd
-    
-//    [self.tableView addPullToRefreshWithActionHandler:^(void) {
-//        [self addButtonDidTap:nil];
-//    }];
-    
-//    UIImageView *iv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navbarbg.png"]];
-//    iv.frame = CGRectMake(100, 200, iv.frame.size.width, iv.frame.size.height);
-//    [self.view addSubview:iv];
-    
+    if (_hidden) {
+        [_popoverController showInView:self.view animated:YES];
+        _hidden = NO;
+    }else{
+        [_popoverController dismisWithAnimated:YES];
+        _hidden = YES;
+    }
+
 }
 
 - (void)viewDidUnload
@@ -82,12 +98,6 @@
 }
 
 #pragma mark - Action Handlers
-
-- (void)cancelButtonDidTap:(id)sender
-{
-    $(@"cencel");
-    [self dismissModalViewControllerAnimated:YES];
-}
 
 - (void)addButtonDidTap:(id)sender
 {
@@ -181,39 +191,66 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.fetchedResultsController.sections.count;
+    return 2;//self.fetchedResultsController.sections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // 編集中は追加ボタンを出す
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+//    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
+//    return [sectionInfo numberOfObjects];
+    switch (section) {
+        case 0:
+            return 2;
+        case 1:
+            return self.fetchedResultsController.fetchedObjects.count;
+        default:
+            break;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"ShelvesCell_";
-    static NSString *BadgedCellIdentifier = @"BadgedCell";
-    static NSString *EditableCellIdentifier = @"EditableCell";
-
+    static NSString *All = @"AllCell";
+    static NSString *Shelves = @"ShelvesCell";
+    static NSString *Favorite = @"FavoriteCell";
     
-    //UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    TDBadgedCell *cell = [tableView dequeueReusableCellWithIdentifier:BadgedCellIdentifier];
-    if (!cell) {
-        cell = [[TDBadgedCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:BadgedCellIdentifier];
-        //cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    TDBadgedCell *cell = nil;
+    
+    switch (indexPath.section) {
+        case 0:
+            switch (indexPath.row) {
+                case 0:
+                    // 全て
+                    cell = [tableView dequeueReusableCellWithIdentifier:All];
+                    cell.textLabel.text = @"すべての本";
+                    return cell;
+                    break;
+                case 1:
+                    // お気に入り
+                    cell = [tableView dequeueReusableCellWithIdentifier:Favorite];
+                    cell.textLabel.text = @"お気に入り";
+                    return cell;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 1: {
+            cell = [tableView dequeueReusableCellWithIdentifier:Shelves];
+            SFShelf *shelf = [self.fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row];
+            cell.textLabel.text = shelf.title;
+            cell.badgeString = [NSString stringWithFormat:@"%i",shelf.books.count];
+            cell.badgeColor = [UIColor darkGrayColor];
+//            cell.detailTextLabel.text = [NSString stringWithFormat:@"%i",[shelf.index integerValue]];
+//        bcell.badge.radius = 7.5f;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            return cell;
+        }
+        default:
+            break;
     }
-    
-    SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = shelf.title;
-    cell.badgeString = [NSString stringWithFormat:@"%i",shelf.books.count];
-    cell.badgeColor = [UIColor darkGrayColor];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%i",[shelf.index integerValue]];
-    //        bcell.badge.radius = 7.5f;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
-    return cell;
 }
 
 // Override to support conditional editing of the table view.
@@ -272,9 +309,7 @@
 {
     // Return NO if you do not want the item to be re-orderable.
     if (indexPath.section == 0){
-        if (indexPath.row == 0 || indexPath.row == 1) {
             return NO;
-        }
     }
     return YES;
 }
@@ -366,25 +401,13 @@
     if (_fetchedResultsController) {
         return _fetchedResultsController;
     }
-    NSManagedObjectContext *context = [[SFCoreDataManager sharedManager] managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Shelf" inManagedObjectContext:context];
+    
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Shelf" inManagedObjectContext:[[SFCoreDataManager sharedManager] managedObjectContext]];
     NSSortDescriptor *index = [[NSSortDescriptor alloc] initWithKey:@"index" ascending:YES];
-    request.entity = entity;
-    request.sortDescriptors = @[index];
+
+    _fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Shelf" sortDescriptors:@[index] sectionNameKeyPath:nil cacheName:@"Shelf" predicate:nil];
+    _fetchedResultsController.delegate = self;
     
-    NSFetchedResultsController *frc = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:nil cacheName:@"Shelves"];
-    frc.delegate = self;
-    
-//    [NSFetchedResultsController deleteCacheWithName:@"Shelves"];
-    
-    _fetchedResultsController = frc;
-    
-    NSError *error = nil;
-    if (![_fetchedResultsController performFetch:&error]) {
-        $(@"unsolvable error : %@", [error userInfo]);
-        abort();
-    }
     return _fetchedResultsController;
 }
 

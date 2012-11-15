@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="MWI-Ws-kxl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C60" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="D1T-Th-Tae">
     <dependencies>
         <deployment version="1536" identifier="iOS"/>
         <development version="4500" identifier="xcode"/>
@@ -10,7 +10,7 @@
         <scene sceneID="7Bl-6e-sr5">
             <objects>
                 <tableViewController storyboardIdentifier="TableShlefView" id="aJQ-a7-IXK" customClass="SFTableShelfViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="8ta-hh-awW">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="66" sectionHeaderHeight="22" sectionFooterHeight="22" id="8ta-hh-awW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -23,12 +23,24 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="q1a-vV-7jO">
-                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TableShelfCell" textLabel="XpL-3b-HOY" detailTextLabel="JIZ-Md-f05" style="IBUITableViewCellStyleSubtitle" id="q1a-vV-7jO">
+                                <rect key="frame" x="0.0" y="66" width="320" height="66"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XpL-3b-HOY">
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Detail" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JIZ-Md-f05">
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </label>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </tableViewCell>
@@ -74,28 +86,47 @@
         <!--Shelves View Controller-->
         <scene sceneID="c3e-Ej-GbQ">
             <objects>
-                <tableViewController id="EqQ-gZ-jNy" customClass="SFShelvesViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ShelvesView" id="EqQ-gZ-jNy" customClass="SFShelvesViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="0z0-eE-Bhh">
                         <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="B9e-tI-dUU">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <textInputTraits key="textInputTraits"/>
-                            <connections>
-                                <outlet property="delegate" destination="EqQ-gZ-jNy" id="yoD-Gb-HsZ"/>
-                            </connections>
-                        </searchBar>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ShelvesCell" id="iPI-QJ-2Iw">
-                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AllCell" id="iPI-QJ-2Iw" customClass="TDBadgedCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <connections>
+                                    <segue destination="fXz-FU-MVf" kind="push" identifier="showAll" id="42J-3I-kL3"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FavoriteCell" id="GjX-NZ-Z4j" customClass="TDBadgedCell">
+                                <rect key="frame" x="0.0" y="66" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <connections>
+                                    <segue destination="fXz-FU-MVf" kind="push" identifier="showFavorite" id="cWs-s0-sWU"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ShelvesCell" id="Cid-b3-13z" customClass="TDBadgedCell">
+                                <rect key="frame" x="0.0" y="110" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <connections>
+                                    <segue destination="fXz-FU-MVf" kind="push" identifier="showShelf" id="FeJ-ap-LjC"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                     </tableView>
@@ -103,14 +134,12 @@
                     <navigationItem key="navigationItem" id="Jzr-Ef-uQJ"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="CH9-ER-CCn" id="wsl-nq-JMn"/>
-                        <segue destination="fXz-FU-MVf" kind="push" identifier="showShelf" id="RwX-vZ-NbZ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5t9-57-Eil" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <searchDisplayController id="CH9-ER-CCn">
                     <connections>
                         <outlet property="delegate" destination="EqQ-gZ-jNy" id="h7e-E8-y1M"/>
-                        <outlet property="searchBar" destination="B9e-tI-dUU" id="aq8-BT-Zfi"/>
                         <outlet property="searchContentsController" destination="EqQ-gZ-jNy" id="1po-rq-LWz"/>
                         <outlet property="searchResultsDataSource" destination="EqQ-gZ-jNy" id="n9i-xi-wne"/>
                         <outlet property="searchResultsDelegate" destination="EqQ-gZ-jNy" id="aNP-lq-QBV"/>
@@ -130,7 +159,6 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="D1T-Th-Tae" kind="relationship" relationship="viewControllers" id="V9K-Cs-SK4"/>
                         <segue destination="DkO-vd-NqL" kind="relationship" relationship="viewControllers" id="OoJ-u2-HvU"/>
                     </connections>
                 </tabBarController>
@@ -272,7 +300,7 @@
         <!--Shelf View Controller-->
         <scene sceneID="v9f-aO-wjr">
             <objects>
-                <viewController id="fXz-FU-MVf" customClass="SFShelfViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ShelfView" id="fXz-FU-MVf" customClass="SFShelfViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0Nw-J2-rDF">
                         <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -350,7 +378,7 @@
         <!--Books View Controller-->
         <scene sceneID="9uL-ex-lD8">
             <objects>
-                <tableViewController id="HHS-4Q-5j0" customClass="SFBooksViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="BooksView" id="HHS-4Q-5j0" customClass="SFBooksViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="66" sectionHeaderHeight="22" sectionFooterHeight="22" id="HSb-kx-beh">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -438,7 +466,7 @@
         <!--Navigation Controller - Books-->
         <scene sceneID="iS4-48-zZH">
             <objects>
-                <navigationController title="Books" definesPresentationContext="YES" id="DkO-vd-NqL" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="BooksNavigation" title="Books" definesPresentationContext="YES" id="DkO-vd-NqL" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Books" id="ITb-87-5Hi"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6Lh-VW-lKx">
                         <autoresizingMask key="autoresizingMask"/>
@@ -567,14 +595,54 @@
             <point key="canvasLocation" x="1378" y="-438"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="SFBookSearchViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFBookSearchViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancelButtonDidTap:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="doneButtonDidTap:"/>
+                <relationship kind="outlet" name="doneButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="SFBookViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFBookViewController.h"/>
+        </class>
+        <class className="SFBooksViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFBooksViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addButtonDidTap:"/>
+                <relationship kind="action" name="sortControlDidChange:" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="addButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="sortControl" candidateClass="UISegmentedControl"/>
+            </relationships>
+        </class>
+        <class className="SFGridShelfViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFGridShelfViewController.h"/>
+        </class>
+        <class className="SFShelfListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFShelfListViewController.h"/>
+        </class>
+        <class className="SFShelfViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFShelfViewController.h"/>
+        </class>
+        <class className="SFShelvesViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFShelvesViewController.h"/>
+        </class>
+        <class className="SFTableShelfViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SFTableShelfViewController.h"/>
+        </class>
+        <class className="TDBadgedCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TDBadgedCell.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="RwX-vZ-NbZ"/>
-        <segue reference="yeA-Ua-hvz"/>
+        <segue reference="cWs-s0-sWU"/>
         <segue reference="eOt-8q-vyY"/>
+        <segue reference="yeA-Ua-hvz"/>
     </inferredMetricsTieBreakers>
 </document>

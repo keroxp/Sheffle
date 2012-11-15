@@ -14,8 +14,25 @@
 <NSFetchedResultsControllerDelegate
 ,UITextFieldDelegate
 ,UISearchDisplayDelegate
-,UIAlertViewDelegate>
+,UIAlertViewDelegate
+,UIPopoverControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+
+@end
+
+
+@interface UIPopoverController (EnableOniPhone)
+
++ (BOOL)_popoversDisabled;
+
+@end
+
+@implementation UIPopoverController (EnableOniPhone)
+
++ (BOOL)_popoversDisabled;
+{
+    return NO;
+}
 
 @end
