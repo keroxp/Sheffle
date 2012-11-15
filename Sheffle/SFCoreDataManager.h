@@ -28,6 +28,12 @@
 - (BOOL)hasDataOfEntityName:(NSString*)entityName withIDKey:(NSString*)IDkey forIDValue:(NSString*)IDValue;
 - (NSArray*)shelves;
 - (NSURL*)applicationDocumentsDirectory;
+
+
+- (NSFetchedResultsController*)fetchedBooksController;
+- (NSFetchedResultsController*)fetchedShelvesController;
+- (NSFetchedResultsController*)fetchedFavoriteBooksController;
+
 - (NSFetchedResultsController*)fetchedResultsControllerWithEntityName:(NSString*)entityName
                                                       sortDescriptors:(NSArray*)sortDesctiptors
                                                    sectionNameKeyPath:(NSString*)sectionNameKeyPath

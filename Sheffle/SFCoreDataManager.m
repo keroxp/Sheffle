@@ -15,6 +15,10 @@ static SFCoreDataManager *_sharedInstance;
     NSManagedObjectModel *__managedObjectModel;
     NSPersistentStoreCoordinator *__persistentStoreCoordinator;
     NSFetchedResultsController *__fetchedResultsController;
+    
+    NSFetchedResultsController *_fetchedBooksController;
+    NSFetchedResultsController *_fetchedShelvesController;
+    NSFetchedResultsController *_fetchedFavoriteBooksController;
 }
 
 - (NSString*)insertNewIdentifier;
@@ -34,6 +38,34 @@ static SFCoreDataManager *_sharedInstance;
         _sharedInstance = [[SFCoreDataManager alloc] init];
     }
     return _sharedInstance;
+}
+
+- (NSFetchedResultsController *)fetchedBooksController
+{
+    if (!_fetchedBooksController) {
+        NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:@"titleKana" ascending:YES];
+        _fetchedBooksController = [self fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[title] sectionNameKeyPath:@"titleInitial" cacheName:@"BooksWithTitle" predicate:nil];
+    }
+    return _fetchedBooksController;
+}
+
+- (NSFetchedResultsController *)fetchedShelvesController
+{
+    if (!_fetchedShelvesController) {
+        NSSortDescriptor *index = [[NSSortDescriptor alloc] initWithKey:@"index" ascending:YES];
+        _fetchedShelvesController = [self fetchedResultsControllerWithEntityName:@"Shelf" sortDescriptors:@[index] sectionNameKeyPath:@"index" cacheName:@"Shelves" predicate:nil];
+    }
+    return _fetchedShelvesController;
+}
+
+- (NSFetchedResultsController *)fetchedFavoriteBooksController
+{
+    if (_fetchedFavoriteBooksController) {
+        NSSortDescriptor *updated = [[NSSortDescriptor alloc] initWithKey:@"updated" ascending:YES];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"favorite == '1'"];
+        _fetchedFavoriteBooksController = [self fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[updated] sectionNameKeyPath:@"title" cacheName:@"FavoriteBooks" predicate:predicate];
+    }
+    return _fetchedFavoriteBooksController;
 }
 
 #pragma mark - Insertion
