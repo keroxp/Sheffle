@@ -16,3 +16,6 @@
 [submodule "Modules/TSPopover"]
 	path = Modules/TSPopover
 	url = git@github.com:takashisite/TSPopover.git
+[submodule "Modules/CQMFloatingController"]
+	path = Modules/CQMFloatingController
+	url = git@github.com:cocopon/CQMFloatingController.git
