@@ -23,13 +23,11 @@
 
 - (void)awakeFromNib
 {
-    [self setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
-    SFAppDelegate *ad = [[UIApplication sharedApplication] delegate];
-    if (ad.iOSVersionMajor >= 5) {
-        [self setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forBarMetrics:UIBarMetricsDefault];
+    if (__IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_5_1) {
+        [self setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
     }
-    if (ad.iOSVersionMajor >= 6) {
-        [self setShadowImage:[UIImage imageNamed:@"toolbarshadow.png"]];        
+    if (__IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0) {
+        [self setShadowImage:[UIImage imageNamed:@"toolbarshadow.png"] forToolbarPosition:UIToolbarPositionBottom];
     }
 }
 

@@ -22,11 +22,10 @@
 
 - (void)awakeFromNib
 {
-    SFAppDelegate *ad = [[UIApplication sharedApplication] delegate];
-    if (ad.iOSVersionMajor >= 5) {
+    if (__IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_5_0) {
         [self setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forBarMetrics:UIBarMetricsDefault];
     }
-    if (ad.iOSVersionMajor >= 6) {
+    if (__IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0) {
         [self setShadowImage:[UIImage imageNamed:@"navbarshadow.png"]];
     }
 
