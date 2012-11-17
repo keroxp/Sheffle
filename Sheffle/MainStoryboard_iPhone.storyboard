@@ -110,7 +110,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ShelvesCell" id="Cid-b3-13z" customClass="TDBadgedCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="ShelfCell" id="Cid-b3-13z" customClass="TDBadgedCell">
                                 <rect key="frame" x="0.0" y="110" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -229,16 +229,25 @@
         <scene sceneID="v9f-aO-wjr">
             <objects>
                 <viewController storyboardIdentifier="ShelfView" id="fXz-FU-MVf" customClass="SFShelfViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="0Nw-J2-rDF">
+                    <view key="view" contentMode="scaleToFill" id="aaZ-Kz-Z3o">
                         <rect key="frame" x="0.0" y="64" width="320" height="460"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem systemItem="add" id="OGc-YA-RAB"/>
-                        <barButtonItem title="Item" id="xYD-ON-2NC"/>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" id="cDV-lN-8bz"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="cDV-lN-8bz">
+                        <nil key="title"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="xeZ-hX-rAt">
+                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="phC-k5-x6a">
+                                <rect key="frame" x="244" y="7" width="71" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title=""/>
+                                    <segment title=""/>
+                                </segments>
+                            </segmentedControl>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="FUa-M4-BAn" id="EQD-Tp-hn8"/>
@@ -308,15 +317,14 @@
         <scene sceneID="110-hI-bPT">
             <objects>
                 <navigationController title="Shelves" toolbarHidden="NO" id="D1T-Th-Tae" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Shelves" id="W0b-l0-L6s"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PSH-tm-mNw">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PSH-tm-mNw" customClass="SFNavigationBar">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="LVq-ec-Wlh">
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="LVq-ec-Wlh" customClass="SFToolbar">
                         <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>

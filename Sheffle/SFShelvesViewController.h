@@ -26,6 +26,7 @@
 
 @protocol SFShelvesViewDelegate <NSObject>
 
+- (void)shelvesViewController:(SFShelvesViewController*)controller didSelectRowAtIndexPath:(NSIndexPath*)indexPath;
 - (void)shelvesViewController:(SFShelvesViewController*)controller didSelectShelf:(SFShelf*)shelf;
 
 @end

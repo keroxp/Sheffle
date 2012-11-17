@@ -16,8 +16,6 @@
     BOOL _isEdittingTitle;
     NSIndexPath *_selectedPath;
     UIAlertView *_alertView;
-    BOOL _hidden;
-    SFPopoverViewController *_popoverController;
 }
 
 - (void)cancelButtonDidTap:(id)sender;
@@ -40,48 +38,17 @@
 {
     [super viewDidLoad];
     
-    _hidden = YES;
-
     // Uncomment the following line to preserve selection between presentations.
     self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+//    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
-    addButton.style = UIBarButtonItemStyleBordered;
-    addButton.tintColor = kBarTintColor;
     
-    self.title = @"Shelves";
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    UIBarButtonItem *sp = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [self setToolbarItems:@[sp,addButton]];
-    
-    // Viewの初期化
-    self.searchDisplayController.delegate = self;
-    self.searchDisplayController.searchResultsDataSource = self;
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showPop:)];
-}
-
-- (void)showPop:(UIBarButtonItem*)sender
-{
-    if (_popoverController == nil) {
-        SFShelvesViewController *sv = [self.storyboard instantiateViewControllerWithIdentifier:@"BooksView"];
-        UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:sv];
-        SFPopoverViewController *pvc = [[SFPopoverViewController alloc] initWithViewContentViewController:nc];
-        _popoverController = pvc;
-    }
-    
-    if (_hidden) {
-        [_popoverController showInView:self.view animated:YES];
-        _hidden = NO;
-    }else{
-        [_popoverController dismisWithAnimated:YES];
-        _hidden = YES;
-    }
-
+    self.navigationItem.rightBarButtonItem = addButton;
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidUnload
@@ -140,7 +107,7 @@
         }
     }else if (alertView.tag == 200){
         NSManagedObjectContext *moc = [[SFCoreDataManager sharedManager] managedObjectContext];
-        SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:_selectedPath];
+        SFShelf *shelf = [self.fetchedResultsController.fetchedObjects objectAtIndex:_selectedPath.row];
         switch (buttonIndex) {
             case 0: {
                 [self setEditing:NO animated:YES];
@@ -148,8 +115,8 @@
             }
             case 1: {
                 //本棚のみ
-                SFShelf *defaultShelf = [self.fetchedResultsController.fetchedObjects objectAtIndex:kDefaultShelfIndex];
-                [defaultShelf addBooks:shelf.books];
+//                SFShelf *defaultShelf = [self.fetchedResultsController.fetchedObjects objectAtIndex:kDefaultShelfIndex];
+//                [defaultShelf addBooks:shelf.books];
                 [moc deleteObject:shelf];
                 [[SFCoreDataManager sharedManager] saveContext];
                 [self setEditing:NO animated:YES];
@@ -161,7 +128,6 @@
                 NSString *m = [NSString stringWithFormat:@"本当に\"%@\"とその本を削除しますか？",shelf.title];
                 UIAlertView *av = [[UIAlertView alloc] initWithTitle:t message:m delegate:self cancelButtonTitle:@"やめる" otherButtonTitles:@"削除", nil];
                 av.tag = 300;
-//                  [alertView dismissWithClickedButtonIndex:alertView.cancelButtonIndex animated:NO];
                 [av show];
                 break;
             }
@@ -170,7 +136,7 @@
         }
     }else if (alertView.tag == 300){
         NSManagedObjectContext *moc = [[SFCoreDataManager sharedManager] managedObjectContext];
-        SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:_selectedPath];
+        SFShelf *shelf = [self.fetchedResultsController.fetchedObjects objectAtIndex:_selectedPath.row];
         switch (buttonIndex) {
             case 1: {
                 for (SFBook*book in shelf.books) {
@@ -191,31 +157,61 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.fetchedResultsController.sections.count;
+    return 2;//self.fetchedResultsController.sections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // 編集中は追加ボタンを出す
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController.sections objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    switch (section) {
+        case 0:
+            return 2;
+            break;
+        case 1:
+            return self.fetchedResultsController.fetchedObjects.count;
+            break;
+        default:
+            break;
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *All = @"AllCell";
-    static NSString *Shelves = @"ShelvesCell";
-    static NSString *Favorite = @"FavoriteCell";
+    static NSString *Shelves = @"ShelfCell";
     
-    TDBadgedCell *cell = nil;
+    TDBadgedCell *cell = [tableView dequeueReusableCellWithIdentifier:Shelves];
     
-    cell = [tableView dequeueReusableCellWithIdentifier:Shelves];
-    SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = shelf.title;
-    cell.badgeString = [NSString stringWithFormat:@"%i",shelf.books.count];
+    switch (indexPath.section) {
+        case 0:
+            switch (indexPath.row) {
+                case 0: {
+                    cell.textLabel.text = @"すべての本";
+                    int nob = [[[[SFCoreDataManager sharedManager] fetchedBooksController] fetchedObjects] count];
+                    cell.badgeString = [NSString stringWithFormat:@"%i", nob];
+                    break;
+                }
+                case 1: {
+                    int nof = [[[[SFCoreDataManager sharedManager] fetchedFavoriteBooksController] fetchedObjects] count];
+                    cell.textLabel.text = @"お気に入り";
+                    cell.badgeString = [NSString stringWithFormat:@"%i", nof];
+                    break;
+                }
+                default:
+                    break;
+            }
+            break;
+        case 1: {
+            SFShelf *shelf = [self.fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row];
+            cell.textLabel.text = shelf.title;
+            cell.badgeString = [NSString stringWithFormat:@"%i",shelf.books.count];
+            break;
+        }
+        default:
+            break;
+    }
+    
     cell.badgeColor = [UIColor darkGrayColor];
-    //            cell.detailTextLabel.text = [NSString stringWithFormat:@"%i",[shelf.index integerValue]];
-    
     return cell;
 }
 
@@ -224,9 +220,7 @@
 {
     // Return NO if you do not want the specified item to be editable.
     if (indexPath.section == 0){
-        if(indexPath.row == 0 || indexPath.row == 1){
-                return NO;
-        }
+        return NO;
     }
     return YES;
 }
@@ -237,7 +231,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         _selectedPath = indexPath;
-        SFShelf *s = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        SFShelf *s = [self.fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row];
         NSString *title = [NSString stringWithFormat:@"\"%@\"を削除",s.title];
         UIAlertView *av = [[UIAlertView alloc] initWithTitle:title
                                                      message:@"削除の方法を選んでください"
@@ -254,7 +248,7 @@
 {
     //並べ替え
     NSMutableArray *newOrder = [self.fetchedResultsController.fetchedObjects mutableCopy];
-    SFShelf *move = [self.fetchedResultsController objectAtIndexPath:fromIndexPath];
+    SFShelf *move = [self.fetchedResultsController.fetchedObjects objectAtIndex:fromIndexPath.row];
     [newOrder removeObjectAtIndex:fromIndexPath.row];
     [newOrder insertObject:move atIndex:toIndexPath.row];
 
@@ -274,7 +268,7 @@
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Return NO if you do not want the item to be re-orderable.
-    if (indexPath.section == 0){
+    if (indexPath.section == 0 && (indexPath.row == 0 || indexPath.row == 2)){
             return NO;
     }
     return YES;
@@ -288,9 +282,12 @@
     _selectedPath = indexPath;
     if (!self.isEditing) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        if ([self.delegate respondsToSelector:@selector(shelvesViewController:didSelectShelf:)]) {            
-            SFShelf *shelf = [self.fetchedResultsController objectAtIndexPath:indexPath];
-            [self.delegate shelvesViewController:self didSelectShelf:shelf];
+//        if ([self.delegate respondsToSelector:@selector(shelvesViewController:didSelectShelf:)]) {            
+//            SFShelf *shelf = [self.fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row];
+//            [self.delegate shelvesViewController:self didSelectShelf:shelf];
+//        }
+        if ([self.delegate respondsToSelector:@selector(shelvesViewController:didSelectRowAtIndexPath:)]) {
+            [self.delegate shelvesViewController:self didSelectRowAtIndexPath:indexPath];
         }
     }
 }
@@ -314,10 +311,12 @@
     [self.tableView beginUpdates];
 }
 
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)aIndexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)aNewIndexPath
 {
-//    $(@"did change content");
+    $(@"did change content");
     UITableView *tableView = self.tableView;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:aIndexPath.row inSection:1];
+    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:aNewIndexPath.row inSection:1];
     
     switch(type) {
         case NSFetchedResultsChangeInsert:
@@ -345,8 +344,7 @@
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-            
+            break;            
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;

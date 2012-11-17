@@ -8,6 +8,8 @@
 
 #import "SFAppDelegate.h"
 #import "SFCoreDataManager.h"
+#import "SFNavigationBar.h"
+#import "SFToolbar.h"
 
 
 @implementation SFAppDelegate
@@ -18,31 +20,10 @@
 {
     // Override point for customization after application launch.
     
-    [[UISegmentedControl appearance] setTintColor:kBarTintColor];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTintColor:kBarTintColor];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setShadowImage:[UIImage imageNamed:@"navbarshadow.png"]];
-    
-    [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"barbg.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
-    [[UIToolbar appearance] setShadowImage:[UIImage imageNamed:@"toolbarshadow.png"] forToolbarPosition:UIToolbarPositionBottom];
-    
-    // 未登録の本棚
-    if (![[SFCoreDataManager sharedManager] hasDataOfEntityName:@"Shelf" withIDKey:@"identifier" forIDValue:kDefaultShelfIdentifier]){        
-        SFShelf *shelf = [[SFCoreDataManager sharedManager] insertNewShelf];
-        [shelf setIdentifier:kDefaultShelfIdentifier];        
-        [shelf setTitle:@"未登録の本棚"];
-        [shelf setIndex:@(kDefaultShelfIndex)];
-        [[SFCoreDataManager sharedManager] saveContext];
-    }
-    
-    // お気に入りの本棚
-    if (![[SFCoreDataManager sharedManager] hasDataOfEntityName:@"Shelf" withIDKey:@"identifier" forIDValue:kFavoriteShelfIdentifier]){
-        SFShelf *shelf = [[SFCoreDataManager sharedManager] insertNewShelf];
-        [shelf setIdentifier:kFavoriteShelfIdentifier];
-        [shelf setTitle:@"お気に入り"];
-        [shelf setIndex:@(kFavoriteShelfIndex)];
-        [[SFCoreDataManager sharedManager] saveContext];
-    }
+    [[UISegmentedControl appearanceWhenContainedIn:[SFNavigationBar class], nil ] setTintColor:kBarTintColor];
+    [[UISegmentedControl appearanceWhenContainedIn:[SFToolbar class], nil] setTintColor:kBarTintColor];
+    [[UIBarButtonItem appearanceWhenContainedIn:[SFToolbar class], nil] setTintColor:kBarTintColor];
+    [[UIBarButtonItem appearanceWhenContainedIn:[SFNavigationBar class], nil] setTintColor:kBarTintColor];
     
     // キャッシュを削除
     [NSFetchedResultsController deleteCacheWithName:@"BooksWithTitle"];
@@ -53,6 +34,14 @@
     [[SFCoreDataManager sharedManager] fetchedShelvesController];
     [[SFCoreDataManager sharedManager] fetchedBooksController];
     [[SFCoreDataManager sharedManager] fetchedFavoriteBooksController];
+    
+    // OS Verion
+    NSArray *versionArray = [ [ [ UIDevice currentDevice]systemVersion]componentsSeparatedByString:@"."];
+    int majorVersion = [ [ versionArray objectAtIndex:0]intValue];
+    int minorVersion = [ [ versionArray objectAtIndex:1]intValue];
+    $(@"VERSION %d.%d",majorVersion,minorVersion);
+    _iOSVersionMajor = majorVersion;
+    _iOSVersionMinor = minorVersion;
     
     return YES;
 }

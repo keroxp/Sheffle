@@ -53,7 +53,7 @@ static SFCoreDataManager *_sharedInstance;
 {
     if (!_fetchedShelvesController) {
         NSSortDescriptor *index = [[NSSortDescriptor alloc] initWithKey:@"index" ascending:YES];
-        _fetchedShelvesController = [self fetchedResultsControllerWithEntityName:@"Shelf" sortDescriptors:@[index] sectionNameKeyPath:@"index" cacheName:@"Shelves" predicate:nil];
+        _fetchedShelvesController = [self fetchedResultsControllerWithEntityName:@"Shelf" sortDescriptors:@[index] sectionNameKeyPath:nil cacheName:@"Shelves" predicate:nil];
     }
     return _fetchedShelvesController;
 }

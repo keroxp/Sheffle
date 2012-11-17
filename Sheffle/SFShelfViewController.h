@@ -11,7 +11,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import <SBJson/SBJson.h>
 
-#import "R9HTTPRequest.h"
 #import "ZBarSDK.h"
 #import "SVProgressHUD.h"
 #import "SVPullToRefresh.h"

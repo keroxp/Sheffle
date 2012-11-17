@@ -7,11 +7,8 @@
 //
 
 #import "SFBookSearchViewController.h"
-#import "R9HTTPRequest.h"
 #import "SFAPIConnection.h"
 #import "SFCoreDataManager.h"
-#import "SFRakutenBook.h"
-#import "KXPPickerViewController.h"
 
 @interface SFBookSearchViewController ()
 {

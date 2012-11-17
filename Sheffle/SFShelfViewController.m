@@ -9,7 +9,9 @@
 #import "SFShelfViewController.h"
 #import "SFAppDelegate.h"
 #import "UIViewController+AddBook.h"
+#import "SFAPIConnection.h"
 #import "SFPopoverViewController.h"
+#import "CQMFloatingController.h"
 
 #define kDefaultShelfViewFrame CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
 #define kDefaultReaderViewFrame CGRectMake(0, 0, self.view.frame.size.width, 0)
@@ -27,11 +29,11 @@
     UISegmentedControl *_sortControl;
     UIBarButtonItem *_sortControlItem;
     SFShelf *_currentShelf;
+    SFAPIConnection *_currentConnection;
     ZBarReaderView *_readerView;
     NSString *_previousBarcode;
     NSInteger _currentSortIndex;
     SFPopoverViewController *_popoverController;
-    BOOL _popoverIsVisible;
 }
 
 @property (strong,nonatomic) NSArray *rightBarItems;
@@ -50,6 +52,7 @@
 - (void)staredButtonDidTap:(id)sender;
 // Private Methods
 - (void)insertNewObject:(NSDictionary*)book image:(UIImage*)image;
+- (void)insertNewBook:(SFRakutenBook*)book;
 - (NSSet*)booksToBeHandled;
 - (UIImage*)resizeImage:(UIImage*)image;
 // Method for DEBUG
@@ -59,21 +62,26 @@
 
 @implementation SFShelfViewController
 
-@synthesize shelfViewMode = _shelfViewMode, fetchedResultsController = _fetchedResultsController;
+@synthesize shelfViewMode = _shelfViewMode, fetchedResultsController = _fetchedResultsController, shelf = _shelf;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+        
     // ボタンを初期化
     [self initButtons];
     
     // NavigationBarを初期化
-    self.navigationItem.titleView = _displayControl;
-    self.navigationItem.leftBarButtonItem = _shelvesButton;
+    self.title = @"すべての本";
+//    UIButton *shelves = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    shelves.frame = CGRectMake(0, 0, 100, 30);
+//    [shelves setTitleColor:kBarTintColor forState:UIControlStateNormal];
+//    [shelves setTitle:@"すべての本" forState:UIControlStateNormal];
+    
+    self.navigationItem.leftBarButtonItem = _editButton;
     self.navigationItem.rightBarButtonItems = self.rightBarItems;
 
-    // Toolbarを初期化    
+    // Toolbarを初期化
     self.toolbarItems = self.normalToolbarItems;
     
     // Viewの初期化
@@ -153,13 +161,13 @@
     [super setEditing:editing];
     if (!editing) {
         // done
-        [self.navigationItem setRightBarButtonItems:[self rightBarItems] animated:YES];
+        [self.navigationItem setLeftBarButtonItem:_editButton animated:YES];
         [self setToolbarItems:[self normalToolbarItems] animated:YES];
         [self.tableShelfViewController setEditing:editing animated:YES];
         [self.gridShelfViewController switchToNormalMode];
     }else{
         // edit
-        [self.navigationItem setRightBarButtonItem:_donebutton animated:YES];
+        [self.navigationItem setLeftBarButtonItem:_donebutton animated:YES];
         [self setToolbarItems:[self editToolbarItems] animated:YES];
         [self.tableShelfViewController setEditing:editing animated:YES];
         [self.gridShelfViewController switchToEditMode];
@@ -185,6 +193,26 @@
         [d startDownload];
         [self.shelf addBooks:[NSSet setWithObject:newBook]];        
     }    
+    [[SFCoreDataManager sharedManager] saveContext];
+}
+
+- (void)insertNewBook:(SFRakutenBook *)book
+{
+    SFBook *newBook = [[SFCoreDataManager sharedManager] insertNewBook];
+    
+    if ([newBook identifier]) {
+        // 楽天の情報をセット
+        [newBook setDataWithRakutenBook:book];
+        KXPDownload *d = [[KXPDownload alloc] initWithContentsOfURL:[NSURL URLWithString:newBook.largeImageUrl] withOptions:nil];
+        d.completionHandler = ^(NSData*d,id opts){
+            if (d) {
+                [newBook setImage:d];
+                [[SFCoreDataManager sharedManager] saveContext];
+            }
+        };
+        [d startDownload];
+        [self.shelf addBooks:[NSSet setWithObject:newBook]];
+    }
     [[SFCoreDataManager sharedManager] saveContext];
 }
 
@@ -215,31 +243,6 @@
         }
         bvc.book = book;
     }
-//    else if ([segue.identifier isEqualToString:segueIDForList]) {
-//        SFShelfListViewController *slvc = (SFShelfListViewController*)segue.destinationViewController;
-//        slvc.shelves = [[SFCoreDataManager sharedManager] shelves];
-//        slvc.currentShelf = self.shelf;
-//        NSSet *booksToBeMoved;
-//        switch (self.shelfViewMode) {
-//            case SFShelfViewModeGrid: {
-//                NSIndexSet *is = self.gridShelfViewController.booksIndexsToBeRemoved;
-//                booksToBeMoved = [NSSet setWithArray:[self.fetchedResultsController.fetchedObjects objectsAtIndexes:is]];
-//
-//            }
-//                break;
-//            case SFShelfViewModeTable:{
-//                NSArray *ips = [self.tableShelfViewController.tableView indexPathsForSelectedRows];
-//                NSMutableArray *ma = [NSMutableArray arrayWithCapacity:ips.count];
-//                for (int i = 0; i < ips.count; i++) {
-//                    [ma addObject:[self.fetchedResultsController.fetchedObjects objectAtIndex:[ips objectAtIndex:i]]];
-//                }
-//            }
-//                break;
-//            default:
-//                break;
-//        }
-//        slvc.booksToBeMoved = booksToBeMoved;
-//    }
 }
 
 
@@ -253,108 +256,72 @@
     for(ZBarSymbol *symbol in symbols) {
         
         NSString *resultText = [symbol data];
+        NSDictionary *params = @{@"isbn" : resultText};
         
-        // 同じ商品を連続で認識しても登録しない
-        if ([resultText isEqualToString:_previousBarcode]) {
-            [SVProgressHUD showErrorWithStatus:@"Same Product" duration:1.5f];
-            return;
-        }
-        
-        // 楽天ブックス総合検索APIのURL
-        
-        NSMutableString *apiURIString = [NSMutableString stringWithString:@"http://api.rakuten.co.jp/rws/3.0/json?"];
-        [apiURIString appendFormat:@"developerId=%@&",kRakutenAPPID];
-        //　2012/07/30 総合検索から書籍検索へ切り替えた
-        [apiURIString appendString:@"operation=BooksBookSearch&"];
-        [apiURIString appendString:@"version=2011-12-01&"];
-        [apiURIString appendFormat:@"isbn=%@",resultText];
-        
-        // HTTPRequestを構築
-        R9HTTPRequest *req = [[R9HTTPRequest alloc] initWithURL:[NSURL URLWithString:[apiURIString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-        
-        // ぐるぐるを表示
-        [SVProgressHUD showWithStatus:@"Loading"];
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        [[self view] setUserInteractionEnabled:NO];
-        for (UIBarButtonItem*b in self.navigationItem.rightBarButtonItems) {
-            [b setEnabled:NO];
-        }
-        
-        // 成功時および失敗時のハンドラをセット
-        [req setCompletionHandler:^(NSHTTPURLResponse *responseHeader, NSString *responseString){
-            //        $(@"Reponse is : %@",responseHeader);
-            //        $(@"body is %@",responseString);
-            NSDictionary *JSON = [responseString JSONValue];
+        SFAPIConnection *c = [SFAPIConnection connectionWithRequestType:SFAPIRequestTypeBooksBookSearch patameters:params];
+        [c setCompletionHandler:^(NSHTTPURLResponse *r, NSDictionary *JSON){
+            $(@"Reponse is : %i",r.statusCode);
+            //            $(@"%@",JSON);
             if ([JSON objectForKey:@"Body"] != nil && [JSON objectForKey:@"Body"] != [NSNull null]) {
                 // 成功時
-                JSON = [[[[[JSON objectForKey:@"Body"] objectForKey:@"BooksBookSearch"] objectForKey:@"Items"] objectForKey:@"Item"] objectAtIndex:0];
-                NSString *productURL = [JSON objectForKey:@"largeImageUrl"];
-                NSError *error = nil;
-                NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:productURL] options:NSDataReadingUncached error: &error];
-                UIImage *cover = [UIImage imageWithData:data];
-                if (error) {
-                    $(@"Error : %@", error);
-                }
-                [self insertNewObject:JSON image:cover];
-                [SVProgressHUD dismissWithSuccess:[JSON objectForKey:@"title"] afterDelay:1.5f];
+                SFRakutenBook *book = [[SFRakutenBook alloc] initWithJSON:[[[[[JSON objectForKey:@"Body"] objectForKey:@"BooksBookSearch"] objectForKey:@"Items"] objectForKey:@"Item"] objectAtIndex:0]];
+                _currentConnection = nil;
+                [self insertNewBook:book];
+                [SVProgressHUD showSuccessWithStatus:book.title];
+                [_readerView start];
             }else{
                 // 失敗時
                 $(@"data might not be found");
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-                [SVProgressHUD dismissWithError:@"Product not found" afterDelay:2.0f];
+                [SVProgressHUD showErrorWithStatus:@"Proudct not found"];
+                _currentConnection = nil;
+                [_readerView start];
             }
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            [[self view] setUserInteractionEnabled:YES];
-            for (UIBarButtonItem*b in self.navigationItem.rightBarButtonItems) {
-                [b setEnabled:YES];
-            }
-            [_readerView start];
         }];
-        [req setFailedHandler:^(NSError *error){
-            [SVProgressHUD dismissWithError:@"Error happed" afterDelay:2.0f];
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            $(@"error happend : %@",error);
-            [_readerView start];
-        }];
-        
-        // リクエストをスタート
-        [req startRequest];
-        
-        // 登録
-        _previousBarcode = resultText;
+        [c startAPIConnection];
+        _currentConnection = c;
+
     }
 }
 
 #pragma mark - Shelves View Delegate
 
-- (void)shelvesViewController:(SFShelvesViewController *)controller didSelectShelf:(SFShelf *)shelf
+- (void)shelvesViewController:(SFShelvesViewController *)controller didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (shelf) {
-        self.shelf = shelf;
-        NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:@"titleKana" ascending:YES];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shelf == %@",self.shelf];        
-        self.fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[title] sectionNameKeyPath:@"titleInitial" cacheName:[NSString stringWithFormat:@"BooksOf%@",shelf.title] predicate:predicate];
-        [_popoverController dismisWithAnimated:YES];
-        _popoverIsVisible = NO;
+    switch (indexPath.section) {
+        case 0:
+            switch (indexPath.row) {
+                case 0:
+                    [self setTitle:@"すべての本"];
+                    [self setFetchedResultsController:[[SFCoreDataManager sharedManager] fetchedBooksController]];
+                    break;
+                case 1:
+                    [self setTitle:@"お気に入りの本"];
+                    [self setFetchedResultsController:[[SFCoreDataManager sharedManager] fetchedFavoriteBooksController]];
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case 1: {
+            SFShelf *shelf = [self.shelvesViewController.fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row];
+            [self setShelf:shelf];
+        }
+        default:
+            break;
     }
+    [[CQMFloatingController sharedFloatingController] dismissAnimated:YES];
 }
 
 #pragma mark - Action Handlers
 
 - (void)shelvesButtonDidTap:(id)sender
 {
-    if (_popoverIsVisible) {
-        [_popoverController dismisWithAnimated:YES];
-        _popoverIsVisible = NO;
-    }else{
-        if (!_popoverController) {
-            SFShelvesViewController *sv = [self.storyboard instantiateViewControllerWithIdentifier:@"ShelvesView"];
-            sv.delegate = self;
-            _popoverController = [[SFPopoverViewController alloc] initWithViewContentViewController:sv];
-        }
-        [_popoverController showInView:self.view animated:YES];
-        _popoverIsVisible = YES;
+    if (!self.shelvesViewController) {
+        self.shelvesViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ShelvesView"];
     }
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    UIView *rootView = [window.rootViewController view];
+    [[CQMFloatingController sharedFloatingController] showInView:rootView withContentViewController:self.shelvesViewController animated:YES];
 }
 
 - (void)editButtonDidTap:(id)sender
@@ -572,12 +539,9 @@
     
     // 編集
     _editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonDidTap:)];
-    _editButton.tintColor = kBarTintColor;
     
     // 追加
     _addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addButtonDidTap:)];
-    _addButton.style = UIBarButtonItemStyleBordered;
-    _addButton.tintColor = kBarTintColor;
     
     // 完了
     _donebutton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonDidTap:)];
@@ -588,13 +552,11 @@
     
     // 移動
     _moveButton = [[UIBarButtonItem alloc] initWithTitle:@"Move" style:UIBarButtonItemStyleBordered target:self action:@selector(moveButtonDidTap:)];
-    _moveButton.tintColor = kBarTintColor;
     
     // ふぁぼ
     _staredButton = [[UIBarButtonItem alloc] initWithTitle:@"Favorite" style:UIBarButtonItemStyleBordered target:self action:@selector(staredButtonDidTap:)];
-    _staredButton.tintColor = kBarTintColor;
     
-    CGFloat w = 96;
+    CGFloat w = 90;
     
     _trashButton.width = _moveButton.width = _staredButton.width = w;
     
@@ -604,8 +566,9 @@
     _displayControl.selectedSegmentIndex = 0;
     _displayControl.segmentedControlStyle = UISegmentedControlStyleBar;
     CGRect f = _displayControl.frame;
-    f.size.width = 150;
     _displayControl.frame = f;
+    [_displayControl setImage:[UIImage imageNamed:@"gridbutton.png"] forSegmentAtIndex:0];
+    [_displayControl setImage:[UIImage imageNamed:@"tablebutton.png"] forSegmentAtIndex:1];
     [_displayControl addTarget:self action:@selector(displayControlDidChange:) forControlEvents:UIControlEventValueChanged];
     _displayControlItem = [[UIBarButtonItem alloc] initWithCustomView:_displayControl];
     
@@ -615,14 +578,14 @@
     _sortControl.segmentedControlStyle = UISegmentedControlStyleBar;
     [_sortControl addTarget:self action:@selector(sortControlDidChange:) forControlEvents:UIControlEventValueChanged];
     _sortControlItem = [[UIBarButtonItem alloc] initWithCustomView:_sortControl];
-    _sortControlItem.width = 265;
+    _sortControlItem.width = 198.0f;
 }
 
 - (NSArray *)rightBarItems
 {
     if (!_rightBarItems) {
-//        _rightBarItems = @[_addButton,_editButton];
-        _rightBarItems = @[_editButton];
+//        _rightBarItems = @[_editButton];
+        _rightBarItems = @[_addButton];
     }
     return _rightBarItems;
 }
@@ -630,8 +593,8 @@
 - (NSArray *)editToolbarItems
 {
     if (!_editToolbarItems) {
-        UIBarButtonItem *sp1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        _editToolbarItems = @[_trashButton,sp1, _moveButton,sp1, _staredButton];
+        UIBarButtonItem *sp = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        _editToolbarItems = @[_trashButton,sp,_moveButton,sp,_staredButton];
     }
     return _editToolbarItems;
 }
@@ -640,12 +603,14 @@
 {
     if (!_normalToolbarItems) {
         UIBarButtonItem *spacor = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        _normalToolbarItems = @[_sortControlItem,spacor,_addButton];
+//        _normalToolbarItems = @[self.editButtonItem,spacor,_sortControlItem,spacor,_addButton];
+        _normalToolbarItems = @[_sortControlItem,spacor,_displayControlItem];
     }
     return _normalToolbarItems;
 }
 
-#pragma mark - Fetched Results Controller Delegate
+
+#pragma mark - Setter / Getter
 
 - (void)setFetchedResultsController:(NSFetchedResultsController *)fetchedResultsController
 {
@@ -664,11 +629,29 @@
     if (_fetchedResultsController) {
         return _fetchedResultsController;
     }
-        
+    
     _fetchedResultsController = [[SFCoreDataManager sharedManager] fetchedBooksController];
     _fetchedResultsController.delegate = self;
     return _fetchedResultsController;
 }
+
+- (void)setShelf:(SFShelf *)shelf
+{
+    if (_shelf != shelf) {
+        _shelf  = shelf;
+        [self setTitle:shelf.title];
+        NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:@"titleKana" ascending:YES];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shelf == %@",self.shelf];
+        [self setFetchedResultsController:[[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[title] sectionNameKeyPath:@"titleInitial" cacheName:[NSString stringWithFormat:@"BooksIn%@",shelf.title] predicate:predicate]];
+    }
+}
+
+- (SFShelf *)shelf
+{
+    return _shelf;
+}
+
+#pragma mark - Fetched Results Controller Delegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {

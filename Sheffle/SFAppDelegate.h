@@ -15,5 +15,7 @@
 @interface SFAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, readonly) NSInteger iOSVersionMajor;
+@property (nonatomic, readonly) NSInteger iOSVersionMinor;
 
 @end

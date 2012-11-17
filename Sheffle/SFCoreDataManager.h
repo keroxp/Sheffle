@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+#import "SFRakutenBook.h"
+
 #import "SFBook.h"
 #import "SFBook+Alpha.h"
 #import "SFShelf.h"
