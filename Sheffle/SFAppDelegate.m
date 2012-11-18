@@ -8,6 +8,7 @@
 
 #import "SFAppDelegate.h"
 #import "SFCoreDataManager.h"
+#import "SFShelfViewController.h"
 #import "SFNavigationBar.h"
 #import "SFToolbar.h"
 

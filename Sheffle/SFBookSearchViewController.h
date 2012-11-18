@@ -16,6 +16,7 @@
 <UISearchBarDelegate,UISearchDisplayDelegate,UIPickerViewDelegate,UIPickerViewDataSource,KXPPickerViewControllerDelegate,UIAlertViewDelegate>
 
 @property (nonatomic,strong) NSArray *shelves;
+@property (nonatomic,strong) SFShelf *currentShelf;
 @property (weak,nonatomic) id<SFBookSearchViewDelegate> delegate;
 
 - (IBAction)cancelButtonDidTap:(UIBarButtonItem *)sender;

@@ -44,7 +44,7 @@ static SFCoreDataManager *_sharedInstance;
 {
     if (!_fetchedBooksController) {
         NSSortDescriptor *title = [[NSSortDescriptor alloc] initWithKey:@"titleKana" ascending:YES];
-        _fetchedBooksController = [self fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[title] sectionNameKeyPath:@"titleInitial" cacheName:@"BooksWithTitle" predicate:nil];
+        _fetchedBooksController = [self fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[title] sectionNameKeyPath:@"titleInitial" cacheName:@"Books" predicate:nil];
     }
     return _fetchedBooksController;
 }
@@ -62,7 +62,7 @@ static SFCoreDataManager *_sharedInstance;
 {
     if (_fetchedFavoriteBooksController) {
         NSSortDescriptor *updated = [[NSSortDescriptor alloc] initWithKey:@"updated" ascending:YES];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"favorite == '1'"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"favorite == '%@'",@(YES)];
         _fetchedFavoriteBooksController = [self fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[updated] sectionNameKeyPath:@"title" cacheName:@"FavoriteBooks" predicate:predicate];
     }
     return _fetchedFavoriteBooksController;

@@ -15,15 +15,12 @@
 #define kTabBarHeight self.parentViewController.tabBarController.tabBar.frame.size.height
 
 @interface SFGridShelfViewController ()
-{
-    UIToolbar *_headerBar;
-}
 
 @end
 
 @implementation SFGridShelfViewController
 
-@synthesize fetchedResultsController = __fetchedResultsController;
+@synthesize fetchedResultsController = _fetchedResultsController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,8 +41,8 @@
 {
     [super viewDidLoad];
     
-    [self switchToNormalMode];
     [self initBooks];
+    [self switchToNormalMode];
     
     _booksIndexsToBeRemoved = [NSMutableIndexSet indexSet];
         
@@ -55,9 +52,7 @@
     self.bookShelfView = [[GSBookShelfView alloc] initWithFrame:f];
     self.bookShelfView.dataSource = self;
     
-    [self.view addSubview:self.bookShelfView];
-//    self.navigationController.toolbarHidden = YES;
-//    [self performSelector:@selector(testScrollToRow) withObject:self afterDelay:3];
+    [self.view addSubview:self.bookShelfView];    
     
 }
 
@@ -84,18 +79,8 @@
 - (void)initBooks
 {
     // 本の初期化
-//    _bookArray = [NSMutableArray arrayWithArray:self.fetchedResultsController.fetchedObjects];
-    self.bookArray = self.fetchedResultsController.fetchedObjects;
-    self.bookStatus = [NSMutableArray arrayWithCapacity:self.bookArray.count];
-    for (int i = 0 , max = [self.bookArray count]; i < max; i++) {
-        [self.bookStatus addObject:@(BOOK_UNSELECTED)];
-    }
-}
-
-- (void)switchToNormalMode {
-    $(@"Switch to normal mode");
-    _editMode = NO;
-    for (int i = 0; i < [self.bookArray count]; i++) {
+    self.bookStatus = [NSMutableArray arrayWithCapacity:self.fetchedResultsController.fetchedObjects.count];
+    for (int i = 0 ; i < self.fetchedResultsController.fetchedObjects.count; i++) {
         [self.bookStatus addObject:@(BOOK_UNSELECTED)];
     }
     for (SFShelfBookView *bookView in [_bookShelfView visibleBookViews]) {
@@ -103,17 +88,33 @@
     }
 }
 
+- (void)switchToNormalMode {
+    $(@"Switch to normal mode");
+    _editMode = NO;
+    [self initBooks];
+}
+
 - (void)switchToEditMode {
     $(@"Switch to edit mode");
     _editMode = YES;
     [_booksIndexsToBeRemoved removeAllIndexes];
-//    for (int i = 0; i < [_bookArray count]; i++) {
-//        [_bookStatus addObject:@(BOOK_UNSELECTED)];
-//    }
-//    
-//    for (SFShelfBookView *bookView in [_bookShelfView visibleBookViews]) {
-//        [bookView setSelected:NO];
-//    }
+    [self initBooks];
+}
+
+#pragma mark - Book View Configuration
+
+- (void)insertBookViewsAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated
+{
+    SFBook *book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSInteger index = [self.fetchedResultsController.fetchedObjects indexOfObject:book];
+    [self.bookShelfView insertBookViewsAtIndexs:[NSIndexSet indexSetWithIndex:index] animate:animated];
+}
+
+- (void)removeBookViewsAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated
+{
+    SFBook *book = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSInteger index = [self.fetchedResultsController.fetchedObjects indexOfObject:book];
+    [self.bookShelfView removeBookViewsAtIndexs:[NSIndexSet indexSetWithIndex:index] animate:animated];
 }
 
 #pragma mark GSBookShelfViewDataSource
@@ -136,7 +137,16 @@
     static NSString *identifier = @"bookView";
     SFShelfBookView *bookView = (SFShelfBookView*)[bookShelfView dequeueReuseableBookViewWithIdentifier:identifier];
 
-    SFBook *book = [self.bookArray objectAtIndex:index];
+    SFBook *book = nil;
+    @try {
+        book = [self.fetchedResultsController.fetchedObjects objectAtIndex:index];
+    }
+    @catch (NSException *exception) {        
+        $(@"%@",exception);
+    }
+    @finally {
+        
+    }
     
     if (bookView == nil) {
         bookView = [[SFShelfBookView alloc] initWithFrame:CGRectZero];
@@ -144,7 +154,9 @@
         [bookView addTarget:self action:@selector(bookViewClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     [bookView setIndex:index];
-    [bookView setSelected:[(NSNumber *)[self.bookStatus objectAtIndex:index] intValue]];
+    
+//        [bookView setSelected:[(NSNumber *)[self.bookStatus objectAtIndex:index] intValue]];
+    
     [bookView setBackgroundImage:[UIImage imageWithData:book.image] forState:UIControlStateNormal];
     return bookView;
 }
@@ -178,13 +190,6 @@
 }
 
 - (UIView *)headerViewOfBookShelfView:(GSBookShelfView *)bookShelfView {
-    
-//    SFShelfRowView *srv = [[SFShelfRowView alloc] initWithFrame:CGRectMake(0, 0, 320, 120)];
-//    return srv;
-    if (!_headerBar) {
-        _headerBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-        _headerBar.barStyle = UIBarStyleDefault;
-    }
     
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
     if (UIDeviceOrientationIsLandscape(orientation)) {
@@ -221,68 +226,6 @@
     return 0.0f;
 }
 
-//- (void)bookShelfView:(GSBookShelfView *)bookShelfView moveBookFromIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
-//    
-//    if ([(NSNumber *)[self.bookStatus objectAtIndex:fromIndex] intValue] == BOOK_SELECTED) {
-//        [_booksIndexsToBeRemoved removeIndex:fromIndex];
-//        [_booksIndexsToBeRemoved addIndex:toIndex];
-//    }
-//    //TODO: 入れ替えの処理を入れるならここでCoreDataをいじる
-////    [_bookArray moveObjectFromIndex:fromIndex toIndex:toIndex];
-//    [self.bookStatus moveObjectFromIndex:fromIndex toIndex:toIndex];
-//    
-//    // the bookview is recognized by index in the demo, so change all the indexes of affected bookViews here
-//    // This is just a example, not a good one.In your code, you'd better use a key to recognize the bookView.
-//    // and you won't need to do the following
-//
-//    SFShelfBookView *bookView = (SFShelfBookView *)[_bookShelfView bookViewAtIndex:toIndex];
-//    [bookView setIndex:toIndex];
-//    if (fromIndex <= toIndex) {
-//        for (int i = fromIndex; i < toIndex; i++) {
-//            bookView = (SFShelfBookView*)[_bookShelfView bookViewAtIndex:i];
-//            [bookView setIndex:bookView.index - 1];
-//        }
-//    }
-//    else {
-//        for (int i = toIndex + 1; i <= fromIndex; i++) {
-//            bookView = (SFShelfBookView*)[_bookShelfView bookViewAtIndex:i];
-//            [bookView setIndex:bookView.index + 1];
-//        }
-//    }
-//}
-
-#pragma mark - BarButtonListener
-
-//- (void)editButtonClicked:(id)sender {
-//    [self switchToEditMode];
-//}
-//
-//- (void)cancleButtonClicked:(id)sender {
-//    [self switchToNormalMode];
-//}
-//
-//- (void)trashButtonClicked:(id)sender {
-//    [_bookArray removeObjectsAtIndexes:_booksIndexsToBeRemoved];
-//    [_bookStatus removeObjectsAtIndexes:_booksIndexsToBeRemoved];
-//    [_bookShelfView removeBookViewsAtIndexs:_booksIndexsToBeRemoved animate:YES];
-//    [self switchToNormalMode];
-//}
-//
-//- (void)addButtonClicked:(id)sender {
-//    int a[6] = {1, 2, 5, 7, 9, 22};
-//    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
-//    NSMutableArray *arr = [NSMutableArray array];
-//    NSMutableArray *stat = [NSMutableArray array];
-//    for (int i = 0; i < 6; i++) {
-//        [indexSet addIndex:a[i]];
-//        [arr addObject:@1];
-//        [stat addObject:@(BOOK_UNSELECTED)];
-//    }
-//    [_bookArray insertObjects:arr atIndexes:indexSet];
-//    [_bookStatus insertObjects:stat atIndexes:indexSet];
-//    [_bookShelfView insertBookViewsAtIndexs:indexSet animate:YES];
-//}
-
 #pragma mark - BookView Listener
 
 - (void)bookViewClicked:(UIButton *)button {
@@ -313,29 +256,12 @@
         SFShelfViewController *svc = (SFShelfViewController*)self.parentViewController;
         svc.trashButton.title = deleteButtonTitle;
         svc.moveButton.title = moveButtonTitle;
-        svc.staredButton.title = staredButtonTitle;
+        svc.staredButton.title = staredButtonTitle;        
     } else {
         [bookView setSelected:NO];
-        SFBook *book = [self.bookArray objectAtIndex:bookView.index];
+        SFBook *book = [self.fetchedResultsController.fetchedObjects objectAtIndex:bookView.index];
         [self.parentViewController performSegueWithIdentifier:@"showBook" sender:book];
     }
 }
-
-#pragma mark - Accessor for Books data source
-
-//- (void)insertBook:(SFBook *)book atIndex:(NSInteger)index
-//{
-//    [self.bookArray insertObject:book atIndex:index];
-//    [self.bookShelfView reloadData];
-//}
-//
-//- (void)removeBookAtIndex:(NSInteger)index
-//{
-//    [self.bookArray removeObjectAtIndex:index];
-//    [self.bookShelfView reloadData];
-//}
-
-#pragma mark - Setter / Getter
-
 
 @end

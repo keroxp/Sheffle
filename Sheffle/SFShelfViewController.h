@@ -16,8 +16,6 @@
 #import "SVPullToRefresh.h"
 
 #import "SFBookViewController.h"
-#import "SFTableShelfViewController.h"
-#import "SFGridShelfViewController.h"
 #import "SFShelvesViewController.h"
 
 typedef enum{
@@ -26,12 +24,18 @@ typedef enum{
 }SFShelfViewMode;
 
 typedef enum{
+    SFShelfTypeNormal = 0,
+    SFShelfTypeAll,
+    SFShelfTypeFavorite
+}SFShelfType;
+
+typedef enum{
     SFBookSortTypeTitle = 0,
     SFBookSortTypeAuthor,
     SFBookSortTypePublisher
 }SFBookSortType;
 
-@class SFShelvesViewController, SFGridShelfViewController, SFTableShelfViewController;
+@class SFShelvesViewController, SFGridShelfViewController, SFTableShelfViewController, GSBookShelfView;
 
 @interface SFShelfViewController : UIViewController 
 <ZBarReaderViewDelegate
@@ -45,18 +49,23 @@ typedef enum{
 // View Mode
 @property (readonly) SFShelfViewMode shelfViewMode;
 @property (assign, nonatomic) SFBookSortType sortType;
+@property (assign, nonatomic, readonly) SFShelfType shelfType;
 // Core Data
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic) SFShelf *shelf;
+@property (strong, nonatomic, readonly) SFShelf *shelf;
 // UI
 @property (strong, nonatomic) UIView *readerView;
 @property (strong, nonatomic) UIView *shelfView;
+// Accecor
+@property (readonly) UITableView *tableView;
+@property (readonly) GSBookShelfView* bookShelfView;
+
 // Buttons
 @property (strong, nonatomic) UIBarButtonItem *trashButton;
 @property (strong, nonatomic) UIBarButtonItem *moveButton;
 @property (strong, nonatomic) UIBarButtonItem *staredButton;
 
-- (NSFetchedResultsController*)fetchedResultsControllerWithEntityName:(NSString*)entityName;
+- (void)setShelf:(SFShelf *)shelf forShelfType:(SFShelfType)shelfType;
 
 @end
 

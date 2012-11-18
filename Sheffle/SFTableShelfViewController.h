@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "SFCoreDataManager.h"
 #import "SFBookViewController.h"
-//#import "SFShelfViewController.h"
+#import "SFShelfViewController.h"
 
 @interface SFTableShelfViewController : UITableViewController
 <UISearchBarDelegate
@@ -20,5 +20,6 @@
 
 // Core Data
 @property (weak, nonatomic) NSFetchedResultsController *fetchedResultsController;
+//@property (assign, nonatomic) SFShelfType shelfType;
 
 @end

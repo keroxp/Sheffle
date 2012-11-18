@@ -237,16 +237,6 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="cDV-lN-8bz">
                         <nil key="title"/>
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="xeZ-hX-rAt">
-                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="phC-k5-x6a">
-                                <rect key="frame" x="244" y="7" width="71" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title=""/>
-                                    <segment title=""/>
-                                </segments>
-                            </segmentedControl>
-                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>

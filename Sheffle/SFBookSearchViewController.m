@@ -18,8 +18,6 @@
     NSMutableArray *_booksToBeRegisted;
     NSMutableArray *_selectionStates;
     SFAPIConnection *_currentConnection;
-    SFShelf *_currentShelf;
-//    NSString *_currentShelf;
     NSInteger _selectedPickerIndex;
     KXPPickerViewController *_pickerViewController;
 }
@@ -53,8 +51,9 @@
         _shelves = [[SFCoreDataManager sharedManager] shelves];
     }
     // 何もなければ一番上を選択
-    _currentShelf = (self.shelves.count > 0) ? [_shelves objectAtIndex:0] : nil;
-
+    if (!self.currentShelf) {
+        _currentShelf = (self.shelves.count > 0) ? [_shelves objectAtIndex:0] : nil;
+    }
     
     KXPPickerViewController *pvc = [[KXPPickerViewController alloc] init];
     pvc.delegate = self;
@@ -295,9 +294,11 @@
     if (tableView == self.tableView) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         switch (indexPath.section) {
-            case 0:
+            case 0: {
                 // 本棚選択
                 [_pickerViewController showWithAnimated:YES];
+                
+            }
                 break;
             case 1:
                 break;

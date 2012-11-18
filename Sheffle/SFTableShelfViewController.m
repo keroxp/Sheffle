@@ -8,7 +8,6 @@
 
 #import "SFTableShelfViewController.h"
 #import "SFShelfViewController.h"
-#define kBarTintColor [UIColor colorWithRed:214.0f/255.0f green:168.0f/255.0f blue:91.0f/255.0f alpha:1.0f]
 
 @interface SFTableShelfViewController ()
 {
@@ -21,7 +20,7 @@
 
 @implementation SFTableShelfViewController
 
-@synthesize fetchedResultsController = __fetchedResultsController;
+@synthesize fetchedResultsController = _fetchedResultsController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -46,6 +45,12 @@
 
 - (void)viewDidUnload {
     [super viewDidUnload];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table View Data Source
@@ -97,7 +102,7 @@
             NSString *name = [[[self.fetchedResultsController.sections objectAtIndex:index] name] substringWithRange:NSMakeRange(0, 1)];
             [ma addObject:name];
         }
-        [_sectionIndexTitles setObject:ma forKey:[self.fetchedResultsController.sectionNameKeyPath copy]];
+//        [_sectionIndexTitles setObject:ma forKey:[self.fetchedResultsController.sectionNameKeyPath copy]];
     }
     return [_sectionIndexTitles objectForKey:self.fetchedResultsController.sectionNameKeyPath];
     
@@ -191,5 +196,6 @@
         [bvc setBook:[self.fetchedResultsController objectAtIndexPath:_selectedPath]];
     }
 }
+
 
 @end

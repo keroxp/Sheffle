@@ -1,3 +1,4 @@
+
 //
 // CQMFloatingFrameView.m
 // Created by cocopon on 2012/05/14.

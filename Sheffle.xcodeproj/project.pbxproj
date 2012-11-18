@@ -90,8 +90,6 @@
 		A6BDB569164FABBA00988ED5 /* SFAPIConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = A6BDB568164FABB900988ED5 /* SFAPIConnection.m */; };
 		A6BDB56B164FBD5500988ED5 /* Placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = A6BDB56A164FBD5500988ED5 /* Placeholder.png */; };
 		A6D0917315C5B0A400B128C8 /* SFBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6D0917115C5B0A400B128C8 /* SFBookViewController.m */; };
-		A6E46DD81655216A00EB1C01 /* SFPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6E46DD61655216A00EB1C01 /* SFPopoverViewController.m */; };
-		A6E46DD91655216A00EB1C01 /* SFPopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6E46DD71655216A00EB1C01 /* SFPopoverViewController.xib */; };
 		A6F5CD4E15CE62BB00AEC20C /* SFShelvesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F5CD4D15CE62BB00AEC20C /* SFShelvesViewController.m */; };
 		A6FDDE2A16522AB600FF7E6F /* SFBook.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FDDE2916522AB500FF7E6F /* SFBook.m */; };
 		A6FDDE2D1652352000FF7E6F /* SFShelf.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FDDE2C1652352000FF7E6F /* SFShelf.m */; };
@@ -283,9 +281,6 @@
 		A6BDB56A164FBD5500988ED5 /* Placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Placeholder.png; sourceTree = "<group>"; };
 		A6D0917015C5B0A400B128C8 /* SFBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFBookViewController.h; sourceTree = "<group>"; };
 		A6D0917115C5B0A400B128C8 /* SFBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFBookViewController.m; sourceTree = "<group>"; };
-		A6E46DD51655216A00EB1C01 /* SFPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFPopoverViewController.h; sourceTree = "<group>"; };
-		A6E46DD61655216A00EB1C01 /* SFPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFPopoverViewController.m; sourceTree = "<group>"; };
-		A6E46DD71655216A00EB1C01 /* SFPopoverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SFPopoverViewController.xib; sourceTree = "<group>"; };
 		A6F5CD4C15CE62BB00AEC20C /* SFShelvesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFShelvesViewController.h; sourceTree = "<group>"; };
 		A6F5CD4D15CE62BB00AEC20C /* SFShelvesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFShelvesViewController.m; sourceTree = "<group>"; };
 		A6FDDE2816522AB500FF7E6F /* SFBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFBook.h; path = Sheffle/SFBook.h; sourceTree = "<group>"; };
@@ -577,9 +572,6 @@
 				A64E749815C3C0CC003464FE /* ShelfView */,
 				A64E74B315C3D7FD003464FE /* BookView */,
 				A6BDB56D1650072400988ED5 /* SearchView */,
-				A6E46DD51655216A00EB1C01 /* SFPopoverViewController.h */,
-				A6E46DD61655216A00EB1C01 /* SFPopoverViewController.m */,
-				A6E46DD71655216A00EB1C01 /* SFPopoverViewController.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -854,7 +846,6 @@
 				A628D2B8164BAF03003D03DD /* toolbarshadow@2x.png in Resources */,
 				A628D2BA164BBEA6003D03DD /* Default-568h@2x.png in Resources */,
 				A6BDB56B164FBD5500988ED5 /* Placeholder.png in Resources */,
-				A6E46DD91655216A00EB1C01 /* SFPopoverViewController.xib in Resources */,
 				A6A7B07816573A62004A75D3 /* SVProgressHUD.bundle in Resources */,
 				A6A7B0D5165760E2004A75D3 /* gridbutton.png in Resources */,
 				A6A7B0D6165760E2004A75D3 /* gridbutton@2x.png in Resources */,
@@ -915,7 +906,6 @@
 				A69BD4A3165206ED0084BC84 /* UIViewController+AddBook.m in Sources */,
 				A6FDDE2A16522AB600FF7E6F /* SFBook.m in Sources */,
 				A6FDDE2D1652352000FF7E6F /* SFShelf.m in Sources */,
-				A6E46DD81655216A00EB1C01 /* SFPopoverViewController.m in Sources */,
 				A6A7B06E16573A62004A75D3 /* CQMFloatingContentOverlayView.m in Sources */,
 				A6A7B06F16573A62004A75D3 /* CQMFloatingController.m in Sources */,
 				A6A7B07016573A62004A75D3 /* CQMFloatingFrameView.m in Sources */,
