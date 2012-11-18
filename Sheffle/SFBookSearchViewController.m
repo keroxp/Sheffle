@@ -292,7 +292,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView == self.tableView) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//        [tableView deselectRowAtIndexPath:indexPath animated:YES];
         switch (indexPath.section) {
             case 0: {
                 // 本棚選択
@@ -358,12 +358,8 @@
 
 - (void)startSearchWithParameters:(NSDictionary*)params
 {
-    // 遅延実行予約を消す
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    
     //サムネイルを消す
     [self.thumbnails removeAllObjects];
-//    _results = nil;
     
     // 検索開始
     UISearchBar *searchBar = self.searchDisplayController.searchBar;
@@ -408,7 +404,21 @@
 {
     // searchDisplayController setActive:NOをすると困るので似たような処理を手動でやる
 //    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self startSearchWithParameters:@{@"title" : searchBar.text}];
+    NSString *scope = nil;
+    switch (searchBar.selectedScopeButtonIndex) {
+        case 0:
+            scope = @"title";
+            break;
+        case 1:
+            scope = @"author";
+            break;
+        case 2:
+            scope = @"publisherName";
+            break;
+        default:
+            break;
+    }
+    [self startSearchWithParameters:@{scope : searchBar.text}];
 }
 
 #pragma mark - Action
