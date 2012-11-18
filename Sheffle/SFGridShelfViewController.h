@@ -27,7 +27,7 @@ typedef enum {
 
 //@property (weak, nonatomic) SFShelf *shelf;
 @property (strong, nonatomic) GSBookShelfView *bookShelfView;
-@property (weak, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (weak,nonatomic) NSFetchedResultsController *fetchedResultsController;
 
 @property (strong, nonatomic) NSMutableArray *bookStatus;
 @property (strong, nonatomic) NSMutableIndexSet *booksIndexsToBeRemoved;

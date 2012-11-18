@@ -65,6 +65,8 @@
 
 @synthesize shelfViewMode = _shelfViewMode;
 @synthesize sortType = _sortType;
+@synthesize shelf = _shelf;
+@synthesize shelfType = _shelfType;
 @synthesize fetchedResultsController = _fetchedResultsController;
 
 - (void)viewDidLoad
@@ -119,7 +121,7 @@
     [self.shelfView addSubview:self.tableShelfViewController.view];
     [self.shelfView addSubview:self.gridShelfViewController.view];
 
-    [self setShelf:nil forShelfType:SFShelfTypeAll];
+    [self setShelfType:SFShelfTypeAll];
     [self setShelfViewMode:SFShelfViewModeGrid];
 //    _shelfViewMode = SFShelfViewModeTable;
     
@@ -152,6 +154,24 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    if (!editing) {
+        // done
+        //        [self.navigationItem setLeftBarButtonItem:_editButton animated:YES];
+        [self setToolbarItems:[self normalToolbarItems] animated:YES];
+        [self.tableShelfViewController setEditing:editing animated:YES];
+        [self.gridShelfViewController switchToNormalMode];
+    }else{
+        // edit
+        //        [self.navigationItem setLeftBarButtonItem:_donebutton animated:YES];
+        [self setToolbarItems:[self editToolbarItems] animated:YES];
+        [self.tableShelfViewController setEditing:editing animated:YES];
+        [self.gridShelfViewController switchToEditMode];
+    }
+}
 
 - (void)setEditing:(BOOL)editing
 {
@@ -284,26 +304,27 @@
 
 - (void)shelvesViewController:(SFShelvesViewController *)controller didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    $(@"%i,%i",indexPath.section,indexPath.row);
     switch (indexPath.section) {
-        case 0:
+        case 0: {
             switch (indexPath.row) {
                 case 0:
-//                    [self setShelfType:SFShelfTypeAll];
-                    [self setShelf:nil forShelfType:SFShelfTypeAll];
+                    [self setShelfType:SFShelfTypeAll];
                     break;
                 case 1:
-//                    [self setShelfType:SFShelfTypeFavorite];
-                    [self setShelf:nil forShelfType:SFShelfTypeFavorite];
+                    [self setShelfType:SFShelfTypeFavorite];
                     break;
                 default:
                     break;
             }
             break;
+        }
         case 1: {
             SFShelf *shelf = [self.shelvesViewController.fetchedResultsController.fetchedObjects objectAtIndex:indexPath.row];
-            [self setShelf:shelf forShelfType:SFShelfTypeNormal];
-        }
+//            $(@"%@",shelf.title);
+            [self setShelf:shelf];
             break;
+        }
         default:
             break;
     }
@@ -478,13 +499,18 @@
             [moc deleteObject:book];
         }
         [[SFCoreDataManager sharedManager] saveContext];
-        [self editButtonDidTap:nil];
+        [self setEditing:NO animated:YES];
     }
 }
 
 - (void)moveButtonDidTap:(id)sender
 {
     $(@"move");
+}
+
+- (void)staredButtonDidTap:(id)sender
+{
+    $(@"star");
     if (self.gridShelfViewController.booksIndexsToBeRemoved.count > 0 ||
         self.tableShelfViewController.tableView.indexPathForSelectedRow.length > 0) {
         switch (self.shelfViewMode) {
@@ -492,32 +518,29 @@
                 NSIndexSet *is = self.gridShelfViewController.booksIndexsToBeRemoved;
                 [self.gridShelfViewController.bookStatus removeObjectsAtIndexes:is];
                 NSArray *books = [self.tableShelfViewController.fetchedResultsController.fetchedObjects objectsAtIndexes:is];
-                NSSet *set = [NSSet setWithArray:books];
-                [self.shelf removeBooks:set];
+                for (SFBook *book in books) {
+                    [book setFavorite:@(YES)];
+                }
                 [[SFCoreDataManager sharedManager] saveContext];
             }
                 break;
             case SFShelfViewModeTable: {
                 NSArray *selected = [self.tableShelfViewController.tableView indexPathsForSelectedRows];
-                NSMutableArray *toBeDeleted = [NSMutableArray array];
+                NSMutableArray *books = [NSMutableArray array];
                 for (NSIndexPath *ip in selected) {
-                    [toBeDeleted addObject:[self.gridShelfViewController.fetchedResultsController objectAtIndexPath:ip]];
+                    [books addObject:[self.gridShelfViewController.fetchedResultsController objectAtIndexPath:ip]];
                 }
-                NSSet *set = [NSSet setWithArray:toBeDeleted];
-                [self.shelf removeBooks:set];
+                for (SFBook *book in books) {
+                    [book setFavorite:@(YES)];
+                }
                 [[SFCoreDataManager sharedManager] saveContext];
             }
                 break;
             default:
                 break;
         }
-        [self editButtonDidTap:nil];
-    }
-}
-
-- (void)staredButtonDidTap:(id)sender
-{
-    $(@"star");;
+        [self setEditing:NO animated:YES];
+    }    
 }
 
 #pragma mark - Toolbar Items
@@ -547,7 +570,7 @@
     // ふぁぼ
     _staredButton = [[UIBarButtonItem alloc] initWithTitle:@"Favorite" style:UIBarButtonItemStyleBordered target:self action:@selector(staredButtonDidTap:)];
     
-    CGFloat w = 90;
+    CGFloat w = 76;
     
     _trashButton.width = _moveButton.width = _staredButton.width = w;
     
@@ -583,7 +606,7 @@
 {
     if (!_editToolbarItems) {
         UIBarButtonItem *sp = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        _editToolbarItems = @[_donebutton,_trashButton,sp,_moveButton,sp,_staredButton];
+        _editToolbarItems = @[self.editButtonItem,_trashButton,sp,_moveButton,sp,_staredButton];
     }
     return _editToolbarItems;
 }
@@ -592,7 +615,7 @@
 {
     if (!_normalToolbarItems) {
         UIBarButtonItem *sp = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        _normalToolbarItems = @[_editButton,sp,_sortControlItem,sp,_addButton];
+        _normalToolbarItems = @[self.editButtonItem,sp,_sortControlItem,sp,_addButton];
     }
     return _normalToolbarItems;
 }
@@ -646,6 +669,68 @@
     return _fetchedResultsController;
 }
 
+- (void)setShelf:(SFShelf *)shelf
+{
+    if (_shelf != shelf) {
+        _shelf  = shelf;
+        if (shelf) {
+            [self setShelfType:SFShelfTypeNormal];
+            [self setTitle:shelf.title];
+            
+            NSString *key = nil;
+            NSString *section = nil;
+            
+            switch (self.sortType) {
+                case SFBookSortTypeTitle: {
+                    key = @"titleKana";
+                    section = @"titleInitial";
+                }
+                    break;
+                case SFBookSortTypeAuthor: {
+                    key = @"author";
+                    key = @"author";
+                }
+                    break;
+                case SFBookSortTypePublisher: {
+                    key = @"publisherName";
+                    section = @"publisherName";
+                }
+                    break;
+                default:
+                    break;
+            }
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shelf == %@",self.shelf];
+            NSString *cache = [NSString stringWithFormat:@"BookIn%@With%i",shelf.title,self.sortType];
+            NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:key ascending:YES];
+            NSFetchedResultsController *frc = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[sort] sectionNameKeyPath:section cacheName:cache predicate:predicate];
+            
+            [self setFetchedResultsController:frc];
+        }
+    }
+}
+
+- (void)setShelfType:(SFShelfType)shelfType
+{
+    if (_shelfType != shelfType) {
+        _shelfType = shelfType;
+        switch (shelfType) {
+            case SFShelfTypeAll:
+                [self setTitle:@"すべての本"];
+                [self setShelf:nil];
+                [self setFetchedResultsController:[[SFCoreDataManager sharedManager] fetchedBooksController]];
+                break;
+            case SFShelfTypeFavorite:
+                [self setTitle:@"お気に入りの本"];
+                [self setShelf:nil];
+                [self setFetchedResultsController:[[SFCoreDataManager sharedManager] fetchedFavoriteBooksController]];
+                break;
+            default:
+                break;                
+        }
+    }
+}
+
 - (void)setSortType:(SFBookSortType)sortType
 {
     if (_sortType != sortType) {
@@ -682,69 +767,10 @@
         }else{
             cache = @"Books";
         }
-                
+        
         NSFetchedResultsController *frc = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[sort] sectionNameKeyPath:section cacheName:cache predicate:predicate];
         
         [self setFetchedResultsController:frc];
-    }
-}
-
-- (void)setShelf:(SFShelf *)shelf forShelfType:(SFShelfType)shelfType
-{
-    if (_shelfType != shelfType) {
-        _shelfType = shelfType;
-        if (shelf) {
-            // 普通の本棚の処理
-            if (_shelf != shelf) {
-                _shelf  = shelf;
-                [self setTitle:shelf.title];
-                
-                NSString *key = nil;
-                NSString *section = nil;
-                
-                switch (self.sortType) {
-                    case SFBookSortTypeTitle: {
-                        key = @"titleKana";
-                        section = @"titleInitial";
-                    }
-                        break;
-                    case SFBookSortTypeAuthor: {
-                        key = @"author";
-                        key = @"author";
-                    }
-                        break;
-                    case SFBookSortTypePublisher: {
-                        key = @"publisherName";
-                        section = @"publisherName";
-                    }
-                        break;
-                    default:
-                        break;
-                }
-                
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shelf == %@",self.shelf];
-                NSString *cache = [NSString stringWithFormat:@"BookIn%@With%i",shelf.title,self.sortType];
-                NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:key ascending:YES];
-                NSFetchedResultsController *frc = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[sort] sectionNameKeyPath:section cacheName:cache predicate:predicate];
-                
-                [self setFetchedResultsController:frc];
-            }
-        }else{
-            // 特殊な本棚の処理
-            switch (shelfType) {
-                case SFShelfTypeAll:
-                    [self setTitle:@"すべての本"];
-                    [self setFetchedResultsController:[[SFCoreDataManager sharedManager] fetchedBooksController]];
-                    break;
-                case SFShelfTypeFavorite:
-                    [self setTitle:@"お気に入りの本"];
-                    [self setFetchedResultsController:[[SFCoreDataManager sharedManager] fetchedFavoriteBooksController]];
-                    break;
-                default:
-                    break;
-                    
-            }
-        }
     }
 }
 
@@ -769,51 +795,11 @@
     }
 }
 
-//- (void)setShelf:(SFShelf *)shelf
-//{
-//    if (_shelf != shelf) {
-//        _shelf  = shelf;
-//        
-//        [self setTitle:shelf.title];
-//        [self setShelfType:SFShelfTypeNormal];
-//        
-//        NSString *key = nil;
-//        NSString *section = nil;
-//        
-//        switch (self.sortType) {
-//            case SFBookSortTypeTitle: {
-//                key = @"titleKana";
-//                section = @"titleInitial";
-//            }
-//                break;
-//            case SFBookSortTypeAuthor: {
-//                key = @"author";
-//                key = @"author";
-//            }
-//                break;
-//            case SFBookSortTypePublisher: {
-//                key = @"publisherName";
-//                section = @"publisherName";
-//            }
-//                break;
-//            default:
-//                break;
-//        }
-//
-//        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"shelf == %@",self.shelf];
-//        NSString *cache = [NSString stringWithFormat:@"BookIn%@",shelf.title];
-//        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:key ascending:YES];
-//        NSFetchedResultsController *frc = [[SFCoreDataManager sharedManager] fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[sort] sectionNameKeyPath:section cacheName:cache predicate:predicate];
-//        [self setFetchedResultsController:frc];        
-//        
-//    }
-//}
-
 #pragma mark - Fetched Results Controller Delegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
-    [self.tableView beginUpdates];
+    [self.tableShelfViewController.tableView beginUpdates];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
@@ -845,11 +831,13 @@
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [self.gridShelfViewController insertBookViewsAtIndexPath:newIndexPath animated:YES];
+//            [self.gridShelfViewController insertBookViewsAtIndexPath:newIndexPath animated:YES];
+            [self.bookShelfView reloadData];
             break;
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [self.gridShelfViewController removeBookViewsAtIndexPath:indexPath animated:YES];
+//            [self.gridShelfViewController removeBookViewsAtIndexPath:indexPath animated:YES];
+            [self.bookShelfView reloadData];
             break;
         case NSFetchedResultsChangeUpdate:
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -862,7 +850,7 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    [self.tableView endUpdates];
+    [self.tableShelfViewController.tableView endUpdates];
 }
 
 @end

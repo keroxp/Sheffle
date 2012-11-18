@@ -62,7 +62,7 @@ static SFCoreDataManager *_sharedInstance;
 {
     if (_fetchedFavoriteBooksController) {
         NSSortDescriptor *updated = [[NSSortDescriptor alloc] initWithKey:@"updated" ascending:YES];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"favorite == '%@'",@(YES)];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"favorite == %i",@(YES)];
         _fetchedFavoriteBooksController = [self fetchedResultsControllerWithEntityName:@"Book" sortDescriptors:@[updated] sectionNameKeyPath:@"title" cacheName:@"FavoriteBooks" predicate:predicate];
     }
     return _fetchedFavoriteBooksController;

@@ -44,6 +44,8 @@
             SFBookSearchViewController *svc = [self.storyboard instantiateViewControllerWithIdentifier:@"BookSearchView"];
             svc.delegate = self;
             svc.shelves = [[SFCoreDataManager sharedManager] shelves];
+            SFShelf *shelf = [self performSelector:@selector(shelf)];
+            svc.currentShelf = shelf;
             UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:svc];
             [self presentViewController:nvc animated:YES completion:NULL];
             break;

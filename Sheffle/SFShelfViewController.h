@@ -49,10 +49,10 @@ typedef enum{
 // View Mode
 @property (readonly) SFShelfViewMode shelfViewMode;
 @property (assign, nonatomic) SFBookSortType sortType;
-@property (assign, nonatomic, readonly) SFShelfType shelfType;
+@property (assign, nonatomic) SFShelfType shelfType;
 // Core Data
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
-@property (strong, nonatomic, readonly) SFShelf *shelf;
+@property (strong, nonatomic) SFShelf *shelf;
 // UI
 @property (strong, nonatomic) UIView *readerView;
 @property (strong, nonatomic) UIView *shelfView;
@@ -64,8 +64,6 @@ typedef enum{
 @property (strong, nonatomic) UIBarButtonItem *trashButton;
 @property (strong, nonatomic) UIBarButtonItem *moveButton;
 @property (strong, nonatomic) UIBarButtonItem *staredButton;
-
-- (void)setShelf:(SFShelf *)shelf forShelfType:(SFShelfType)shelfType;
 
 @end
 

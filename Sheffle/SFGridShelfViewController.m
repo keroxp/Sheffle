@@ -105,6 +105,7 @@
 
 - (void)insertBookViewsAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated
 {
+    SFShelfViewController *sv = self.parentViewController;
     SFBook *book = [self.fetchedResultsController objectAtIndexPath:indexPath];
     NSInteger index = [self.fetchedResultsController.fetchedObjects indexOfObject:book];
     [self.bookShelfView insertBookViewsAtIndexs:[NSIndexSet indexSetWithIndex:index] animate:animated];
